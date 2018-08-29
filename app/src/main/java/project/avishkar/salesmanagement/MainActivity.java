@@ -1,4 +1,4 @@
-tepackage project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
