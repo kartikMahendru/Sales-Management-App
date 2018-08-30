@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "182838856632",
+    "firebase_url": "https://sales-management-app-3a933.firebaseio.com",
+    "project_id": "sales-management-app-3a933",
+    "storage_bucket": "sales-management-app-3a933.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182838856632:android:b796b064fd6e605b",
+        "android_client_info": {
+          "package_name": "project.avishkar.salesmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182838856632-05b4jcm533vrm1fh06giam5hnvpsq2kq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "project.avishkar.salesmanagement",
+            "certificate_hash": "d51b26bfa7ba7129daedd15b6de59e0180ff97fe"
+          }
+        },
+        {
+          "client_id": "182838856632-bdp3s25j7llelpt6iq93lir8e00klcc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGNKqVVlO2WEdb8jzaYLmNj_C-xNsF7Qw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182838856632-bdp3s25j7llelpt6iq93lir8e00klcc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
