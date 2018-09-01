@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
 
-    tools:context=".SignUpRetailer">
+    tools:context=".SignUpSalesManager">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -126,6 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Signup"
+                android:id="@+id/signUp_button"
                 android:textColor="#f7f7f7"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"/>
