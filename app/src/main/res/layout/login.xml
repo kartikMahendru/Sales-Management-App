@@ -71,7 +71,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Retailer"
+                android:text="Manager"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
         </RadioGroup>
@@ -98,15 +98,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Not a member yet. "
+                android:text="Not a member yet? "
                 android:textSize="18sp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sign up as a Retailer"
+                android:text="Sign up as a Manager"
+                android:layout_marginTop="15sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:linksClickable="true"
-                android:id="@+id/retailer"
+                android:id="@+id/Manager"
                 android:textSize="20sp"
                 android:gravity="center_horizontal"
                 />
@@ -115,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign up as a Salesperson"
                 android:textSize="20sp"
+                android:layout_marginTop="5sp"
                 android:id="@+id/salesperson"
                 android:textColor="@color/colorPrimaryDark"
                 android:linksClickable="true"
