@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="project.avishkar.salesmanagement">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,8 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpSalesManager"/>
-        <activity android:name=".SignUpSalesperson"/>
+        <activity android:name=".SignUpSalesManager" />
+        <activity android:name=".SignUpSalesperson" />
+        <activity
+            android:name=".manager_main"
+            android:label="@string/title_activity_manager_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AccountManager"/>
     </application>
 
 </manifest>
