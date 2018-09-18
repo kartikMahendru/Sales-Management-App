@@ -5,19 +5,14 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
@@ -26,46 +21,15 @@ import com.shashank.sony.fancydialoglib.Icon;
 
 import java.io.File;
 
-public class manager_main extends AppCompatActivity
+public class salesperson_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manager_main);
+        setContentView(R.layout.activity_salesperson_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // dialog box to add item on dashboard
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(manager_main.this);
-                final View mView = getLayoutInflater().inflate(R.layout.dialog_box_add_item_inventory, null);
-
-                Button ok = (Button) mView.findViewById(R.id.ok);
-
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        // add item on inventory
-
-                        dialog.dismiss();
-                        Snackbar snackbar = Snackbar
-                                .make(view , "Item added successfully !", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-                });
-
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -99,7 +63,7 @@ public class manager_main extends AppCompatActivity
                     .OnPositiveClicked(new FancyAlertDialogListener() {
                         @Override
                         public void OnClick() {
-                            manager_main.super.onBackPressed();
+                            salesperson_main.super.onBackPressed();
                         }
                     })
                     .OnNegativeClicked(new FancyAlertDialogListener() {
@@ -116,7 +80,7 @@ public class manager_main extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.manager_main, menu);
+        getMenuInflater().inflate(R.menu.salesperson_main, menu);
         return true;
     }
 
@@ -141,37 +105,28 @@ public class manager_main extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.dashboard) {
+        if (id == R.id.dashboard) {
 
-        }
-        else if (id == R.id.my_account) {
-            //show the manager's myaccount
-            Intent intent = new Intent(manager_main.this,AccountManager.class);
+        } else if (id == R.id.my_account) {
+
+            //show the salesperson's myaccount (used same class AccountManager for salesperson also)
+            Intent intent = new Intent(salesperson_main.this,AccountManager.class);
             startActivity(intent);
 
-        } else if (id == R.id.my_team) {
+        } else if (id == R.id.leaderboard) {
 
         } else if (id == R.id.statistics) {
 
         } else if (id == R.id.nav_share) {
 
-            // Share app with others
+            //Share app with others
             ApplicationInfo api = getApplicationContext().getApplicationInfo();
             String apkpath = api.sourceDir;
             Intent share_intent = new Intent(Intent.ACTION_SEND);
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
-
-        } else if (id == R.id.nav_send) {
-
-            // Share invite-code with salespersons
-            String shareBody = "invite-code";
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Invite code -");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            startActivity(Intent.createChooser(sharingIntent, "Send invite-code using"));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
