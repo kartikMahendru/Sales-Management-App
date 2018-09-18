@@ -35,6 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     implementation 'com.github.Shashank02051997:FancyAlertDialog-Android:0.1'
-
+    compile 'com.baoyz.swipemenulistview:library:1.3.0'
 }
 apply plugin: 'com.google.gms.google-services'
