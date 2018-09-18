@@ -6,4 +6,7 @@
     <color name="colorAccent">#ffffff</color>
     <color name="colorAlert">#ff3232</color>
     <color name="colorRedlight">#ff7f7f</color>
+    <color name="colorTextBlack">#000000</color>
+    <color name="colorGray">#C0C0C0</color>
+    <color name="colorLightPink">#FFEFD5</color>
 </resources>

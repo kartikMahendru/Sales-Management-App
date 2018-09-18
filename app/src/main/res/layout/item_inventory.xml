@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#29BBFF"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Samsung S9"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textSize="25sp"
+        android:fontFamily="@font/robotobold"
+        android:gravity="center_horizontal"
+        android:textColor="#C8EDFF  "/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemName"
+        android:layout_margin="5dp"
+        android:id="@+id/rlayout"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Available: "
+            android:id="@+id/available"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/creteround"
+            android:layout_marginRight="5dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorTextBlack"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:id="@+id/available_units"
+            android:background="#00FF7F"
+            android:layout_toRightOf="@id/available"
+            android:textSize="18sp"
+            android:textColor="@color/colorTextBlack"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:id="@+id/sold_quantity"
+            android:background="#FFFF00"
+            android:layout_alignParentRight="true"
+            android:textSize="18sp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/colorTextBlack"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sold Units: "
+            android:fontFamily="@font/creteround"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="18sp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/sold_quantity"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
