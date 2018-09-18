@@ -8,4 +8,16 @@
     tools:context=".manager_main"
     tools:showIn="@layout/app_bar_manager_main">
 
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/items_list"
+        android:divider="@color/colorAccent"
+        android:dividerHeight="5sp">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
 </android.support.constraint.ConstraintLayout>
