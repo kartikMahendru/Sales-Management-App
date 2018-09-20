@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.DatabaseMetaData;
-
 /**
  * Created by Mehul Garg on 01-09-2018.
  */
@@ -67,21 +65,29 @@ public class SignUpSalesManager extends AppCompatActivity {
         login.setText(text);
     }
 
+
     void go_back_to_main(){
         Intent intent = new Intent(SignUpSalesManager.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    void write_data(){
+    void write_data() {
 
         SalesManager salesManager = new SalesManager(name_field.getText().toString(),
                 email_field.getText().toString(), num_field.getText().toString(),
                 password_field.getText().toString());
 
         databaseRef = FirebaseDatabase.getInstance().getReference(org_field.getText().toString());
-        String id = org_field.getText().toString()+ "-" +num_field.getText().toString().substring(5);
+        String id = org_field.getText().toString() + "-" + num_field.getText().toString().substring(5);
         databaseRef.child(id).setValue(salesManager);
-        Toast.makeText(this, "Sales Manager UID : "+id, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Sales Manager UID : " + id, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(SignUpSalesManager.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

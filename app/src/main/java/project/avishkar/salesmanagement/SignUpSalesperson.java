@@ -84,4 +84,11 @@ public class SignUpSalesperson extends AppCompatActivity {
         databaseRef.child(inviteCode_field.getText().toString()).child(id).setValue(salesPerson);
         Toast.makeText(this, "Sales Person UID : "+id, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(SignUpSalesperson.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

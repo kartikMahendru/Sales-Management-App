@@ -3,8 +3,8 @@ package project.avishkar.salesmanagement;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
-import android.net.Uri;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,21 +18,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 import com.shashank.sony.fancydialoglib.Icon;
 
 import java.io.File;
-import android.view.animation.BounceInterpolator;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-
 import java.util.ArrayList;
 
 public class manager_main extends AppCompatActivity
@@ -204,6 +202,7 @@ public class manager_main extends AppCompatActivity
 
         }
         else if (id == R.id.my_account) {
+
             //show the manager's account
             Intent intent = new Intent(manager_main.this,AccountManager.class);
             startActivity(intent);
@@ -213,6 +212,7 @@ public class manager_main extends AppCompatActivity
         } else if (id == R.id.statistics) {
 
         } else if (id == R.id.nav_share) {
+
             // Share app with others
             ApplicationInfo api = getApplicationContext().getApplicationInfo();
             String apkpath = api.sourceDir;
@@ -220,7 +220,9 @@ public class manager_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
+
         } else if (id == R.id.nav_send) {
+
             // Share invite-code with salespersons
             String shareBody = "invite-code";
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -228,6 +230,7 @@ public class manager_main extends AppCompatActivity
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Invite code -");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             startActivity(Intent.createChooser(sharingIntent, "Send invite-code using"));
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

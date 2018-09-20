@@ -36,15 +36,15 @@
             android:layout_width="match_parent"
             android:textColorHint="@color/colorAccent"
             android:id="@+id/textInputLayout">
+
             <android.support.design.widget.TextInputEditText
-                android:layout_height="57dp"
-                android:layout_width="match_parent"
-                android:hint="Name"
                 android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
                 android:layout_marginTop="50dp"
-                android:textSize="25dp"
+                android:hint="Name"
                 android:inputType="text"
-                />
+                android:textSize="25dp" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_height="68dp"
@@ -58,7 +58,7 @@
                 android:id="@+id/mobile"
                 android:layout_marginTop="50dp"
                 android:textSize="25dp"
-                android:inputType="text"
+                android:inputType="text|phone"
                 />
         </android.support.design.widget.TextInputLayout>
 
