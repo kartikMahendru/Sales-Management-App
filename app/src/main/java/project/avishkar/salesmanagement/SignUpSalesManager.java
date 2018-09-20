@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -21,10 +20,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.sql.DatabaseMetaData;
-
-import static android.util.Log.d;
 
 /**
  * Created by Mehul Garg on 01-09-2018.
@@ -137,6 +132,13 @@ public class SignUpSalesManager extends AppCompatActivity {
                         }
                     }
                 });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SignUpSalesManager.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

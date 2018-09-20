@@ -132,7 +132,6 @@ public class SignUpSalesperson extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     @Override

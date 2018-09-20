@@ -94,15 +94,17 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_reset_password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:text="forgot password?"
+                android:text="Forgot password?"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAccent" />
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
