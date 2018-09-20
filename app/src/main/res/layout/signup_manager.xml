@@ -58,7 +58,7 @@
                 android:id="@+id/mobile"
                 android:layout_marginTop="50dp"
                 android:textSize="25dp"
-                android:inputType="text"
+                android:inputType="text|number"
                 />
         </android.support.design.widget.TextInputLayout>
 

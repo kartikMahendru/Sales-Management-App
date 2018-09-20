@@ -132,6 +132,12 @@ public class SignUpSalesperson extends AppCompatActivity {
                         }
                     }
                 });
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(SignUpSalesperson.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

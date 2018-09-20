@@ -11,15 +11,12 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -237,9 +234,10 @@ public class AccountManager extends AppCompatActivity {
                 SessionManager sm = new SessionManager(getApplicationContext());
                 sm.logoutUser();
                 auth.signOut();
-                startActivity(new Intent(AccountManager.this, MainActivity.class));
+                Intent intent=new Intent(AccountManager.this, MainActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
-
             }
         });
 
