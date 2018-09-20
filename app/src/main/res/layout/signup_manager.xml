@@ -58,7 +58,7 @@
                 android:id="@+id/mobile"
                 android:layout_marginTop="50dp"
                 android:textSize="25dp"
-                android:inputType="text"
+                android:inputType="text|number"
                 />
         </android.support.design.widget.TextInputLayout>
 
@@ -151,6 +151,13 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorLink="@color/colorAccent"
                     android:textSize="20sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|bottom"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
