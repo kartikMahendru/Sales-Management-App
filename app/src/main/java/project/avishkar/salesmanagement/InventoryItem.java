@@ -1,14 +1,20 @@
 package project.avishkar.salesmanagement;
 
+import java.util.ArrayList;
+
 public class InventoryItem {
     private String itemName;
-    private int total_available,sold;
+    private int total_available, sold, notAlloted;
 
+    public InventoryItem(){
+
+    }
     public InventoryItem(String itemName,int total_available,int sold)
     {
         this.itemName=itemName;
         this.total_available=total_available;
         this.sold=sold;
+        this.notAlloted = this.total_available;
     }
 
     public InventoryItem(String itemName,int total_available)
@@ -16,6 +22,7 @@ public class InventoryItem {
         this.itemName=itemName;
         this.total_available=total_available;
         this.sold=0;
+        this.notAlloted = this.total_available;
     }
 
     public String getItemName() {

@@ -1,19 +1,29 @@
 package project.avishkar.salesmanagement;
 
+import java.util.ArrayList;
+
 /**
  * Created by user on 9/1/18.
  */
 
 public class SalesPerson {
-    String name, number, email, invite_code, password;
+    private String name, number, managerName, password, emailId;
+    private ArrayList<InventoryItem> inventoryItems;
 
-    public SalesPerson(String name, String email, String number, String password) {
+    public SalesPerson(){}
+    public SalesPerson(String name, String number, String password, String managerName, String Email) {
         this.name = name;
         this.number = number;
-        this.email = email;
         this.password = password;
+        this.managerName = managerName;
+        this.emailId = Email;
+
+        this.inventoryItems = new ArrayList<>();
     }
 
+    public String getEmailId() {
+        return emailId;
+    }
     public String getName() {
         return name;
     }
@@ -22,12 +32,12 @@ public class SalesPerson {
         return number;
     }
 
-    public String getEmail() {
-        return email;
+    public String getManagerName() {
+        return managerName;
     }
 
-    public String getInvite_code() {
-        return invite_code;
+    public ArrayList<InventoryItem> getInventoryItems() {
+        return inventoryItems;
     }
 
     public String getPassword() {
