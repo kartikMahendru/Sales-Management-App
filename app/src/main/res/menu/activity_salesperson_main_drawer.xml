@@ -13,9 +13,9 @@
             android:icon="@mipmap/myaccount"
             android:title="My Account" />
         <item
-            android:id="@+id/my_team"
-            android:icon="@mipmap/myteam"
-            android:title="My Team" />
+            android:id="@+id/leaderboard"
+            android:icon="@mipmap/leaderboard"
+            android:title="Leaderboard" />
         <item
             android:id="@+id/statistics"
             android:icon="@mipmap/stats"
@@ -28,10 +28,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share app" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send invite code" />
         </menu>
     </item>
 

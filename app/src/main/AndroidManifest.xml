@@ -23,8 +23,12 @@
         <activity
             android:name=".manager_main"
             android:label="@string/title_activity_manager_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AccountManager" />
+        <activity
+            android:name=".salesperson_main"
+            android:label="@string/title_activity_salesperson_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".AccountManager"/>
     </application>
 
 </manifest>
