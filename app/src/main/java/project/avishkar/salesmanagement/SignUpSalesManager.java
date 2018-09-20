@@ -2,17 +2,29 @@ package project.avishkar.salesmanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.sql.DatabaseMetaData;
+
+import static android.util.Log.d;
 
 /**
  * Created by Mehul Garg on 01-09-2018.
@@ -26,12 +38,16 @@ public class SignUpSalesManager extends AppCompatActivity {
     private TextInputEditText password_field;
     private TextView login;
     private Button signUp_button;
-    DatabaseReference databaseRef;
+    private ProgressBar progressBar;
+    private DatabaseReference databaseRef;
+    private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_manager);
 
+        auth = FirebaseAuth.getInstance();
         login=findViewById(R.id.login);
         signUp_button=findViewById(R.id.signUp_button);
         name_field = findViewById(R.id.name);
@@ -39,13 +55,16 @@ public class SignUpSalesManager extends AppCompatActivity {
         num_field = findViewById(R.id.mobile);
         org_field = findViewById(R.id.organisation_name);
         password_field = findViewById(R.id.password);
+        progressBar = findViewById(R.id.progressBar);
 
 
         signUp_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                write_data();
-                go_back_to_main();
+                write_data(view);
+                Intent intent = new Intent(SignUpSalesManager.this, manager_main.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -54,7 +73,9 @@ public class SignUpSalesManager extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                go_back_to_main();
+                Intent intent = new Intent(SignUpSalesManager.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -65,29 +86,57 @@ public class SignUpSalesManager extends AppCompatActivity {
         login.setText(text);
     }
 
+    void write_data(View v){
 
-    void go_back_to_main(){
-        Intent intent = new Intent(SignUpSalesManager.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
+        String name = name_field.getText().toString();
+        String email = email_field.getText().toString();
+        String num = num_field.getText().toString();
+        String password = password_field.getText().toString();
+        String org = org_field.getText().toString();
 
-    void write_data() {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(name)
+                || TextUtils.isEmpty(num) || TextUtils.isEmpty(org)){
+            if (password.length() < 6) {
+                Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "All fields not filled !!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
-        SalesManager salesManager = new SalesManager(name_field.getText().toString(),
-                email_field.getText().toString(), num_field.getText().toString(),
-                password_field.getText().toString());
+        SalesManager salesManager = new SalesManager(name, num, password, email, org);
+        //Added data to database
+        databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+        String key = databaseRef.push().getKey();
+        databaseRef.child(key).setValue(salesManager);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference(org_field.getText().toString());
-        String id = org_field.getText().toString() + "-" + num_field.getText().toString().substring(5);
-        databaseRef.child(id).setValue(salesManager);
-        Toast.makeText(this, "Sales Manager UID : " + id, Toast.LENGTH_LONG).show();
-    }
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.createLoginSession(key,"Manager");
 
-    @Override
-    public void onBackPressed() {
-        Intent intent=new Intent(SignUpSalesManager.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        //register user on fireBase Authentication
+        progressBar.setVisibility(View.VISIBLE);
+        //create user
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(SignUpSalesManager.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(SignUpSalesManager.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignUpSalesManager.this, "Authentication failed." + task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                        else {
+
+                            startActivity(new Intent(SignUpSalesManager.this, manager_main.class));
+                            finish();
+                        }
+                    }
+                });
+
     }
 }

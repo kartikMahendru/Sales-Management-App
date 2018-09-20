@@ -3,8 +3,8 @@ package project.avishkar.salesmanagement;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,33 +18,52 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 import com.shashank.sony.fancydialoglib.Icon;
 
 import java.io.File;
+import android.view.animation.BounceInterpolator;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class manager_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private EditText itemName,q;
+    private DatabaseReference databaseRef;
     private SwipeMenuListView listView;
     private ArrayList<InventoryItem> data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /*
+
+        databaseRef = FirebaseDatabase.getInstance().getReference(ref[0]);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +75,8 @@ public class manager_main extends AppCompatActivity
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_add_item_inventory, null);
 
                 Button ok = (Button) mView.findViewById(R.id.ok);
-
+                itemName = mView.findViewById(R.id.item_name);
+                q = mView.findViewById(R.id.quantity);
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
@@ -65,18 +85,41 @@ public class manager_main extends AppCompatActivity
                     @Override
                     public void onClick(View view) {
 
-                        // add item on inventory
+                        String item = itemName.getText().toString();
+                        int quant = Integer.parseInt(q.getText().toString());
+                        InventoryItem it = new InventoryItem(item, quant);
 
+                        databaseRef.child(tmp).child("Inventory").child(item).setValue(it);
                         dialog.dismiss();
-                        Snackbar snackbar = Snackbar
-                                .make(view , "Item added successfully !", Snackbar.LENGTH_LONG);
+
+                        listView=findViewById(R.id.items_list);
+                        final ArrayList<InventoryItem> data = new ArrayList<>();
+                        databaseRef.child(tmp).child("Inventory")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                                            data.add(it1);
+                                        }
+                                        CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
+                                        listView.setAdapter(mAdapter);
+
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+
+                        Snackbar snackbar = Snackbar.make(view , "Item added successfully !", Snackbar.LENGTH_LONG);
                         snackbar.show();
+
                     }
                 });
 
             }
         });
-
+        */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -85,7 +128,7 @@ public class manager_main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /********Working for the list view to show the items on the dashboard*********/
+
 
         listView=findViewById(R.id.items_list);
 
@@ -124,14 +167,7 @@ public class manager_main extends AppCompatActivity
         // for creating a bounce effect
         listView.setCloseInterpolator(new BounceInterpolator());
 
-        ArrayList<InventoryItem> data = new ArrayList<>();
-        data.add(new InventoryItem("Motorola",1000));
-        data.add(new InventoryItem("Charger",300));
-        data.add(new InventoryItem("Headphones",200));
-        data.add(new InventoryItem("MacBook Air",500));
 
-        CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
-        listView.setAdapter(mAdapter);
     }
 
     @Override
@@ -202,7 +238,6 @@ public class manager_main extends AppCompatActivity
 
         }
         else if (id == R.id.my_account) {
-
             //show the manager's account
             Intent intent = new Intent(manager_main.this,AccountManager.class);
             startActivity(intent);
@@ -212,7 +247,6 @@ public class manager_main extends AppCompatActivity
         } else if (id == R.id.statistics) {
 
         } else if (id == R.id.nav_share) {
-
             // Share app with others
             ApplicationInfo api = getApplicationContext().getApplicationInfo();
             String apkpath = api.sourceDir;
@@ -220,9 +254,7 @@ public class manager_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
-
         } else if (id == R.id.nav_send) {
-
             // Share invite-code with salespersons
             String shareBody = "invite-code";
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -230,7 +262,6 @@ public class manager_main extends AppCompatActivity
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Invite code -");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             startActivity(Intent.createChooser(sharingIntent, "Send invite-code using"));
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

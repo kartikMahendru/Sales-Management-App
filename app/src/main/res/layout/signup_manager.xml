@@ -151,6 +151,13 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorLink="@color/colorAccent"
                     android:textSize="20sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|bottom"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
