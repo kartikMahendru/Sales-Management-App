@@ -1,6 +1,7 @@
 package project.avishkar.salesmanagement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +65,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
         holder.itemName.setText(item.getItemName());
         holder.progressBar.setMax(item.getTotal_available());
         holder.progressBar.setProgress(item.getSold());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(context,ProductSpecificDetails.class);
+                context.startActivity(intent);
+            }
+        });
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
