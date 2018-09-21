@@ -135,12 +135,50 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 else {
                                     if(RadioButtonSelect(radioGroup_type.getCheckedRadioButtonId()).equals("Manager")){
-                                        getUniqKey();
-                                        goto_Manager();
+
+                                        databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+                                        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    SalesManager sm1 = snapshot.getValue(SalesManager.class);
+                                                    if(sm1.getEmail().equals(email)){
+                                                        SessionManager sm = new SessionManager(getApplicationContext());
+                                                        sm.createLoginSession(snapshot.getKey(), "Manager");
+                                                        goto_Manager();
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
                                     else{
-                                        getUniqKey();
-                                        goto_Salesperson();
+                                        databaseRef = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    SalesPerson sm1 = snapshot.getValue(SalesPerson.class);
+                                                    if(sm1.getEmailId().equals(email)){
+                                                        SessionManager sm = new SessionManager(getApplicationContext());
+                                                        sm.createLoginSession(snapshot.getKey().toString(), "Salesperson");
+                                                        goto_Salesperson();
+
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
                                     }
                                 }
                             }
@@ -202,53 +240,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    void getUniqKey(){
-
-        String id = RadioButtonSelect(radioGroup_type.getCheckedRadioButtonId());
-        databaseRef = FirebaseDatabase.getInstance().getReference(id);
-
-        if(id.equals("Manager")){
-            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        SalesManager sm1 = snapshot.getValue(SalesManager.class);
-                        if(sm1.getEmail().equals(email)){
-                            SessionManager sm = new SessionManager(getApplicationContext());
-                            sm.createLoginSession(snapshot.getKey(), "Manager");
-                            break;
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-        else{
-            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        SalesPerson sm1 = snapshot.getValue(SalesPerson.class);
-                        if(sm1.getEmailId().equals(email)){
-                            SessionManager sm = new SessionManager(getApplicationContext());
-                            sm.createLoginSession(snapshot.getKey().toString(), "Salesperson");
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-
-    }
     String RadioButtonSelect(int selectId){
         RadioButton radioButton = findViewById(selectId);
         return radioButton.getText().toString();

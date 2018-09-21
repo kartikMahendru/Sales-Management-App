@@ -70,8 +70,29 @@ public class manager_main extends AppCompatActivity
         final String id = details.get("id");
         final String role = details.get("role");
 
-
         databaseRef = FirebaseDatabase.getInstance().getReference(role);
+        mRecyclerView=findViewById(R.id.items_list);
+        final ArrayList<InventoryItem> list= new ArrayList<>();
+        databaseRef.child(id).child("Inventory")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                            list.add(it1);
+                        }
+                                        /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
+                                        listView.setAdapter(mAdapter); */
+                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
