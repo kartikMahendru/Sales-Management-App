@@ -14,6 +14,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,7 +52,8 @@ public class manager_main extends AppCompatActivity
 
     private EditText itemName,q;
     private DatabaseReference databaseRef;
-    private SwipeMenuListView listView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
     private ArrayList<InventoryItem> data;
 
     @Override
@@ -59,7 +62,19 @@ public class manager_main extends AppCompatActivity
         setContentView(R.layout.activity_manager_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mRecyclerView=findViewById(R.id.items_list);
+        ArrayList<InventoryItem> list= new ArrayList<>();
 
+        list.add(new InventoryItem("Samsung galaxy",200,20));
+        list.add(new InventoryItem("MacBook Air",50));
+        list.add(new InventoryItem("Xiomi Power Bank",1000,222));
+        list.add(new InventoryItem("Headphones",700,30));
+        list.add(new InventoryItem("Mouse TrackPad",410));
+        list.add(new InventoryItem("Joystick",320));
+        mAdapter=new InventoryAdapter(this,list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
         /*
 
         databaseRef = FirebaseDatabase.getInstance().getReference(ref[0]);
@@ -127,45 +142,6 @@ public class manager_main extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-        listView=findViewById(R.id.items_list);
-
-        SwipeMenuCreator creator= new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu) {
-
-                // create "open" item
-
-                SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
-                openItem.setWidth(dp2px(90));
-                openItem.setTitle("Open");
-                openItem.setTitleSize(18);
-                openItem.setTitleColor(Color.WHITE);
-                menu.addMenuItem(openItem);
-
-                // create "delete" item
-
-                SwipeMenuItem deleteItem=new SwipeMenuItem(getApplicationContext());
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xC9,0xC9,0xCE)));
-                deleteItem.setWidth(dp2px(90));
-                deleteItem.setTitle("Delete");
-                deleteItem.setTitleSize(18);
-                deleteItem.setTitleColor(Color.RED);
-                menu.addMenuItem(deleteItem);
-            }
-
-            public int dp2px(int dp)
-            {
-                return (int) (dp * getApplicationContext().getResources().getDisplayMetrics().density + 0.5f);
-            }
-        };
-
-        listView.setMenuCreator(creator);
-        // for creating a bounce effect
-        listView.setCloseInterpolator(new BounceInterpolator());
 
 
     }
