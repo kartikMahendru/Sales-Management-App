@@ -1,8 +1,6 @@
 package project.avishkar.salesmanagement;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,13 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.shashank.sony.fancydialoglib.Animation;
-import com.shashank.sony.fancydialoglib.FancyAlertDialog;
-import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
-import com.shashank.sony.fancydialoglib.Icon;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyViewHolder> {
 
@@ -67,7 +68,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FancyAlertDialog.Builder((Activity) context)
+                /* new FancyAlertDialog.Builder((Activity) context)
                         .setTitle("Warning!!!")
                         .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
                         .setMessage("Do you really want to Delete ?")
@@ -92,7 +93,41 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
                                 // do nothing here
                             }
                         })
-                        .build();
+                        .build(); */
+
+                SessionManager sm = new SessionManager(context);
+                HashMap<String, String> details = sm.getUserDetails();
+                final String id = details.get("id");
+                final String role = details.get("role");
+
+                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference(role);;
+
+                databaseRef.child(id).child("Inventory")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                int counter = -1;
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    counter++;
+                                    if(counter==position)
+                                    {
+                                        snapshot.getRef().removeValue();
+                                        break;
+                                    }
+                                }
+
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
+                Toast.makeText(context , "Item deleted successfully !", Toast.LENGTH_LONG).show();
+                list.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
+
+
             }
         });
     }
