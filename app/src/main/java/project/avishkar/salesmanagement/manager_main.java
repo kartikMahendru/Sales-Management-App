@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.net.Uri;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -21,12 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
@@ -34,16 +33,6 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 import com.shashank.sony.fancydialoglib.Icon;
 
 import java.io.File;
-import android.view.animation.BounceInterpolator;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.TextView;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -62,7 +51,7 @@ public class manager_main extends AppCompatActivity
         setContentView(R.layout.activity_manager_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mRecyclerView=findViewById(R.id.items_list);
+        /* mRecyclerView=findViewById(R.id.items_list);
         ArrayList<InventoryItem> list= new ArrayList<>();
 
         list.add(new InventoryItem("Samsung galaxy",200,20));
@@ -74,10 +63,15 @@ public class manager_main extends AppCompatActivity
         mAdapter=new InventoryAdapter(this,list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        /*
+        mAdapter.notifyDataSetChanged(); */
 
-        databaseRef = FirebaseDatabase.getInstance().getReference(ref[0]);
+        SessionManager sm = new SessionManager(getApplicationContext());
+        HashMap<String, String> details = sm.getUserDetails();
+        final String id = details.get("id");
+        final String role = details.get("role");
+
+
+        databaseRef = FirebaseDatabase.getInstance().getReference(role);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -104,21 +98,26 @@ public class manager_main extends AppCompatActivity
                         int quant = Integer.parseInt(q.getText().toString());
                         InventoryItem it = new InventoryItem(item, quant);
 
-                        databaseRef.child(tmp).child("Inventory").child(item).setValue(it);
+                        String key = databaseRef.child(id).child("Inventory").push().getKey();
+                        databaseRef.child(id).child("Inventory").child(key).setValue(it);
                         dialog.dismiss();
 
-                        listView=findViewById(R.id.items_list);
-                        final ArrayList<InventoryItem> data = new ArrayList<>();
-                        databaseRef.child(tmp).child("Inventory")
+                        mRecyclerView=findViewById(R.id.items_list);
+                        final ArrayList<InventoryItem> list= new ArrayList<>();
+                        databaseRef.child(id).child("Inventory")
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                             InventoryItem it1 = snapshot.getValue(InventoryItem.class);
-                                            data.add(it1);
+                                            list.add(it1);
                                         }
-                                        CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
-                                        listView.setAdapter(mAdapter);
+                                        /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
+                                        listView.setAdapter(mAdapter); */
+                                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                        mRecyclerView.setAdapter(mAdapter);
+                                        mAdapter.notifyDataSetChanged();
 
                                     }
                                     @Override
@@ -134,7 +133,7 @@ public class manager_main extends AppCompatActivity
 
             }
         });
-        */
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
