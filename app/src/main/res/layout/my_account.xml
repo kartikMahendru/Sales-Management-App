@@ -7,9 +7,14 @@
     android:orientation="vertical"
     android:background="@color/colorPrimaryLight">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <ImageView
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:id="@+id/user_pic"
         android:src="@mipmap/boy"
         android:layout_gravity="center"
@@ -21,9 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        tools:text="Utkarsh Garg"
         android:textStyle="bold"
-        android:layout_margin="10dp"
-        android:textSize="25sp"
+        android:layout_margin="16dp"
+        android:textSize="35sp"
         />
 
     <LinearLayout
@@ -31,14 +37,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="3dp"
-        android:background="@color/colorAccent">
+        >
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@mipmap/phone" />
-
+            android:src="@drawable/ic_phone" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/mobile"
             android:layout_width="match_parent"
@@ -47,33 +57,17 @@
             android:linksClickable="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@color/colorAccent"
+            tools:text="7753839036"
+            android:textColor="@color/black"
             android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="3dp"
-        android:background="@color/colorAccent">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/email" />
-
-        <TextView
-            android:id="@+id/emailid"
+        <View android:layout_height="1.5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:layout_margin="3dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:linksClickable="true"
-            android:textSize="20sp"/>
+            android:background="@color/black"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/separator1" />
+    </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -81,25 +75,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="3dp"
-        android:background="@color/colorAccent">
+        >
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@mipmap/organization" />
+            android:src="@drawable/ic_email" />
 
-        <TextView
-            android:id="@+id/organisation"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:background="@color/colorAccent"
-            android:clickable="false"
-            android:gravity="center"
-            android:linksClickable="true"
-            android:textSize="20sp" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/emailid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:linksClickable="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:text="utkarsh22garg@gmail.com"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+            <View android:layout_height="1.5dp"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/separator2" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -107,41 +113,71 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="3dp"
-        android:background="@color/colorRedlight">
+        >
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@mipmap/password" />
+            android:src="@drawable/ic_business_center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/organisation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:linksClickable="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:text="Visa"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+            <View android:layout_height="1.5dp"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/separator3" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="3dp"
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/change_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorRedlight"
-            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/black"
             android:layout_margin="4dp"
             android:text="Change Password"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:layout_gravity="center"
             android:gravity="center"
             android:linksClickable="true"
             android:clickable="false"/>
     </LinearLayout>
 
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="3dp"
-        android:background="@color/colorAlert">
+        android:background="@color/colorAlert"
+        >
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/logout" />
 
         <TextView
             android:id="@+id/logout"
@@ -149,9 +185,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAlert"
             android:layout_margin="4dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black"
             android:text="Logout"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:linksClickable="true"
             android:layout_gravity="center"
             android:gravity="center"

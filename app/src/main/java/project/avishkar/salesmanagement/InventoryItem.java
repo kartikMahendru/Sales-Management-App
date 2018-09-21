@@ -6,15 +6,12 @@ public class InventoryItem {
     private String itemName;
     private int total_available, sold, notAlloted;
 
-    public InventoryItem(){
-
-    }
     public InventoryItem(String itemName,int total_available,int sold)
     {
         this.itemName=itemName;
         this.total_available=total_available;
         this.sold=sold;
-        this.notAlloted = this.total_available;
+        this.notAlloted = (this.total_available-this.sold);
     }
 
     public InventoryItem(String itemName,int total_available)
@@ -47,6 +44,14 @@ public class InventoryItem {
 
     public void setSold(int sold) {
         this.sold = sold;
+    }
+
+    public int getNotAlloted() {
+        return notAlloted;
+    }
+
+    public void setNotAlloted(int notAlloted) {
+        this.notAlloted = notAlloted;
     }
 }
 
