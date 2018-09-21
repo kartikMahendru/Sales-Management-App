@@ -1,9 +1,11 @@
 package project.avishkar.salesmanagement;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -13,8 +15,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,12 +33,13 @@ public class AccountManager extends AppCompatActivity {
 
 
     private TextView update_email, update_mobile, change_password, logout, update_name, update_org;
-    private String currEmail, currMobile, currName, currOrg;
+    private String currEmail, currMobile, currName, currOrg, currPass;
     private FirebaseAuth auth;
     protected ImageView imageView;
     private DatabaseReference reference;
     private SalesPerson sp1;
     private SalesManager sm1, sm2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +56,19 @@ public class AccountManager extends AppCompatActivity {
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
-        String role = details.get("role");
+        final String role = details.get("role");
 
           if(role.equals("Manager")) {
 
-            reference = FirebaseDatabase.getInstance().getReference("Manager");
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+              reference = FirebaseDatabase.getInstance().getReference("Manager");
+
+              final ProgressDialog dialog = ProgressDialog.show(AccountManager.this, "Loading...","Please wait..." , true);
+              dialog.show();
+              Handler handler = new Handler();
+              handler.postDelayed(new Runnable() {
+                  public void run() {
+                      //your code here
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -65,6 +77,7 @@ public class AccountManager extends AppCompatActivity {
                         if(snapshot.getKey().equals(id)){
 
                             currName = sm1.getName();
+                            currPass = sm1.getPassword();
                             //Toast.makeText(getApplicationContext(), ""+sm1.getName(), Toast.LENGTH_SHORT).show();
                             currOrg = sm1.getOrgName();
                             currMobile = sm1.getNumber();
@@ -73,6 +86,7 @@ public class AccountManager extends AppCompatActivity {
                         }
 
                     }
+
                     update_name.setText(currName);
                     update_org.setText(currOrg);
                     update_email.setText(currEmail);
@@ -83,18 +97,31 @@ public class AccountManager extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
+                });
+
+                      dialog.dismiss();
+                  }
+              }, 4000);  // 4000 milliseconds
 
         }
         else
         {
             reference = FirebaseDatabase.getInstance().getReference("Salesperson");
+
+            final ProgressDialog dialog = ProgressDialog.show(AccountManager.this, "Loading...","Please wait..." , true);
+            dialog.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    //your code here
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         sp1 = snapshot.getValue(SalesPerson.class);
                         if (snapshot.getKey().equals(id)) {
+
+                            currPass = sp1.getPassword();
                             currName = sp1.getName();
                             currMobile = sp1.getNumber();
                             currEmail = sp1.getEmailId();
@@ -132,7 +159,11 @@ public class AccountManager extends AppCompatActivity {
 
                 }
 
-            });
+                });
+
+                    dialog.dismiss();
+                }
+            }, 4000);  // 4000 milliseconds
         }
 
         //Toast.makeText(this,currOrg+"**"+currName,Toast.LENGTH_LONG).show();
@@ -179,6 +210,7 @@ public class AccountManager extends AppCompatActivity {
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_mobile, null);
 
                 Button update = (Button) mView.findViewById(R.id.update);
+                final EditText updated_number = (EditText) mView.findViewById(R.id.mobile);
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -189,11 +221,18 @@ public class AccountManager extends AppCompatActivity {
                     public void onClick(View view) {
 
                         // update mobile no. in firebase
+                        currMobile = String.valueOf(updated_number.getText());
+                        SalesManager salesManager = new SalesManager(currName, currMobile, currPass, currEmail, currOrg);
+
+                        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference(role);
+                        databaseRef.child(id).setValue(salesManager);
+
+                        update_mobile.setText(currMobile);
 
                         dialog.dismiss();
-                        Snackbar snackbar = Snackbar
-                                .make(view , "Mobile no. updated successfully !", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+
+                        Toast.makeText(getApplicationContext(), "Mobile no. updated successfully !", Toast.LENGTH_LONG)
+                                .show();
                     }
                 });
             }

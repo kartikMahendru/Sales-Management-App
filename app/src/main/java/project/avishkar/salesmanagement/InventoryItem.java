@@ -1,10 +1,12 @@
 package project.avishkar.salesmanagement;
 
-import java.util.ArrayList;
-
 public class InventoryItem {
     private String itemName;
     private int total_available, sold, notAlloted;
+
+    public InventoryItem(){
+
+    }
 
     public InventoryItem(String itemName,int total_available,int sold)
     {
