@@ -41,13 +41,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class manager_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private EditText itemName,q;
     private DatabaseReference databaseRef;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<InventoryItem> data;
+    private InventoryItem it;
+
     private ProgressBar spinner;
 
 
@@ -60,8 +62,31 @@ public class manager_main extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /* mRecyclerView=findViewById(R.id.items_list);
+        ArrayList<InventoryItem> list= new ArrayList<>();
+
+        list.add(new InventoryItem("Samsung galaxy",200,20));
+        list.add(new InventoryItem("MacBook Air",50));
+        list.add(new InventoryItem("Xiomi Power Bank",1000,222));
+        list.add(new InventoryItem("Headphones",700,30));
+        list.add(new InventoryItem("Mouse TrackPad",410));
+        list.add(new InventoryItem("Joystick",320));
+        mAdapter=new InventoryAdapter(this,list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged(); */
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+
+
         spinner = (ProgressBar)findViewById(R.id.progressBar);
+
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
@@ -77,6 +102,32 @@ public class manager_main extends AppCompatActivity
 
 
         updateList(id,role,true);
+
+        spinner.setVisibility(View.VISIBLE);
+
+        databaseRef = FirebaseDatabase.getInstance().getReference(role);
+        mRecyclerView=findViewById(R.id.items_list);
+        final ArrayList<InventoryItem> list= new ArrayList<>();
+        databaseRef.child(id).child("Inventory")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                            list.add(it1);
+                        }
+                                        /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
+                                        listView.setAdapter(mAdapter); */
+                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        spinner.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -109,7 +160,7 @@ public class manager_main extends AppCompatActivity
                         else {
 
                             int quant = Integer.parseInt(q1);
-                            InventoryItem it = new InventoryItem(item, quant);
+                            it = new InventoryItem(item, quant);
 
                             String key = databaseRef.child(id).child("Inventory").push().getKey();
                             databaseRef.child(id).child("Inventory").child(key).setValue(it);
@@ -127,6 +178,7 @@ public class manager_main extends AppCompatActivity
                                                 InventoryItem it1 = snapshot.getValue(InventoryItem.class);
                                                 list.add(it1);
                                             }
+
                                             mAdapter = new InventoryAdapter(getApplicationContext(), list);
                                             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                             mRecyclerView.setAdapter(mAdapter);
@@ -141,12 +193,56 @@ public class manager_main extends AppCompatActivity
                                         }
                                     });
 
-                            Snackbar snackbar = Snackbar.make(view, "Item added successfully !", Snackbar.LENGTH_LONG);
-                            snackbar.show();
+                            Toast.makeText(getApplicationContext(), "Item added successfully !", Toast.LENGTH_LONG).show();
+
+                            // get current manager name and compare across all salesperson's
+                            databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+                            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    SalesManager sm1;
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        sm1 = snapshot.getValue(SalesManager.class);
+                                        if (snapshot.getKey().equals(id)) {
+
+                                            final String ManagerName = sm1.getName();
+
+                                            // compare manager name and insert item in his inventory
+                                            final DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                            databaseRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                                    for( DataSnapshot snapshot1 : dataSnapshot2.getChildren())
+                                                    {
+                                                        SalesPerson sp1 = snapshot1.getValue(SalesPerson.class);
+                                                        String salesperson_id = snapshot1.getKey();
+
+                                                        if(sp1.getManagerName().equals(ManagerName))
+                                                        {
+                                                            String key1 = databaseRef1.child(salesperson_id).child("Inventory").push().getKey();
+                                                            databaseRef1.child(salesperson_id).child("Inventory").child(key1).setValue(it);
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 });
-
             }
         });
 

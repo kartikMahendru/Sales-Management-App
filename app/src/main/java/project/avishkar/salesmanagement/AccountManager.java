@@ -221,13 +221,6 @@ public class AccountManager extends AppCompatActivity {
                     public void onClick(View view) {
 
                         // update mobile no. in firebase
-                        currMobile = String.valueOf(updated_number.getText());
-                        SalesManager salesManager = new SalesManager(currName, currMobile, currPass, currEmail, currOrg);
-
-                        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference(role);
-                        databaseRef.child(id).setValue(salesManager);
-
-                        update_mobile.setText(currMobile);
 
                         dialog.dismiss();
 
