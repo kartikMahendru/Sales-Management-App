@@ -16,11 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +47,7 @@ public class manager_main extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<InventoryItem> data;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class manager_main extends AppCompatActivity
         setContentView(R.layout.activity_manager_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         /* mRecyclerView=findViewById(R.id.items_list);
         ArrayList<InventoryItem> list= new ArrayList<>();
 
@@ -65,10 +70,14 @@ public class manager_main extends AppCompatActivity
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(); */
 
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
         final String role = details.get("role");
+
+        spinner.setVisibility(View.VISIBLE);
 
         databaseRef = FirebaseDatabase.getInstance().getReference(role);
         mRecyclerView=findViewById(R.id.items_list);
@@ -87,7 +96,7 @@ public class manager_main extends AppCompatActivity
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
-
+                        spinner.setVisibility(View.GONE);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -116,39 +125,52 @@ public class manager_main extends AppCompatActivity
                     public void onClick(View view) {
 
                         String item = itemName.getText().toString();
-                        int quant = Integer.parseInt(q.getText().toString());
-                        InventoryItem it = new InventoryItem(item, quant);
+                        String q1 = q.getText().toString();
 
-                        String key = databaseRef.child(id).child("Inventory").push().getKey();
-                        databaseRef.child(id).child("Inventory").child(key).setValue(it);
-                        dialog.dismiss();
+                        if(TextUtils.isEmpty(item) || TextUtils.isEmpty(q1))
+                        {
+                            Toast.makeText(getApplicationContext(), "Please fill all the details!", Toast.LENGTH_LONG).show();
+                        }
+                        else {
 
-                        mRecyclerView=findViewById(R.id.items_list);
-                        final ArrayList<InventoryItem> list= new ArrayList<>();
-                        databaseRef.child(id).child("Inventory")
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
-                                            list.add(it1);
-                                        }
+                            int quant = Integer.parseInt(q1);
+                            InventoryItem it = new InventoryItem(item, quant);
+
+                            String key = databaseRef.child(id).child("Inventory").push().getKey();
+                            databaseRef.child(id).child("Inventory").child(key).setValue(it);
+                            dialog.dismiss();
+
+                            spinner.setVisibility(View.VISIBLE);
+
+                            mRecyclerView = findViewById(R.id.items_list);
+                            final ArrayList<InventoryItem> list = new ArrayList<>();
+                            databaseRef.child(id).child("Inventory")
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                                                list.add(it1);
+                                            }
                                         /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
                                         listView.setAdapter(mAdapter); */
-                                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
-                                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                        mRecyclerView.setAdapter(mAdapter);
-                                        mAdapter.notifyDataSetChanged();
+                                            mAdapter = new InventoryAdapter(getApplicationContext(), list);
+                                            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                            mRecyclerView.setAdapter(mAdapter);
+                                            mAdapter.notifyDataSetChanged();
 
-                                    }
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                    }
-                                });
+                                            spinner.setVisibility(View.GONE);
 
-                        Snackbar snackbar = Snackbar.make(view , "Item added successfully !", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                                        }
 
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                        }
+                                    });
+
+                            Snackbar snackbar = Snackbar.make(view, "Item added successfully !", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
                     }
                 });
 
