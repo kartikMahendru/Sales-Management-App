@@ -7,6 +7,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".manager_main"
     tools:showIn="@layout/app_bar_manager_main">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,5 +20,23 @@
         >
 
     </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    </FrameLayout>
+
 
 </android.support.constraint.ConstraintLayout>
