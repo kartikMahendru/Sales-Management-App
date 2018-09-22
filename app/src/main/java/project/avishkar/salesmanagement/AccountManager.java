@@ -91,6 +91,7 @@ public class AccountManager extends AppCompatActivity {
                     update_org.setText(currOrg);
                     update_email.setText(currEmail);
                     update_mobile.setText(currMobile);
+                    dialog.dismiss();
                 }
 
                 @Override
@@ -99,7 +100,7 @@ public class AccountManager extends AppCompatActivity {
                 }
                 });
 
-                      dialog.dismiss();
+
                   }
               }, 4000);  // 4000 milliseconds
 
@@ -142,6 +143,7 @@ public class AccountManager extends AppCompatActivity {
                                     update_org.setText(currOrg);
                                     update_email.setText(currEmail);
                                     update_mobile.setText(currMobile);
+                                    dialog.dismiss();
                                 }
 
                                 @Override
@@ -160,8 +162,6 @@ public class AccountManager extends AppCompatActivity {
                 }
 
                 });
-
-                    dialog.dismiss();
                 }
             }, 4000);  // 4000 milliseconds
         }

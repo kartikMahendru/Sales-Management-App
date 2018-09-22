@@ -7,10 +7,16 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".manager_main"
     tools:showIn="@layout/app_bar_manager_main">
-    <android.support.v4.widget.SwipeRefreshLayout
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+  <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swiperefresh">
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +25,23 @@
         >
 
     </android.support.v7.widget.RecyclerView>
+ 
+      </android.support.v4.widget.SwipeRefreshLayout>
+      
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
