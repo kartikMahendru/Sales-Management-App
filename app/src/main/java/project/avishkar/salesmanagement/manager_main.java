@@ -70,7 +70,7 @@ public class manager_main extends AppCompatActivity
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(); */
 
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
