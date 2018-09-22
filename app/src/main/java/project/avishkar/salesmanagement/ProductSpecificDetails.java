@@ -3,13 +3,10 @@ package project.avishkar.salesmanagement;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -19,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,15 +29,16 @@ public class ProductSpecificDetails extends AppCompatActivity  {
     private RecyclerView mRecyclerView;
     private SalespersonDetailsAdapter mAdapter;
     private ProgressBar mProgressBar;
-    final ArrayList<String> salespersonNames = new ArrayList<>();
-    final ArrayList<String> sold_number = new ArrayList<>();
-
+    ArrayList<String> salespersonNames;
+    ArrayList<String> sold_number;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_specific_salesperson_list);
         final String itemName = getIntent().getStringExtra("itemName");
         mProgressBar=findViewById(R.id.progressBar4);
+        salespersonNames= new ArrayList<>();
+        sold_number= new ArrayList<>();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("Item");
         actionBar.setSubtitle(itemName);
@@ -49,7 +46,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
         ListenerRunner1();
     }
 
-    void ListenerRunner1(){
+    synchronized void ListenerRunner1(){
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> mp = sm.getUserDetails();
@@ -78,7 +75,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
         });
     }
 
-    void ListenerRunner2(final String managerName){
+   synchronized void ListenerRunner2(final String managerName){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,6 +89,12 @@ public class ProductSpecificDetails extends AppCompatActivity  {
                         for(int i=0;i<10;i++)
                             System.out.println("TAG 2 :: " + sp.getName());
                         ListenerRunner3(dataSnapshot1.getKey());
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -103,7 +106,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
         });
     }
 
-    void ListenerRunner3(String keySalesperson){
+    synchronized void ListenerRunner3(String keySalesperson){
 
         final String itemName = getIntent().getStringExtra("itemName");
 
@@ -133,7 +136,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
 
     }
 
-    void populatingData(){
+    synchronized void populatingData(){
 
 
         for(int i=0;i<100;i++)

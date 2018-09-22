@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -62,28 +63,7 @@ public class manager_main extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* mRecyclerView=findViewById(R.id.items_list);
-        ArrayList<InventoryItem> list= new ArrayList<>();
-
-        list.add(new InventoryItem("Samsung galaxy",200,20));
-        list.add(new InventoryItem("MacBook Air",50));
-        list.add(new InventoryItem("Xiomi Power Bank",1000,222));
-        list.add(new InventoryItem("Headphones",700,30));
-        list.add(new InventoryItem("Mouse TrackPad",410));
-        list.add(new InventoryItem("Joystick",320));
-        mAdapter=new InventoryAdapter(this,list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged(); */
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
-
 
         spinner = (ProgressBar)findViewById(R.id.progressBar);
 
