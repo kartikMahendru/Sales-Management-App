@@ -109,7 +109,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
                 final String id = details.get("id");
                 final String role = details.get("role");
 
-                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference(role);;
+                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference(role);
 
                 databaseRef.child(id).child("Inventory")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,6 +121,44 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
                                     if(counter==position)
                                     {
                                         snapshot.getRef().removeValue();
+
+                                        //////////////////////////////////////////
+                                        DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("Salesperson");
+
+                                        databaseRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                DatabaseReference databaseRef2 = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                                                    String id1 = dataSnapshot1.getKey();
+                                                    databaseRef2.child(id1).child("Inventory")
+                                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                                    int counter = -1;
+                                                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                                        counter++;
+                                                                        if(counter==position)
+                                                                        {
+                                                                            snapshot.getRef().removeValue();
+                                                                            break;
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                                @Override
+                                                                public void onCancelled(DatabaseError databaseError) {
+                                                                }
+                                                            });
+                                                }
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                            }
+                                        });
+
                                         break;
                                     }
                                 }
@@ -131,10 +169,12 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
                             }
                         });
 
+
                 Toast.makeText(context , "Item deleted successfully !", Toast.LENGTH_LONG).show();
                 list.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
+
 
 
             }

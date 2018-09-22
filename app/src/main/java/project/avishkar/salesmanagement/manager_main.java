@@ -5,9 +5,9 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -48,6 +48,7 @@ public class manager_main extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<InventoryItem> data;
+    private InventoryItem it;
 
     private ProgressBar spinner;
 
@@ -61,19 +62,6 @@ public class manager_main extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* mRecyclerView=findViewById(R.id.items_list);
-        ArrayList<InventoryItem> list= new ArrayList<>();
-
-        list.add(new InventoryItem("Samsung galaxy",200,20));
-        list.add(new InventoryItem("MacBook Air",50));
-        list.add(new InventoryItem("Xiomi Power Bank",1000,222));
-        list.add(new InventoryItem("Headphones",700,30));
-        list.add(new InventoryItem("Mouse TrackPad",410));
-        list.add(new InventoryItem("Joystick",320));
-        mAdapter=new InventoryAdapter(this,list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged(); */
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -90,6 +78,7 @@ public class manager_main extends AppCompatActivity
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
         final String role = details.get("role");
+
 
         spinner.setVisibility(View.VISIBLE);
 
@@ -148,7 +137,7 @@ public class manager_main extends AppCompatActivity
                         else {
 
                             int quant = Integer.parseInt(q1);
-                            InventoryItem it = new InventoryItem(item, quant);
+                            it = new InventoryItem(item, quant);
 
                             String key = databaseRef.child(id).child("Inventory").push().getKey();
                             databaseRef.child(id).child("Inventory").child(key).setValue(it);
@@ -166,14 +155,13 @@ public class manager_main extends AppCompatActivity
                                                 InventoryItem it1 = snapshot.getValue(InventoryItem.class);
                                                 list.add(it1);
                                             }
-                                        /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
-                                        listView.setAdapter(mAdapter); */
+
                                             mAdapter = new InventoryAdapter(getApplicationContext(), list);
                                             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                             mRecyclerView.setAdapter(mAdapter);
                                             mAdapter.notifyDataSetChanged();
 
-                                           spinner.setVisibility(View.GONE);
+                                            spinner.setVisibility(View.GONE);
 
                                         }
 
@@ -182,12 +170,56 @@ public class manager_main extends AppCompatActivity
                                         }
                                     });
 
-                            Snackbar snackbar = Snackbar.make(view, "Item added successfully !", Snackbar.LENGTH_LONG);
-                            snackbar.show();
+                            Toast.makeText(getApplicationContext(), "Item added successfully !", Toast.LENGTH_LONG).show();
+
+                            // get current manager name and compare across all salesperson's
+                            databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+                            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    SalesManager sm1;
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        sm1 = snapshot.getValue(SalesManager.class);
+                                        if (snapshot.getKey().equals(id)) {
+
+                                            final String ManagerName = sm1.getName();
+
+                                            // compare manager name and insert item in his inventory
+                                            final DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                            databaseRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                                    for( DataSnapshot snapshot1 : dataSnapshot2.getChildren())
+                                                    {
+                                                        SalesPerson sp1 = snapshot1.getValue(SalesPerson.class);
+                                                        String salesperson_id = snapshot1.getKey();
+
+                                                        if(sp1.getManagerName().equals(ManagerName))
+                                                        {
+                                                            String key1 = databaseRef1.child(salesperson_id).child("Inventory").push().getKey();
+                                                            databaseRef1.child(salesperson_id).child("Inventory").child(key1).setValue(it);
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 });
-
             }
         });
 
@@ -198,8 +230,6 @@ public class manager_main extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
