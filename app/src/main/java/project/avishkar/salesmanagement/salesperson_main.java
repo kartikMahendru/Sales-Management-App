@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +42,8 @@ public class salesperson_main extends AppCompatActivity
     private DatabaseReference databaseReference;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ArrayList <InventoryItem> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +52,27 @@ public class salesperson_main extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         spinner = (ProgressBar) findViewById(R.id.progressBar3);
+        swipeRefreshLayout=findViewById(R.id.swiperefresh1);
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
         final String role = details.get("role");
+        databaseReference = FirebaseDatabase.getInstance().getReference(role);
+        mRecyclerView = findViewById(R.id.items_list1);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateList(id,role,false);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         spinner.setVisibility(View.VISIBLE);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(role);
-        mRecyclerView = findViewById(R.id.items_list1);
-        final ArrayList <InventoryItem> list = new ArrayList<>();
+        list = new ArrayList<>();
         databaseReference.child(id).child("Inventory")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -184,5 +196,36 @@ public class salesperson_main extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void updateList(String id, String role, final boolean spin)
+    {
+        if(spin==true)
+        {
+            spinner.setVisibility(View.VISIBLE);
+        }
+
+        final ArrayList<InventoryItem> list= new ArrayList<>();
+        databaseReference.child(id).child("Inventory")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                            list.add(it1);
+                        }
+                        mAdapter=new SalespersonInventoryAdapter(getApplicationContext(),list);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        if(spin==true)
+                        spinner.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

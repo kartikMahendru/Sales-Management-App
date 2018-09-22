@@ -32,6 +32,7 @@
             android:label="SalesManagement"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ProductSpecificDetails" />
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,17 +16,18 @@ import java.util.ArrayList;
 
 public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonDetailsAdapter.MyViewHolder>{
 
-    private ArrayList<SalesPerson> list;
+    private ArrayList<String> names,sold;
     private Context context;
     public SalespersonDetailsAdapter()
     {
 
     }
 
-    public SalespersonDetailsAdapter(Context context, ArrayList<SalesPerson> list)
+    public SalespersonDetailsAdapter(Context context, ArrayList<String> names, ArrayList<String> sold)
     {
         this.context=context;
-        this.list=list;
+        this.names=names;
+        this.sold=sold;
     }
 
     @Override
@@ -36,14 +38,18 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.userName.setText(list.get(position).getName());
-        holder.soldItems.setText(String.valueOf(list.get(position).getNumber()));
+        for(int i=0;i<100;i++)
+            System.out.println(position);
+
+        holder.userName.setText(names.get(position));
+        holder.soldItems.setText(sold.get(position));
+        Toast.makeText(context,""+names.get(position),Toast.LENGTH_LONG).show();
     }
 
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return names.size();
     }
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {
@@ -55,5 +61,12 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
             userName=itemView.findViewById(R.id.user_name);
             soldItems=itemView.findViewById(R.id.soldText);
         }
+    }
+
+    public void addItem(String name,String sold,int position)
+    {
+        this.names.add(position,name);
+        this.sold.add(position,sold);
+        notifyItemInserted(position);
     }
 }

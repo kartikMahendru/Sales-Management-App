@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -64,21 +65,23 @@ public class manager_main extends AppCompatActivity
 
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
-
-
         spinner = (ProgressBar)findViewById(R.id.progressBar);
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
         final String role = details.get("role");
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateList(id,role,false);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
+
+
+        updateList(id,role,true);
 
         spinner.setVisibility(View.VISIBLE);
 
@@ -161,7 +164,7 @@ public class manager_main extends AppCompatActivity
                                             mRecyclerView.setAdapter(mAdapter);
                                             mAdapter.notifyDataSetChanged();
 
-                                            spinner.setVisibility(View.GONE);
+                                           spinner.setVisibility(View.GONE);
 
                                         }
 
@@ -230,6 +233,8 @@ public class manager_main extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -330,5 +335,34 @@ public class manager_main extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void updateList(String id, String role, final boolean spin)
+    {
+        if(spin==true)
+            spinner.setVisibility(View.VISIBLE);
+        databaseRef = FirebaseDatabase.getInstance().getReference(role);
+        mRecyclerView=findViewById(R.id.items_list);
+        final ArrayList<InventoryItem> list= new ArrayList<>();
+        databaseRef.child(id).child("Inventory")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                            list.add(it1);
+                        }
+                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        if(spin==true)
+                        spinner.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
     }
 }
