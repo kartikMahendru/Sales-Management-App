@@ -9,112 +9,67 @@
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/colorPrimaryLight">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:layout_margin="1dp"
-        android:orientation="vertical">
-        
+        >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/boy"
+            android:scaleType="centerInside"
+            android:layout_margin="8dp"
+            android:id="@+id/user_pic"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignTop="@id/user_pic"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/user_pic">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/user_pic"
-                android:src="@mipmap/boy"
-                android:layout_gravity="center"
-                android:layout_marginTop="25dp"
-                android:layout_weight="0.06"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Utkarsh Garg"
+                android:id="@+id/user_name"
+                android:textSize="25sp"
+                android:textColor="@color/black"
                 />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.04">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/item_name"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Samsung S9"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
 
-            <ImageView
-                android:id="@+id/delete_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sold:"
+                    android:id="@+id/soldText"
+                    android:textSize="20sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/soldText"
+                    android:text="200"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="8dp"/>
 
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:scaleType="centerCrop"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_delete" />
-
-        </RelativeLayout>
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:progressTint="@color/colorPrimaryDarkComp"
-            android:progress="43"
-            android:max="100"
-            android:indeterminate="false"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/unallocated_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Unallocated items: "
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/unallocated_text"
-                android:id="@+id/unallocated"
-                android:text="20"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/total_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100"
-                android:layout_alignParentRight="true"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/separator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                android:layout_toLeftOf="@id/total_item"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/sold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="43"
-                android:layout_toLeftOf="@id/separator"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-        </RelativeLayout>
+            </RelativeLayout>
 
         </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
