@@ -25,6 +25,7 @@ public class SalesPerson {
         this.emailId = Email;
 
         this.inventoryItems = new ArrayList<>();
+
     }
 
     public String getEmailId() {

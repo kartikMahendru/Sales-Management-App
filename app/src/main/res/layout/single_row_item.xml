@@ -55,14 +55,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sold:"
-                    android:id="@+id/soldText"
+                    android:id="@+id/sold"
                     android:textSize="20sp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/soldText"
+                    android:layout_toRightOf="@id/sold"
                     android:text="200"
+                    android:id="@+id/soldText"
                     android:textSize="20sp"
                     android:layout_marginLeft="8dp"/>
 
