@@ -84,7 +84,7 @@ public class manager_main extends AppCompatActivity
         });
 
 
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
@@ -173,7 +173,7 @@ public class manager_main extends AppCompatActivity
                                             mRecyclerView.setAdapter(mAdapter);
                                             mAdapter.notifyDataSetChanged();
 
-                                            spinner.setVisibility(View.GONE);
+                                           spinner.setVisibility(View.GONE);
 
                                         }
 
@@ -270,6 +270,7 @@ public class manager_main extends AppCompatActivity
 
         }
         else if (id == R.id.my_account) {
+
             //show the manager's account
             Intent intent = new Intent(manager_main.this,AccountManager.class);
             startActivity(intent);
