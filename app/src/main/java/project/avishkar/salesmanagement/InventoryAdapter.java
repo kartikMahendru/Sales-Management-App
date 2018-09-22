@@ -2,6 +2,7 @@ package project.avishkar.salesmanagement;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,7 +58,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
 
     @Override
     public void onBindViewHolder(InventoryAdapter.MyViewHolder holder, final int position) {
-        InventoryItem item=list.get(position);
+        final InventoryItem item=list.get(position);
         Log.d("Setting for: ", String.valueOf(position));
         holder.total.setText(String.valueOf(item.getTotal_available()));
         holder.sold.setText(String.valueOf(item.getSold()));
@@ -70,6 +71,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(context,ProductSpecificDetails.class);
+                intent.putExtra("itemName",item.getItemName());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

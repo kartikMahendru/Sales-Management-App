@@ -41,14 +41,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class manager_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private EditText itemName,q;
     private DatabaseReference databaseRef;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<InventoryItem> data;
-
     private ProgressBar spinner;
 
 
@@ -61,61 +60,23 @@ public class manager_main extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* mRecyclerView=findViewById(R.id.items_list);
-        ArrayList<InventoryItem> list= new ArrayList<>();
-
-        list.add(new InventoryItem("Samsung galaxy",200,20));
-        list.add(new InventoryItem("MacBook Air",50));
-        list.add(new InventoryItem("Xiomi Power Bank",1000,222));
-        list.add(new InventoryItem("Headphones",700,30));
-        list.add(new InventoryItem("Mouse TrackPad",410));
-        list.add(new InventoryItem("Joystick",320));
-        mAdapter=new InventoryAdapter(this,list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged(); */
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
-
-
         spinner = (ProgressBar)findViewById(R.id.progressBar);
-
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         final String id = details.get("id");
         final String role = details.get("role");
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateList(id,role,false);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
-        spinner.setVisibility(View.VISIBLE);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference(role);
-        mRecyclerView=findViewById(R.id.items_list);
-        final ArrayList<InventoryItem> list= new ArrayList<>();
-        databaseRef.child(id).child("Inventory")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
-                            list.add(it1);
-                        }
-                                        /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
-                                        listView.setAdapter(mAdapter); */
-                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
-                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        mRecyclerView.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
-                        spinner.setVisibility(View.GONE);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+
+        updateList(id,role,true);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -166,8 +127,6 @@ public class manager_main extends AppCompatActivity
                                                 InventoryItem it1 = snapshot.getValue(InventoryItem.class);
                                                 list.add(it1);
                                             }
-                                        /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
-                                        listView.setAdapter(mAdapter); */
                                             mAdapter = new InventoryAdapter(getApplicationContext(), list);
                                             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                             mRecyclerView.setAdapter(mAdapter);
@@ -300,5 +259,34 @@ public class manager_main extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void updateList(String id, String role, final boolean spin)
+    {
+        if(spin==true)
+            spinner.setVisibility(View.VISIBLE);
+        databaseRef = FirebaseDatabase.getInstance().getReference(role);
+        mRecyclerView=findViewById(R.id.items_list);
+        final ArrayList<InventoryItem> list= new ArrayList<>();
+        databaseRef.child(id).child("Inventory")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                            list.add(it1);
+                        }
+                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        if(spin==true)
+                        spinner.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
     }
 }
