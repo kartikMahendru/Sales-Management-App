@@ -6,23 +6,33 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alexzaitsev.meternumberpicker.MeterNumberPicker;
+import com.alexzaitsev.meternumberpicker.MeterView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class salesperson_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,AdapterView.OnItemClickListener{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
 
     private ProgressBar spinner;
@@ -47,13 +57,14 @@ public class salesperson_main extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList <InventoryItem> list;
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesperson_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        fab=findViewById(R.id.fab_salesperson);
         spinner = (ProgressBar) findViewById(R.id.progressBar3);
         swipeRefreshLayout=findViewById(R.id.swiperefresh1);
 
@@ -70,6 +81,69 @@ public class salesperson_main extends AppCompatActivity
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> itemlist=new ArrayList<>();
+                itemlist=getItemList(id,role);
+
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(salesperson_main.this);
+                final View mView = getLayoutInflater().inflate(R.layout.activity_selling, null);
+                final AutoCompleteTextView autoCompleteTextView;
+                final MeterView numberPicker;
+                Button ok = (Button) mView.findViewById(R.id.ok);
+                autoCompleteTextView = mView.findViewById(R.id.autoCompleteTextView1);
+                numberPicker=mView.findViewById(R.id.sold_number);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mView.getContext(),R.layout.support_simple_spinner_dropdown_item,itemlist);
+
+                autoCompleteTextView.setThreshold(1);
+                autoCompleteTextView.setAdapter(adapter);
+                mBuilder.setView(mView);
+                mBuilder.setTitle("Select the item to sell");
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+                final ArrayList<String> finalItemlist = itemlist;
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // do selling work here
+
+                        int sold = numberPicker.getValue();
+                        String itemName = autoCompleteTextView.getText().toString();
+
+                        if(TextUtils.isEmpty(itemName))
+                        {
+
+                            Toast.makeText(getApplicationContext(),"Please fill all the details!", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            int i1;
+                            for(i1 = 0; i1< finalItemlist.size(); i1++)
+                            {
+                                if(finalItemlist.get(i1).equals(itemName))
+                                    break;
+                            }
+                            if(i1 == finalItemlist.size()){
+                                Toast.makeText(getApplicationContext(),"Please select among available items only!", Toast.LENGTH_LONG).show();
+
+                            }
+                            else
+                            {
+
+                            }
+                        }
+
+                        dialog.dismiss();
+
+
+                    }
+                });
+            }
+        });
+
 
 
         spinner.setVisibility(View.VISIBLE);
@@ -131,6 +205,27 @@ public class salesperson_main extends AppCompatActivity
 
             }
         });
+    }
+
+    private ArrayList<String> getItemList(String id, String role) {
+        final ArrayList<String> itemlist=new ArrayList<>();
+        databaseReference.child(id).child("Inventory")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            InventoryItem it1 = snapshot.getValue(InventoryItem.class);
+                            itemlist.add(it1.getItemName());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        return itemlist;
     }
 
     @Override
@@ -256,8 +351,4 @@ public class salesperson_main extends AppCompatActivity
                 });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
 }
