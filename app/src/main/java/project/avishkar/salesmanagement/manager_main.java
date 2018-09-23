@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,7 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -50,10 +51,7 @@ public class manager_main extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private ArrayList<InventoryItem> data;
     private InventoryItem it;
-
     private ProgressBar spinner;
-
-
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -64,7 +62,6 @@ public class manager_main extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
-
         spinner = (ProgressBar)findViewById(R.id.progressBar);
 
         SessionManager sm = new SessionManager(getApplicationContext());
@@ -234,6 +231,31 @@ public class manager_main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headView = navigationView.getHeaderView(0);
+        final TextView headerManagerName = headView.findViewById(R.id.ManagerName);
+        final TextView headerManagerEmail = headView.findViewById(R.id.ManagerMail);
+        final ImageView headerManagerImage = headView.findViewById(R.id.imageView);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    if(snapshot.getKey().equals(id)){
+                        SalesManager sm = snapshot.getValue(SalesManager.class);
+                        headerManagerName.setText(sm.getName());
+                        headerManagerEmail.setText(sm.getEmail());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -247,7 +269,7 @@ public class manager_main extends AppCompatActivity
             // exit dialog box
             new FancyAlertDialog.Builder(this)
                     .setTitle("Warning!!!")
-                    .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
+                    .setBackgroundColor(Color.parseColor("#00A144"))  //Don't pass R.color.colorvalue
                     .setMessage("Do you really want to Exit ?")
                     .setNegativeBtnText("No")
                     .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
@@ -324,14 +346,38 @@ public class manager_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
+
         } else if (id == R.id.nav_send) {
             // Share invite-code with salespersons
-            String shareBody = "invite-code";
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Invite code -");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            startActivity(Intent.createChooser(sharingIntent, "Send invite-code using"));
+
+            SessionManager sm = new SessionManager(getApplicationContext());
+            HashMap<String, String> details = sm.getUserDetails();
+            final String key = details.get("id");
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Manager");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                        if(snapshot.getKey().equals(key)){
+                            String shareBody = "Hey, signup using my name - " + snapshot.getValue(SalesManager.class).getName()
+                                                 + " on SalesManagement App.";
+                            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                            sharingIntent.setType("text/plain");
+                            // sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Invite code -");
+                            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                            startActivity(Intent.createChooser(sharingIntent, "Send invite"));
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

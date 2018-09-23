@@ -27,15 +27,19 @@
             android:label="SalesManagement"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AccountManager" />
+        <activity
+            android:name=".AccountManager"
+            android:label="My Account"/>
         <activity
             android:name=".salesperson_main"
             android:label="SalesManagement"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProductSpecificDetails" />
-        <activity android:name=".myTeam"
-            ></activity>
+        <activity
+            android:name=".myTeam"
+            android:label="My Team">
+        </activity>
     </application>
 
 </manifest>
