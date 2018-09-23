@@ -115,10 +115,14 @@ public class myTeam extends AppCompatActivity {
 
                                                 final TextView name, phone, email, org;
 
+                                                final ProgressBar spinner7 = mView.findViewById(R.id.progressBar6);
                                                 name = mView.findViewById(R.id.name);
                                                 phone = mView.findViewById(R.id.mobile);
                                                 email = mView.findViewById(R.id.emailid);
                                                 org = mView.findViewById(R.id.organisation);
+
+                                                dialog.show();
+                                                spinner7.setVisibility(View.VISIBLE);
 
                                                 final String currSalesperson = list.get(position);
 
@@ -128,13 +132,9 @@ public class myTeam extends AppCompatActivity {
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
 
-                                                            SalesPerson sp = snapshot1.getValue(SalesPerson.class);
+                                                            final SalesPerson sp = snapshot1.getValue(SalesPerson.class);
 
                                                             if(sp.getName().equals(currSalesperson)){
-
-                                                                name.setText(sp.getName());
-                                                                phone.setText(sp.getNumber());
-                                                                email.setText(sp.getEmailId());
 
                                                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
                                                                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -143,7 +143,10 @@ public class myTeam extends AppCompatActivity {
                                                                         for(DataSnapshot snapshot2 : dataSnapshot.getChildren()){
                                                                             if(snapshot2.getKey().equals(id)){
                                                                                 org.setText(snapshot2.getValue(SalesManager.class).getOrgName());
-                                                                                dialog.show();
+                                                                                name.setText(sp.getName());
+                                                                                phone.setText(sp.getNumber());
+                                                                                email.setText(sp.getEmailId());
+                                                                                spinner7.setVisibility(View.GONE);
                                                                                 break;
                                                                             }
                                                                         }
