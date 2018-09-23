@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MyTeamAdapter extends BaseAdapter {
-    private ArrayList<String> list;
+    private ArrayList <String> list;
     private Context context;
 
     public MyTeamAdapter(Context context,ArrayList<String> list)

@@ -190,7 +190,6 @@ public class salesperson_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
-            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
