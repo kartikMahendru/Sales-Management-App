@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,7 +42,7 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
         holder.userName.setText(names.get(position));
         holder.soldItems.setText(sold.get(position));
-        Toast.makeText(context,""+names.get(position),Toast.LENGTH_LONG).show();
+        // Toast.makeText(context,""+names.get(position),Toast.LENGTH_LONG).show();
     }
 
 

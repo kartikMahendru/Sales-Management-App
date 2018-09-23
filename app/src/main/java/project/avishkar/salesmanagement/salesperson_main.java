@@ -143,7 +143,7 @@ public class salesperson_main extends AppCompatActivity
             // exit dialog box
             new FancyAlertDialog.Builder(this)
                     .setTitle("Warning!!!")
-                    .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
+                    .setBackgroundColor(Color.parseColor("#00A144"))  //Don't pass R.color.colorvalue
                     .setMessage("Do you really want to Exit ?")
                     .setNegativeBtnText("No")
                     .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue

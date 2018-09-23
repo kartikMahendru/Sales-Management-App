@@ -57,7 +57,7 @@ public class SalespersonInventoryAdapter extends RecyclerView.Adapter<Salesperso
             public void onClick(View v) {
 
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-                final View mView = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_box_sold, null);
+                final View mView = LayoutInflater.from(context).inflate(R.layout.dialog_box_sold, null);
 
                 Button ok = (Button) mView.findViewById(R.id.ok);
                 final NumberPicker sold = (NumberPicker) mView.findViewById(R.id.sold_items);
