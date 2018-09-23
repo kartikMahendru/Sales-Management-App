@@ -18,7 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class salesperson_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,AdapterView.OnItemClickListener{
 
 
     private ProgressBar spinner;
@@ -60,7 +63,6 @@ public class salesperson_main extends AppCompatActivity
         final String role = details.get("role");
         databaseReference = FirebaseDatabase.getInstance().getReference(role);
         mRecyclerView = findViewById(R.id.items_list1);
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -103,6 +105,32 @@ public class salesperson_main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headView = navigationView.getHeaderView(0);
+        final TextView headerSalespersonName = headView.findViewById(R.id.SalespersonName);
+        final TextView headerSalespersonEmail = headView.findViewById(R.id.SalespersonMail);
+        final ImageView headerSalespersonImage = headView.findViewById(R.id.imageView);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Salesperson");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    if(snapshot.getKey().equals(id)){
+                        SalesPerson sm = snapshot.getValue(SalesPerson.class);
+                        headerSalespersonName.setText(sm.getName());
+                        headerSalespersonEmail.setText(sm.getEmailId());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -213,7 +241,7 @@ public class salesperson_main extends AppCompatActivity
                             InventoryItem it1 = snapshot.getValue(InventoryItem.class);
                             list.add(it1);
                         }
-                        mAdapter=new SalespersonInventoryAdapter(getApplicationContext(),list);
+                        mAdapter=new SalespersonInventoryAdapter(getApplicationContext(), list);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
@@ -226,5 +254,10 @@ public class salesperson_main extends AppCompatActivity
 
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

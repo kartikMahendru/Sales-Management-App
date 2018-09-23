@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 email = inputEmail.getText().toString();
-                 password = inputPassword.getText().toString();
+                email = inputEmail.getText().toString();
+                password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
                     Snackbar snackbar = Snackbar.make(v, "Enter Email!", Snackbar.LENGTH_LONG);
