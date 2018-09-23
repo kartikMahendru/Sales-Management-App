@@ -23,7 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -229,6 +231,31 @@ public class manager_main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headView = navigationView.getHeaderView(0);
+        final TextView headerManagerName = headView.findViewById(R.id.ManagerName);
+        final TextView headerManagerEmail = headView.findViewById(R.id.ManagerMail);
+        final ImageView headerManagerImage = headView.findViewById(R.id.imageView);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    if(snapshot.getKey().equals(id)){
+                        SalesManager sm = snapshot.getValue(SalesManager.class);
+                        headerManagerName.setText(sm.getName());
+                        headerManagerEmail.setText(sm.getEmail());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
