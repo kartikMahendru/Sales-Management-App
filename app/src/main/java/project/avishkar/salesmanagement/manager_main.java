@@ -311,6 +311,8 @@ public class manager_main extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.my_team) {
+            Intent intent= new Intent(this,myTeam.class);
+            startActivity(intent);
 
         } else if (id == R.id.statistics) {
 
