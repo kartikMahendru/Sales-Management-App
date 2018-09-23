@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AccountManager"
-            android:label="My Account"/>
+            android:label="My Account" />
         <activity
             android:name=".salesperson_main"
             android:label="SalesManagement"
@@ -38,8 +38,7 @@
         <activity android:name=".ProductSpecificDetails" />
         <activity
             android:name=".myTeam"
-            android:label="My Team">
-        </activity>
+            android:label="My Team"></activity>
     </application>
 
 </manifest>

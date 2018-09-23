@@ -49,7 +49,6 @@ public class manager_main extends AppCompatActivity
     private DatabaseReference databaseRef;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private ArrayList<InventoryItem> data;
     private InventoryItem it;
     private ProgressBar spinner;
     private SwipeRefreshLayout swipeRefreshLayout;

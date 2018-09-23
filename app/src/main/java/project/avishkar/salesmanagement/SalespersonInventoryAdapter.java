@@ -51,59 +51,6 @@ public class SalespersonInventoryAdapter extends RecyclerView.Adapter<Salesperso
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.itemName.setText(list.get(position).getItemName());
         holder.sold.setText(String.valueOf(list.get(position).getSold()));
-
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-                final View mView = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_box_sold, null);
-
-                Button ok = (Button) mView.findViewById(R.id.ok);
-                final NumberPicker sold = (NumberPicker) mView.findViewById(R.id.sold_items);
-
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        final int sold_items = sold.getValue();
-                        final String itemName = list.get(position).getItemName();
-
-                        final SessionManager sm = new SessionManager(context);
-                        HashMap<String, String> details = sm.getUserDetails();
-                        final String id = details.get("id");
-
-                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
-                        databaseReference.child(id).child("Inventory")
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                                        {
-                                            InventoryItem it = snapshot.getValue(InventoryItem.class);
-                                            if(it.getItemName().equals(itemName)){
-                                                String key = snapshot.getKey();
-                                                InventoryItem new_it = new InventoryItem(itemName,it.getTotal_available(),it.getSold()+sold_items);
-                                                databaseReference.child(id).child("Inventory").child(key).setValue(new_it);
-                                                dialog.dismiss();
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -111,7 +58,8 @@ public class SalespersonInventoryAdapter extends RecyclerView.Adapter<Salesperso
         return list.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView itemName,sold,remaining;
         private ImageView edit;
