@@ -31,7 +31,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send invite code" />
+                android:title="Send invite" />
         </menu>
     </item>
 
