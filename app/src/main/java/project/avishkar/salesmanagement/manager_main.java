@@ -49,7 +49,6 @@ public class manager_main extends AppCompatActivity
     private DatabaseReference databaseRef;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private ArrayList<InventoryItem> data;
     private InventoryItem it;
     private ProgressBar spinner;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -115,6 +114,7 @@ public class manager_main extends AppCompatActivity
                 // dialog box to add item on dashboard
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(manager_main.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_add_item_inventory, null);
+                mBuilder.setTitle("Add an item");
 
                 Button ok = (Button) mView.findViewById(R.id.ok);
                 itemName = mView.findViewById(R.id.item_name);

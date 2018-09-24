@@ -9,16 +9,17 @@
         android:id="@+id/autoCompleteTextView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Item name"
         android:ems="10"
         />
 
-    <NumberPicker
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@color/colorPrimaryDark"
-        android:background="@color/colorPrimaryLight"
-        android:id="@+id/sold_items">
-    </NumberPicker>
+    <com.alexzaitsev.meternumberpicker.MeterView
+        android:id="@+id/sold_number"
+        style="@style/MeterViewStyle"
+        android:layout_gravity="center"
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/ok"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
         android:text="ok"
+        android:clickable="true"
         android:textSize="20sp"
         android:background="#db3236"
         android:textColor="#FFFFFF"/>
