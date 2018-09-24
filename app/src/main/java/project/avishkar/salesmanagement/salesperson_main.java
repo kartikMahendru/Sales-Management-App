@@ -57,6 +57,7 @@ public class salesperson_main extends AppCompatActivity
     private ArrayList <InventoryItem> list;
     private FloatingActionButton fab;
     private String managerName;
+    private int sold;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +110,10 @@ public class salesperson_main extends AppCompatActivity
                     public void onClick(View v) {
                         // do selling work here
 
-                        final int sold = numberPicker.getValue();
+                        sold = numberPicker.getValue();
                         final String itemName = autoCompleteTextView.getText().toString();
 
-                        if(TextUtils.isEmpty(itemName))
+                        if(TextUtils.isEmpty(itemName) || sold==0)
                         {
 
                             Toast.makeText(getApplicationContext(),"Please fill all the details!", Toast.LENGTH_LONG).show();
@@ -131,6 +132,7 @@ public class salesperson_main extends AppCompatActivity
                             }
                             else
                             {
+
                                 final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
                                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -152,6 +154,11 @@ public class salesperson_main extends AppCompatActivity
                                                         for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
                                                             if(snapshot1.getValue(InventoryItem.class).getItemName().equals(itemName)){
                                                                 InventoryItem it1 = snapshot1.getValue(InventoryItem.class);
+                                                                if(it1.getTotal_available()<sold)
+                                                                {
+                                                                    Toast.makeText(getApplicationContext(), "Sold can't be greater than items remaining!", Toast.LENGTH_LONG).show();
+                                                                    sold=0;
+                                                                }
                                                                 InventoryItem it = new InventoryItem(itemName,it1.getTotal_available(),sold + it1.getSold());
                                                                 databaseReference1.child(id).child("Inventory").child(snapshot1.getKey()).setValue(it);
 
