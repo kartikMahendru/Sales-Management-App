@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private DatabaseReference databaseRef;
     private String email, password;
+    private int flag = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,20 +132,28 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                                 else {
+
                                     if(RadioButtonSelect(radioGroup_type.getCheckedRadioButtonId()).equals("Manager")){
 
                                         databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
                                         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
                                                     SalesManager sm1 = snapshot.getValue(SalesManager.class);
-                                                    if(sm1.getEmail().equals(email)){
+                                                    if(sm1.getEmail().equals(email)) {
                                                         SessionManager sm = new SessionManager(getApplicationContext());
                                                         sm.createLoginSession(snapshot.getKey(), "Manager");
+                                                        flag = 1;
                                                         goto_Manager();
                                                         break;
                                                     }
+                                                }
+                                                // authentication done but chose wrong radio button
+                                                if(flag != 1){
+                                                    Toast.makeText(getApplicationContext(),"This Email is not registerd as manager!!",Toast.LENGTH_LONG).show();
                                                 }
                                             }
 
@@ -163,10 +172,14 @@ public class MainActivity extends AppCompatActivity {
                                                     SalesPerson sm1 = snapshot.getValue(SalesPerson.class);
                                                     if(sm1.getEmailId().equals(email)){
                                                         SessionManager sm = new SessionManager(getApplicationContext());
+                                                        flag=1;
                                                         sm.createLoginSession(snapshot.getKey().toString(), "Salesperson");
                                                         goto_Salesperson();
 
                                                     }
+                                                }
+                                                if(flag != 1){
+                                                    Toast.makeText(getApplicationContext(),"This Email is not registerd as Salesperson!!",Toast.LENGTH_LONG).show();
                                                 }
                                             }
 

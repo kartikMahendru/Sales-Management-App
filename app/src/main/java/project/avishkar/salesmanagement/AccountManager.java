@@ -179,6 +179,7 @@ public class AccountManager extends AppCompatActivity {
             public void onClick(View view) {
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountManager.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_email, null);
+                mBuilder.setTitle("Update email-id");
 
                 Button update = (Button) mView.findViewById(R.id.update);
 
@@ -190,7 +191,7 @@ public class AccountManager extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        // update email id in firebase
+
 
                         dialog.dismiss();
                         Snackbar snackbar = Snackbar
@@ -208,6 +209,7 @@ public class AccountManager extends AppCompatActivity {
             public void onClick(View view) {
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountManager.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_mobile, null);
+                mBuilder.setTitle("Update mobile number");
 
                 Button update = (Button) mView.findViewById(R.id.update);
                 final EditText updated_number = (EditText) mView.findViewById(R.id.mobile);
@@ -224,7 +226,7 @@ public class AccountManager extends AppCompatActivity {
 
                         dialog.dismiss();
 
-                        Toast.makeText(getApplicationContext(), "Mobile no. updated successfully !", Toast.LENGTH_LONG)
+                        Toast.makeText(getApplicationContext(), "Mobile no. updated successfully!", Toast.LENGTH_LONG)
                                 .show();
                     }
                 });
@@ -237,6 +239,7 @@ public class AccountManager extends AppCompatActivity {
             public void onClick(View view) {
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountManager.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_change_password, null);
+                mBuilder.setTitle("Change password");
 
                 Button update = (Button) mView.findViewById(R.id.update);
 
