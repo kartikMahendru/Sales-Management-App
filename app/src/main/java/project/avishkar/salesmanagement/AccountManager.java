@@ -190,7 +190,7 @@ public class AccountManager extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        // update email id in firebase
+
 
                         dialog.dismiss();
                         Snackbar snackbar = Snackbar
