@@ -133,8 +133,8 @@ public class salesperson_main extends AppCompatActivity
                             else
                             {
 
-                                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
-                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
