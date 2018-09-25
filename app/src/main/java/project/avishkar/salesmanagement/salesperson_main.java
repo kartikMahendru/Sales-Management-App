@@ -290,6 +290,7 @@ public class salesperson_main extends AppCompatActivity
                         SalesPerson sm = snapshot.getValue(SalesPerson.class);
                         headerSalespersonName.setText(sm.getName());
                         headerSalespersonEmail.setText(sm.getEmailId());
+                        imageSetter.setImage(getApplicationContext(),headerSalespersonImage,sm.getEmailId());
                         break;
                     }
                 }
@@ -447,6 +448,9 @@ public class salesperson_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
+        }else if(id == R.id.chat_room){
+
+            // add intent for chat room here
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

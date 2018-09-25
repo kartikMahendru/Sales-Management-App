@@ -1,10 +1,12 @@
 package project.avishkar.salesmanagement;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,14 +17,16 @@ import java.util.ArrayList;
 
 public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonDetailsAdapter.MyViewHolder>{
 
-    private ArrayList<String> names,sold;
+    private ArrayList<String> sold;
+    private ArrayList<SalesPerson> names;
     private Context context;
+
     public SalespersonDetailsAdapter()
     {
 
     }
 
-    public SalespersonDetailsAdapter(Context context, ArrayList<String> names, ArrayList<String> sold)
+    public SalespersonDetailsAdapter(Context context, ArrayList<SalesPerson> names, ArrayList<String> sold)
     {
         this.context=context;
         this.names=names;
@@ -40,9 +44,9 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
         for(int i=0;i<100;i++)
             System.out.println(position);
 
-        holder.userName.setText(names.get(position));
+        holder.userName.setText(names.get(position).getName());
         holder.soldItems.setText(sold.get(position));
-        // Toast.makeText(context,""+names.get(position),Toast.LENGTH_LONG).show();
+        imageSetter.setImage(holder.itemView.getContext(),holder.userPic,names.get(position).getEmailId());
     }
 
 
@@ -54,18 +58,12 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
     public  class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView userName,soldItems;
-
+        private ImageView userPic;
         public MyViewHolder(View itemView) {
             super(itemView);
             userName=itemView.findViewById(R.id.user_name);
             soldItems=itemView.findViewById(R.id.soldText);
+            userPic=itemView.findViewById(R.id.user_pic);
         }
-    }
-
-    public void addItem(String name,String sold,int position)
-    {
-        this.names.add(position,name);
-        this.sold.add(position,sold);
-        notifyItemInserted(position);
     }
 }
