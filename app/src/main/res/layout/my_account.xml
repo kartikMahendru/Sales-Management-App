@@ -12,14 +12,50 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-    <ImageView
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:id="@+id/user_pic"
-        android:src="@mipmap/boy"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/image_picker"
+                android:src="@drawable/ic_collections"
+                android:layout_gravity="center"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="2"
+                    android:id="@+id/user_pic"
+                    tools:src="@mipmap/boy"
+                    android:layout_marginTop="20dp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/image_uploader"
+                android:src="@drawable/ic_cloud_upload"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
 
     <TextView
         android:id="@+id/name"
@@ -28,8 +64,8 @@
         android:layout_gravity="center"
         tools:text="Utkarsh Garg"
         android:textStyle="bold"
-        android:layout_margin="16dp"
-        android:textSize="35sp"
+        android:layout_margin="8dp"
+        android:textSize="33sp"
         />
 
     <LinearLayout

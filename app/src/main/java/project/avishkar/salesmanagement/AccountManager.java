@@ -1,11 +1,14 @@
 package project.avishkar.salesmanagement;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,28 +17,43 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class AccountManager extends AppCompatActivity {
 
 
+    private static final int PICK_IMAGE_REQUEST = 234;
+    private Uri filePath;
+    private StorageReference storageReference;
+    private DatabaseReference mDatabase;
+
     private TextView update_email, update_mobile, change_password, logout, update_name, update_org;
     private String currEmail, currMobile, currName, currOrg, currPass;
     private FirebaseAuth auth;
-    protected ImageView imageView;
+    protected ImageView imageView,imageChooser,imageUploader;
     private DatabaseReference reference;
     private SalesPerson sp1;
     private SalesManager sm1, sm2;
@@ -45,13 +63,21 @@ public class AccountManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_account);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_UPLOADS);
+
+        imageChooser=findViewById(R.id.image_picker);
+        imageUploader=findViewById(R.id.image_uploader);
         auth = FirebaseAuth.getInstance();
 
         imageView=findViewById(R.id.user_pic);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.boy);
+        /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.boy);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
-        imageView.setImageDrawable(roundedBitmapDrawable);
+        imageView.setImageDrawable(roundedBitmapDrawable); */
+
+        final ProgressBar spinnerImage = findViewById(R.id.progressBar8);
+        spinnerImage.setVisibility(View.VISIBLE);
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
@@ -82,6 +108,36 @@ public class AccountManager extends AppCompatActivity {
                             currOrg = sm1.getOrgName();
                             currMobile = sm1.getNumber();
                             currEmail = sm1.getEmail();
+
+                            // downloading profile pic
+                            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    int flag = 0;
+                                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                        if(snapshot.getValue(Upload.class).getEmail().equals(currEmail)){
+
+                                            Glide.with(getApplicationContext()).load("https://firebasestorage.googleapis.com/v0/b/sales-management-app-3a933.appspot.com/o/uploads%2F1537812578229.jpg?alt=media&token=20db2fb0-554f-42e7-8bc2-0c6f3a7b2834").into(imageView);
+                                            flag = 1;
+                                            Toast.makeText(getApplicationContext(), "Photo downloaded!!" + snapshot.getValue(Upload.class).getUrl(), Toast.LENGTH_LONG).show();
+                                            spinnerImage.setVisibility(View.GONE);
+                                            break;
+                                        }
+                                    }
+                                    if(flag != 1){
+                                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.boy);
+                                        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+                                        roundedBitmapDrawable.setCircular(true);
+                                        imageView.setImageDrawable(roundedBitmapDrawable);
+                                        spinnerImage.setVisibility(View.GONE);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                             break;
                         }
 
@@ -276,5 +332,119 @@ public class AccountManager extends AppCompatActivity {
             }
         });
 
+
+
+        // file choosing and uploading code here
+
+
+        imageChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+            }
+        });
+
+        imageUploader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadFile();
+            }
+        });
+
+    }
+
+    private void showFileChooser()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!=null && data.getData()!=null){
+            filePath = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageView.setImageBitmap(bitmap);
+        }
+    }
+
+    public String getFileExtension(Uri uri){
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private void uploadFile(){
+
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
+
+            final StorageReference sRef = storageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + "." + getFileExtension(filePath));
+
+            sRef.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            progressDialog.dismiss();
+
+                            Toast.makeText(getApplicationContext(), "File uploaded", Toast.LENGTH_LONG).show();
+
+                            final Upload upload = new Upload(currEmail, sRef.getDownloadUrl().toString());
+
+                            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    int flag = 0;
+                                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                        if(snapshot.getValue(Upload.class).getEmail().equals(currEmail)){
+                                            mDatabase.child(snapshot.getKey()).setValue(upload);
+                                            flag = 1;
+                                            break;
+                                        }
+                                    }
+                                    if(flag != 1){
+                                        String uploadId = mDatabase.push().getKey();
+                                        mDatabase.child(uploadId).setValue(upload);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Upload failed!!",Toast.LENGTH_LONG ).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded "+ (int)progress + "%...");
+                        }
+                    });
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "No image selected!!", Toast.LENGTH_LONG).show();
+        }
     }
 }
