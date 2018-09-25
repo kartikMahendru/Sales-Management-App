@@ -5,15 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class MyTeamAdapter extends BaseAdapter {
-    private ArrayList <String> list;
+    private ArrayList <SalesPerson> list;
     private Context context;
 
-    public MyTeamAdapter(Context context,ArrayList<String> list)
+    public MyTeamAdapter(Context context,ArrayList<SalesPerson> list)
     {
         this.list=list;
         this.context=context;
@@ -43,9 +44,9 @@ public class MyTeamAdapter extends BaseAdapter {
         }
 
         TextView teamName=convertView.findViewById(R.id.team_name);
-        teamName.setText(list.get(position));
-
-
+        ImageView teamImage=convertView.findViewById(R.id.team_image);
+        teamName.setText(list.get(position).getName());
+        imageSetter.setImage(parent.getContext(),teamImage,list.get(position).getEmailId());
         return convertView;
     }
 }

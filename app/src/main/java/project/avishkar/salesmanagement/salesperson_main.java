@@ -133,8 +133,13 @@ public class salesperson_main extends AppCompatActivity
                             else
                             {
 
+<<<<<<< HEAD
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
                                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+=======
+                                final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+>>>>>>> b2b59b1245ec8bd15e4660a2c7bb705a365c6723
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -290,6 +295,7 @@ public class salesperson_main extends AppCompatActivity
                         SalesPerson sm = snapshot.getValue(SalesPerson.class);
                         headerSalespersonName.setText(sm.getName());
                         headerSalespersonEmail.setText(sm.getEmailId());
+                        imageSetter.setImage(getApplicationContext(),headerSalespersonImage,sm.getEmailId());
                         break;
                     }
                 }
@@ -447,6 +453,7 @@ public class salesperson_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
+<<<<<<< HEAD
         } else if(id1 == R.id.message_manager){
 
                 databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
@@ -474,6 +481,11 @@ public class salesperson_main extends AppCompatActivity
 
                     }
                 });
+=======
+        }else if(id == R.id.chat_room){
+
+            // add intent for chat room here
+>>>>>>> b2b59b1245ec8bd15e4660a2c7bb705a365c6723
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -246,6 +246,7 @@ public class manager_main extends AppCompatActivity
                         SalesManager sm = snapshot.getValue(SalesManager.class);
                         headerManagerName.setText(sm.getName());
                         headerManagerEmail.setText(sm.getEmail());
+                        imageSetter.setImage(getApplicationContext(),headerManagerImage,sm.getEmail());
                         break;
                     }
                 }
@@ -378,6 +379,9 @@ public class manager_main extends AppCompatActivity
 
                 }
             });
+        } else if(id == R.id.chat_room){
+
+            // add intent for chat room here
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -29,7 +29,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
     private RecyclerView mRecyclerView;
     private SalespersonDetailsAdapter mAdapter;
     private ProgressBar mProgressBar;
-    ArrayList<String> salespersonNames;
+    ArrayList<SalesPerson> salespersonNames;
     ArrayList<String> sold_number;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,9 +85,11 @@ public class ProductSpecificDetails extends AppCompatActivity  {
 
                     SalesPerson sp = dataSnapshot1.getValue(SalesPerson.class);
                     if(sp.getManagerName().equals(managerName)){
-                        salespersonNames.add(sp.getName());
+                        salespersonNames.add(sp);
+
                         for(int i=0;i<10;i++)
                             System.out.println("TAG 2 :: " + sp.getName());
+
                         ListenerRunner3(dataSnapshot1.getKey());
 
                         try {

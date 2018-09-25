@@ -24,6 +24,10 @@
             android:id="@+id/message_manager"
             android:icon="@drawable/ic_message"
             android:title="Message manager" />
+        <item
+            android:id="@+id/chat_room"
+            android:icon="@drawable/ic_message"
+            android:title="Chat Room" />
     </group>
 
     <item android:title="Communicate">

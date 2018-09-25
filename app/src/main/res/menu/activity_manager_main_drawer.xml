@@ -20,6 +20,10 @@
             android:id="@+id/statistics"
             android:icon="@mipmap/stats"
             android:title="Stats" />
+        <item
+            android:id="@+id/chat_room"
+            android:icon="@drawable/ic_message"
+            android:title="Chat Room" />
     </group>
 
     <item android:title="Communicate">
