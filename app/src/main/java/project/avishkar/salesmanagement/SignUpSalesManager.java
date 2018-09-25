@@ -117,6 +117,8 @@ public class SignUpSalesManager extends AppCompatActivity {
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
+
         databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -142,15 +144,13 @@ public class SignUpSalesManager extends AppCompatActivity {
                     sessionManager.createLoginSession(key,"Manager");
 
                     //register user on fireBase Authentication
-                    progressBar.setVisibility(View.VISIBLE);
+
                     //create user
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUpSalesManager.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Toast.makeText(SignUpSalesManager.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-
                                     if (!task.isSuccessful()) {
                                         Toast.makeText(SignUpSalesManager.this, "Authentication failed." + task.getException(),
                                                 Toast.LENGTH_SHORT).show();
@@ -161,6 +161,7 @@ public class SignUpSalesManager extends AppCompatActivity {
                                         startActivity(new Intent(SignUpSalesManager.this, manager_main.class));
                                         finish();
                                     }
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             });
                 }

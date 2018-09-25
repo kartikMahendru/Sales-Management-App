@@ -113,6 +113,8 @@ public class SignUpSalesperson extends AppCompatActivity {
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
+
         databaseRef = FirebaseDatabase.getInstance().getReference("Salesperson");
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -120,7 +122,7 @@ public class SignUpSalesperson extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                     SalesPerson sp = dataSnapshot1.getValue(SalesPerson.class);
                     if(sp.getEmailId().equals(email)){
-                        Toast.makeText(getApplicationContext(),"This Email-id is already registered !!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"This email-id is already registered !!", Toast.LENGTH_LONG).show();
                         tmp = -1;
                         break;
                     }
@@ -130,7 +132,7 @@ public class SignUpSalesperson extends AppCompatActivity {
                     SalesPerson salesPerson = new SalesPerson(name, num, password, managerName, email);
                     //Added data to database
                     databaseRef = FirebaseDatabase.getInstance().getReference("Salesperson");
-                    String key = databaseRef.push().getKey();
+                    final String key = databaseRef.push().getKey();
                     databaseRef.child(key).setValue(salesPerson);
 
                     // session created using sharedPreference
@@ -138,14 +140,13 @@ public class SignUpSalesperson extends AppCompatActivity {
                     sessionManager.createLoginSession(key,"Salesperson");
 
                     //register user on fireBase Authentication
-                    progressBar.setVisibility(View.VISIBLE);
+
                     //create user
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUpSalesperson.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     //Toast.makeText(SignUpSalesManager.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
 
                                     if (!task.isSuccessful()) {
                                         Toast.makeText(SignUpSalesperson.this, "Authentication failed." + task.getException(),
@@ -154,9 +155,50 @@ public class SignUpSalesperson extends AppCompatActivity {
                                     }
                                     else {
 
-                                        startActivity(new Intent(SignUpSalesperson.this, manager_main.class));
-                                        finish();
+                                        // checking if any items were present in manager's inventory which are to be allotted to new salesperson
+                                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Manager");
+                                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                                    if(snapshot.getValue(SalesManager.class).getName().equals(managerName)){
+                                                        // Manager found now go to his inventory
+
+                                                        // Taking a reference of current salesperson
+                                                        final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Salesperson").child(key);
+
+                                                        databaseReference.child(snapshot.getKey()).child("Inventory")
+                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                        for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                                                                            InventoryItem it = snapshot1.getValue(InventoryItem.class);
+                                                                            InventoryItem itNew = new InventoryItem(it.getItemName(),it.getTotal_available() - it.getSold(), 0);
+                                                                            databaseReference1.child("Inventory").child(databaseReference1.child("Inventory").push().getKey()).setValue(itNew);
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
+
+                                                        startActivity(new Intent(SignUpSalesperson.this, salesperson_main.class));
+                                                        finish();
+
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             });
                 }

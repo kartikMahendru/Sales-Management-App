@@ -84,81 +84,81 @@ public class AccountManager extends AppCompatActivity {
         final String id = details.get("id");
         final String role = details.get("role");
 
-          if(role.equals("Manager")) {
+        if(role.equals("Manager")) {
 
-              reference = FirebaseDatabase.getInstance().getReference("Manager");
+            reference = FirebaseDatabase.getInstance().getReference("Manager");
 
-              final ProgressDialog dialog = ProgressDialog.show(AccountManager.this, "Loading...","Please wait..." , true);
-              dialog.show();
-              Handler handler = new Handler();
-              handler.postDelayed(new Runnable() {
-                  public void run() {
-                      //your code here
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        sm1 = snapshot.getValue(SalesManager.class);
-                        //Toast.makeText(getApplicationContext(),snapshot.getKey()+" ++ "+id,Toast.LENGTH_LONG).show();
-                        if(snapshot.getKey().equals(id)){
+            final ProgressDialog dialog = ProgressDialog.show(AccountManager.this, "Loading...","Please wait..." , true);
+            dialog.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    //your code here
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                sm1 = snapshot.getValue(SalesManager.class);
+                                //Toast.makeText(getApplicationContext(),snapshot.getKey()+" ++ "+id,Toast.LENGTH_LONG).show();
+                                if(snapshot.getKey().equals(id)){
 
-                            currName = sm1.getName();
-                            currPass = sm1.getPassword();
-                            //Toast.makeText(getApplicationContext(), ""+sm1.getName(), Toast.LENGTH_SHORT).show();
-                            currOrg = sm1.getOrgName();
-                            currMobile = sm1.getNumber();
-                            currEmail = sm1.getEmail();
+                                    currName = sm1.getName();
+                                    currPass = sm1.getPassword();
+                                    //Toast.makeText(getApplicationContext(), ""+sm1.getName(), Toast.LENGTH_SHORT).show();
+                                    currOrg = sm1.getOrgName();
+                                    currMobile = sm1.getNumber();
+                                    currEmail = sm1.getEmail();
 
-                            // downloading profile pic
-                            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    int flag = 0;
-                                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                        if(snapshot.getValue(Upload.class).getEmail().equals(currEmail)){
+                                    // downloading profile pic
+                                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            int flag = 0;
+                                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                                if(snapshot.getValue(Upload.class).getEmail().equals(currEmail)){
 
-                                            Glide.with(getApplicationContext()).load("https://firebasestorage.googleapis.com/v0/b/sales-management-app-3a933.appspot.com/o/uploads%2F1537812578229.jpg?alt=media&token=20db2fb0-554f-42e7-8bc2-0c6f3a7b2834").into(imageView);
-                                            flag = 1;
-                                            Toast.makeText(getApplicationContext(), "Photo downloaded!!" + snapshot.getValue(Upload.class).getUrl(), Toast.LENGTH_LONG).show();
-                                            spinnerImage.setVisibility(View.GONE);
-                                            break;
+                                                    Glide.with(getApplicationContext()).load(Uri.parse(snapshot.getValue(Upload.class).getUrl())).into(imageView);
+                                                    flag = 1;
+                                                    Toast.makeText(getApplicationContext(), "Photo downloaded!!" + snapshot.getValue(Upload.class).getUrl(), Toast.LENGTH_LONG).show();
+                                                    spinnerImage.setVisibility(View.GONE);
+                                                    break;
+                                                }
+                                            }
+                                            if(flag != 1){
+                                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.boy);
+                                                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+                                                roundedBitmapDrawable.setCircular(true);
+                                                imageView.setImageDrawable(roundedBitmapDrawable);
+                                                spinnerImage.setVisibility(View.GONE);
+                                            }
                                         }
-                                    }
-                                    if(flag != 1){
-                                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.boy);
-                                        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-                                        roundedBitmapDrawable.setCircular(true);
-                                        imageView.setImageDrawable(roundedBitmapDrawable);
-                                        spinnerImage.setVisibility(View.GONE);
-                                    }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    break;
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
 
-                                }
-                            });
-                            break;
+                            update_name.setText(currName);
+                            update_org.setText(currOrg);
+                            update_email.setText(currEmail);
+                            update_mobile.setText(currMobile);
+                            dialog.dismiss();
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    update_name.setText(currName);
-                    update_org.setText(currOrg);
-                    update_email.setText(currEmail);
-                    update_mobile.setText(currMobile);
-                    dialog.dismiss();
-                }
+                        }
+                    });
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-                });
-
-
-                  }
-              }, 4000);  // 4000 milliseconds
+            }, 4000);  // 4000 milliseconds
 
         }
         else
@@ -171,53 +171,53 @@ public class AccountManager extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     //your code here
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        sp1 = snapshot.getValue(SalesPerson.class);
-                        if (snapshot.getKey().equals(id)) {
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                sp1 = snapshot.getValue(SalesPerson.class);
+                                if (snapshot.getKey().equals(id)) {
 
-                            currPass = sp1.getPassword();
-                            currName = sp1.getName();
-                            currMobile = sp1.getNumber();
-                            currEmail = sp1.getEmailId();
+                                    currPass = sp1.getPassword();
+                                    currName = sp1.getName();
+                                    currMobile = sp1.getNumber();
+                                    currEmail = sp1.getEmailId();
 
-                            final String currManager = sp1.getManagerName();
-                            reference = FirebaseDatabase.getInstance().getReference("Manager");
-                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                        sm2 = snapshot.getValue(SalesManager.class);
-                                        if (sm2.getName().equals(currManager)) {
-                                            currOrg = sm2.getOrgName();
-                                            break;
+                                    final String currManager = sp1.getManagerName();
+                                    reference = FirebaseDatabase.getInstance().getReference("Manager");
+                                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                sm2 = snapshot.getValue(SalesManager.class);
+                                                if (sm2.getName().equals(currManager)) {
+                                                    currOrg = sm2.getOrgName();
+                                                    break;
+                                                }
+                                            }
+                                            update_name.setText(currName);
+                                            update_org.setText(currOrg);
+                                            update_email.setText(currEmail);
+                                            update_mobile.setText(currMobile);
+                                            dialog.dismiss();
                                         }
-                                    }
-                                    update_name.setText(currName);
-                                    update_org.setText(currOrg);
-                                    update_email.setText(currEmail);
-                                    update_mobile.setText(currMobile);
-                                    dialog.dismiss();
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                                        }
+                                    });
+                                    break;
                                 }
-                            });
-                            break;
+                            }
                         }
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
+                        }
 
-                });
+                    });
                 }
             }, 4000);  // 4000 milliseconds
         }
@@ -382,6 +382,7 @@ public class AccountManager extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
+    Uri URL;
     private void uploadFile(){
 
         if(filePath != null)
@@ -401,7 +402,14 @@ public class AccountManager extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "File uploaded", Toast.LENGTH_LONG).show();
 
-                            final Upload upload = new Upload(currEmail, sRef.getDownloadUrl().toString());
+                            sRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    URL = uri;
+                                }
+                            });
+
+                            final Upload upload = new Upload(currEmail, String.valueOf(URL));
 
                             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
