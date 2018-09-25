@@ -1,5 +1,6 @@
 package project.avishkar.salesmanagement;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -30,6 +30,7 @@ public class myTeam extends AppCompatActivity {
     private SwipeMenuListView listView;
     private MyTeamAdapter myTeamAdapter;
     private ProgressBar spinner;
+    private String managerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class myTeam extends AppCompatActivity {
                 {
                     if(snapshot.getKey().equals(id))
                     {
-                        final String managerName = snapshot.getValue(SalesManager.class).getName();
+                        managerName = snapshot.getValue(SalesManager.class).getName();
 
                         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Salesperson");
                         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,8 +170,11 @@ public class myTeam extends AppCompatActivity {
                                                 });
                                                 break;
                                             case 1:
-                                                // Message
-                                                Toast.makeText(getApplicationContext(),"Message Clicked",Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(getApplicationContext(),"Aa gya hun mai",Toast.LENGTH_LONG).show();
+                                                Intent intent=new Intent(getApplicationContext(),PersonalChatActivityManager.class);
+                                                intent.putExtra("SalespersonName", list.get(position));
+                                                intent.putExtra("ManagerName",managerName);
+                                                startActivity(intent);
                                                 break;
                                         }
                                         // false : close the menu; true : not close the menu

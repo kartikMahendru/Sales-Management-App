@@ -20,6 +20,10 @@
             android:id="@+id/statistics"
             android:icon="@mipmap/stats"
             android:title="Stats" />
+        <item
+            android:id="@+id/message_manager"
+            android:icon="@drawable/ic_message"
+            android:title="Message manager" />
     </group>
 
     <item android:title="Communicate">
