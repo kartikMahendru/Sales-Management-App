@@ -48,7 +48,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
         HashMap<String, String> mp = sm.getUserDetails();
         String id = mp.get("id");
         String role = mp.get("role");
-
+        for(int i=0;i<100;i++)
+        {
+            System.out.println(message.getMsgRole());
+        }
         if(message.getMsgRole().equals(id))
             return VIEW_TYPE_MESSAGE_SENT;
         else
@@ -63,11 +66,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.chat_room_sent, parent, false);
-            return new MessageHolder(view);
+            return new ReceivedMessageHolder(view);
         } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.chat_room_received, parent, false);
-            return new MessageHolder(view);
+            return new ReceivedMessageHolder(view);
         }
 
         return null;

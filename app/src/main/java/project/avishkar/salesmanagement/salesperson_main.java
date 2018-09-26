@@ -57,6 +57,7 @@ public class salesperson_main extends AppCompatActivity
     private ArrayList <InventoryItem> list;
     private FloatingActionButton fab;
     private String managerName, salespersonName ,id,role;
+    private String SalesPersonName;
     private int sold;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -492,6 +493,7 @@ public class salesperson_main extends AppCompatActivity
 
                             SalesPerson salesPerson = dataSnapshot1.getValue(SalesPerson.class);
                             thisManager = salesPerson.getManagerName();
+                            SalesPersonName=salesPerson.getName();
                             break;
                         }
                     }
@@ -507,6 +509,7 @@ public class salesperson_main extends AppCompatActivity
 
                                     Intent intent = new Intent(salesperson_main.this, chatRoom.class);
                                     intent.putExtra("ManagerNumber", salesManager.getNumber());
+                                    intent.putExtra("Name",SalesPersonName);
                                     startActivity(intent);
                                 }
                             }
