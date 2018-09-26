@@ -10,14 +10,15 @@
 
     <TextView
         android:id="@+id/text_message_name"
-        android:text="John Doe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="7sp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:text="John Doe"
+        android:textSize="12sp"
         android:textStyle="italic"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="4dp" />
+        app:layout_constraintBottom_toTopOf="@+id/text_message_body"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/text_message_body"
@@ -25,15 +26,15 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rounded_rectangle_sent"
         android:maxWidth="240dp"
         android:padding="8dp"
         android:text="hello, hello!"
         android:textColor="#ffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintHorizontal_bias="0.908"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
         />
@@ -43,7 +44,7 @@
         android:text="11:40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="7sp"
+        android:textSize="12sp"
         android:layout_marginRight="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_message_body"
         app:layout_constraintRight_toLeftOf="@+id/text_message_body" />

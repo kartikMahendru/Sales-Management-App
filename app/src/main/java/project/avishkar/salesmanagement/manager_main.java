@@ -398,6 +398,7 @@ public class manager_main extends AppCompatActivity
                             SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
                             Intent intent = new Intent(manager_main.this, chatRoom.class);
                             intent.putExtra("ManagerNumber", salesManager.getNumber());
+                            intent.putExtra("Name",salesManager.getName());
                             startActivity(intent);
                         }
                     }

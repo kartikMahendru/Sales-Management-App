@@ -115,38 +115,42 @@ public class PersonalChatActivitySalesperson extends AppCompatActivity {
                 //getting current timestamp
                 Long tsLong = System.currentTimeMillis()/1000 - 19800;
                 String ts = tsLong.toString();
+                if(!message.equals("")) {
+                    BaseMessage baseMessage = new BaseMessage(message, ts, SalespersonName, mp.get("role"));
+                    databaseReference = FirebaseDatabase.getInstance().getReference("ChatsTable");
 
-                BaseMessage baseMessage = new BaseMessage(message, ts, SalespersonName, mp.get("role"));
-                databaseReference = FirebaseDatabase.getInstance().getReference("ChatsTable");
-
-                String key1 = databaseReference.child(tmp1+"-"+tmp2).push().getKey();
-                databaseReference.child(tmp1+"-"+tmp2).child(key1).setValue(baseMessage);
+                    String key1 = databaseReference.child(tmp1 + "-" + tmp2).push().getKey();
+                    databaseReference.child(tmp1 + "-" + tmp2).child(key1).setValue(baseMessage);
 
 
-                databaseReference.child(tmp1+"-"+tmp2).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        ArrayList<BaseMessage> ListOfMessages = new ArrayList<>();
-                        for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    databaseReference.child(tmp1 + "-" + tmp2).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            ArrayList<BaseMessage> ListOfMessages = new ArrayList<>();
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
-                            BaseMessage bm = dataSnapshot1.getValue(BaseMessage.class);
-                            ListOfMessages.add(bm);
+                                BaseMessage bm = dataSnapshot1.getValue(BaseMessage.class);
+                                ListOfMessages.add(bm);
+
+                            }
+                            messageListAdapter = new MessageListAdapter(getApplicationContext(), ListOfMessages);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            recyclerView.setAdapter(messageListAdapter);
+                            messageListAdapter.notifyDataSetChanged();
+
+                            chatBox.setText("");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
-                        messageListAdapter=new MessageListAdapter(getApplicationContext(),ListOfMessages);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        recyclerView.setAdapter(messageListAdapter);
-                        messageListAdapter.notifyDataSetChanged();
+                    });
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "message is empty!!", Toast.LENGTH_SHORT).show();
 
-                        chatBox.setText("");
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+                }
 
 
 
