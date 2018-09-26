@@ -3,8 +3,8 @@ package project.avishkar.salesmanagement;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,8 +12,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,8 +41,13 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+
+import id.zelory.compressor.Compressor;
 
 public class AccountManager extends AppCompatActivity {
 
@@ -61,6 +65,7 @@ public class AccountManager extends AppCompatActivity {
     private SalesPerson sp1;
     private SalesManager sm1, sm2;
     private Upload upload;
+    private byte[] imageDataInByte;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -340,15 +345,22 @@ public class AccountManager extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!=null && data.getData()!=null){
             filePath = data.getData();
-            Bitmap bitmap = null;
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                imageDataInByte = byteArrayOutputStream.toByteArray();
+                Log.d("TAG: : ",""+filePath.toString());
+                Glide.with(getApplicationContext()).load(bitmap).apply(RequestOptions.circleCropTransform()).into(imageView);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            imageView.setImageBitmap(bitmap);
+
         }
     }
+
+
 
     public String getFileExtension(Uri uri){
         ContentResolver cR = getContentResolver();
@@ -366,7 +378,7 @@ public class AccountManager extends AppCompatActivity {
             final String fileName=Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + "." + getFileExtension(filePath);
             final StorageReference sRef = storageReference.child(fileName);
 
-            sRef.putFile(filePath)
+            sRef.putBytes(imageDataInByte)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

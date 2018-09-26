@@ -135,7 +135,7 @@ public class myTeam extends AppCompatActivity {
 
                                                             final SalesPerson sp = snapshot1.getValue(SalesPerson.class);
 
-                                                            if(sp.getName().equals(currSalesperson)){
+                                                            if(sp.getName().equals(currSalesperson.getName())){
 
                                                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
                                                                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,7 +147,7 @@ public class myTeam extends AppCompatActivity {
                                                                                 name.setText(sp.getName());
                                                                                 phone.setText(sp.getNumber());
                                                                                 email.setText(sp.getEmailId());
-                                                                                //imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId());
+                                                                                imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId());
                                                                                 spinner7.setVisibility(View.GONE);
                                                                                 break;
                                                                             }
@@ -173,7 +173,7 @@ public class myTeam extends AppCompatActivity {
                                             case 1:
                                                 //Toast.makeText(getApplicationContext(),"Aa gya hun mai",Toast.LENGTH_LONG).show();
                                                 Intent intent=new Intent(getApplicationContext(),PersonalChatActivityManager.class);
-                                                intent.putExtra("SalespersonName", list.get(position));
+                                                intent.putExtra("SalespersonName", list.get(position).getName());
                                                 intent.putExtra("ManagerName",managerName);
                                                 startActivity(intent);
                                                 break;
