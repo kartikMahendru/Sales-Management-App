@@ -147,6 +147,15 @@ public class SignUpSalesperson extends AppCompatActivity {
                     SessionManager sessionManager = new SessionManager(getApplicationContext());
                     sessionManager.createLoginSession(key,"Salesperson");
 
+                    //adding node under LeaderBoard
+                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("LeaderBoard");
+                    String key1 = databaseReference1.push().getKey();
+
+                    Long tsLong = System.currentTimeMillis()/1000;
+                    String ts = tsLong.toString();
+
+                    LeaderBoardObject leaderBoardObject = new LeaderBoardObject(name, ts);
+                    databaseReference1.child(key1).setValue(leaderBoardObject);
                     //register user on fireBase Authentication
 
                     //create user
