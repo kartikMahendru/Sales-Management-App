@@ -2,7 +2,6 @@ package project.avishkar.salesmanagement;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +28,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemName,unalloted,sold,total;
+        public TextView itemName, unalloted, sold, total, profitText;
         public ImageView delete;
         public ProgressBar progressBar;
         public MyViewHolder(View itemView) {
@@ -40,6 +39,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
             total=itemView.findViewById(R.id.total_item);
             delete=itemView.findViewById(R.id.delete_icon);
             progressBar=itemView.findViewById(R.id.progressBar2);
+            profitText=itemView.findViewById(R.id.profitText);
         }
     }
 
@@ -62,11 +62,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
         Log.d("Setting for: ", String.valueOf(position));
         holder.total.setText(String.valueOf(item.getTotal_available()));
         holder.sold.setText(String.valueOf(item.getSold()));
-        holder.unalloted.setText(String.valueOf(item.getNotAlloted()));
+        holder.unalloted.setText(String.valueOf(item.getTotal_available() - item.getSold()));
         holder.itemName.setText(item.getItemName());
         holder.progressBar.setMax(item.getTotal_available());
         holder.progressBar.setProgress(item.getSold());
-
+        holder.profitText.setText(String.valueOf(item.getProfit() * item.getSold()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

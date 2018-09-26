@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonDetailsAdapter.MyViewHolder>{
 
-    private ArrayList<String> sold;
+    private ArrayList<String> sold, profit;
     private ArrayList<SalesPerson> names;
     private Context context;
 
@@ -26,11 +26,12 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
     }
 
-    public SalespersonDetailsAdapter(Context context, ArrayList<SalesPerson> names, ArrayList<String> sold)
+    public SalespersonDetailsAdapter(Context context, ArrayList<SalesPerson> names, ArrayList<String> sold, ArrayList<String> profit)
     {
         this.context=context;
         this.names=names;
         this.sold=sold;
+        this.profit=profit;
     }
 
     @Override
@@ -46,6 +47,7 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
         holder.userName.setText(names.get(position).getName());
         holder.soldItems.setText(sold.get(position));
+        holder.profitText.setText(String.valueOf(Integer.parseInt(sold.get(position)) * Integer.parseInt(profit.get(position))));
         holder.spinnerImage.setVisibility(View.VISIBLE);
         imageSetter.setImage(holder.itemView.getContext(),holder.userPic,names.get(position).getEmailId());
         holder.spinnerImage.setVisibility(View.GONE);
@@ -59,7 +61,7 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView userName,soldItems;
+        private TextView userName,soldItems,profitText;
         private ImageView userPic;
         private ProgressBar spinnerImage;
         public MyViewHolder(View itemView) {
@@ -67,6 +69,7 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
             userName=itemView.findViewById(R.id.user_name);
             soldItems=itemView.findViewById(R.id.soldText);
             userPic=itemView.findViewById(R.id.user_pic);
+            profitText=itemView.findViewById(R.id.profitText);
             spinnerImage=itemView.findViewById(R.id.progressBar9);
         }
     }

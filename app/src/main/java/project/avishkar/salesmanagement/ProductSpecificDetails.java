@@ -31,6 +31,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
     private ProgressBar mProgressBar;
     ArrayList<SalesPerson> salespersonNames;
     ArrayList<String> sold_number;
+    ArrayList<String> profit;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
         mProgressBar=findViewById(R.id.progressBar4);
         salespersonNames= new ArrayList<>();
         sold_number= new ArrayList<>();
+        profit= new ArrayList<>();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("Item");
         actionBar.setSubtitle(itemName);
@@ -122,6 +124,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
                     InventoryItem it = dataSnapshot1.getValue(InventoryItem.class);
                     if(it.getItemName().equals(itemName)){
                         sold_number.add(String.valueOf(it.getSold()));
+                        profit.add(String.valueOf(it.getProfit()));
                         for(int i=0;i<10;i++)
                         System.out.println("TAG 3 :: " + it.getSold());
                         populatingData();
@@ -145,7 +148,7 @@ public class ProductSpecificDetails extends AppCompatActivity  {
         System.out.println(""+salespersonNames.size()+" "+sold_number.size());
 
         mRecyclerView=findViewById(R.id.recyclerViewProduct);
-        mAdapter= new SalespersonDetailsAdapter(getApplicationContext(),salespersonNames,sold_number);
+        mAdapter= new SalespersonDetailsAdapter(getApplicationContext(), salespersonNames, sold_number, profit);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mAdapter.notifyDataSetChanged();
