@@ -186,6 +186,10 @@ public class salesperson_main extends AppCompatActivity
                                                                                                 InventoryItem it1 = snapshot1.getValue(InventoryItem.class);
                                                                                                 InventoryItem it = new InventoryItem(itemName,it1.getTotal_available()-sold,it1.getSold(), it1.getProfit());
                                                                                                 databaseReference1.child(snapshot3.getKey()).child("Inventory").child(snapshot1.getKey()).setValue(it);
+
+                                                                                                // updating manager's sold
+                                                                                                updateManagerSold(managerName,itemName,sold);
+
                                                                                                 break;
                                                                                             }
                                                                                         }
@@ -219,9 +223,6 @@ public class salesperson_main extends AppCompatActivity
 
                                                     }
                                                 });
-
-                                                // updating manager's sold
-                                                updateManagerSold(managerName,itemName,sold);
                                                 break;
                                             }
                                         }
