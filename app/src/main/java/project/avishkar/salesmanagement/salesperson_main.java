@@ -57,6 +57,7 @@ public class salesperson_main extends AppCompatActivity
     private ArrayList <InventoryItem> list;
     private FloatingActionButton fab;
     private String managerName, salespersonName ,id,role;
+    private String SalesPersonName;
     private int sold;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -452,31 +453,31 @@ public class salesperson_main extends AppCompatActivity
 
         } else if(id1 == R.id.message_manager){
 
-            databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                        if (snapshot.getKey().equals(id)) {
+                            if (snapshot.getKey().equals(id)) {
 
-                            SalesPerson sp = snapshot.getValue(SalesPerson.class);
-                            salespersonName = sp.getName();
-                            managerName = sp.getManagerName();
-                            Intent intent = new Intent(salesperson_main.this, PersonalChatActivitySalesperson.class);
-                            intent.putExtra("SalespersonName", salespersonName);
-                            intent.putExtra("ManagerName", managerName);
-                            startActivity(intent);
+                                SalesPerson sp = snapshot.getValue(SalesPerson.class);
+                                salespersonName = sp.getName();
+                                managerName = sp.getManagerName();
+                                Intent intent = new Intent(salesperson_main.this, PersonalChatActivitySalesperson.class);
+                                intent.putExtra("SalespersonName", salespersonName);
+                                intent.putExtra("ManagerName", managerName);
+                                startActivity(intent);
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                    }
+                });
         }else if(id1 == R.id.chat_room){
 
             SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -485,13 +486,14 @@ public class salesperson_main extends AppCompatActivity
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String thisManager="";
+                     String thisManager="";
                     for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
 
                         if(idSP.equals(dataSnapshot1.getKey())){
 
                             SalesPerson salesPerson = dataSnapshot1.getValue(SalesPerson.class);
                             thisManager = salesPerson.getManagerName();
+                            SalesPersonName=salesPerson.getName();
                             break;
                         }
                     }
@@ -506,7 +508,8 @@ public class salesperson_main extends AppCompatActivity
                                 if(salesManager.getName().equals(thisManagerName)){
 
                                     Intent intent = new Intent(salesperson_main.this, chatRoom.class);
-                                    intent.putExtra("ManagerEmail", salesManager.getEmail());
+                                    intent.putExtra("ManagerNumber", salesManager.getNumber());
+                                    intent.putExtra("Name",SalesPersonName);
                                     startActivity(intent);
                                 }
                             }
@@ -553,7 +556,7 @@ public class salesperson_main extends AppCompatActivity
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                         if(spin==true)
-                            spinner.setVisibility(View.GONE);
+                        spinner.setVisibility(View.GONE);
                     }
 
                     @Override

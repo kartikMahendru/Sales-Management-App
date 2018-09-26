@@ -7,14 +7,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@mipmap/boy"
-            android:id="@+id/team_image"
-            />
 
-        <TextView
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@mipmap/boy"
+                android:id="@+id/team_image" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+
+            <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Utkarsh Garg"
@@ -22,8 +35,7 @@
             android:id="@+id/team_name"
             android:textColor="@color/black"
             android:layout_marginLeft="25dp"
-            android:textSize="25sp"
-            />
+            android:textSize="25sp" />
 
         </LinearLayout>
 </android.support.constraint.ConstraintLayout>
