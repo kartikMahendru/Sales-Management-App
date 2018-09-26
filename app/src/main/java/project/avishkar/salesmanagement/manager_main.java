@@ -61,7 +61,6 @@ public class manager_main extends AppCompatActivity
         setContentView(R.layout.activity_manager_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         swipeRefreshLayout=findViewById(R.id.swiperefresh);
         spinner = (ProgressBar)findViewById(R.id.progressBar);
 
@@ -251,7 +250,7 @@ public class manager_main extends AppCompatActivity
                         SalesManager sm = snapshot.getValue(SalesManager.class);
                         headerManagerName.setText(sm.getName());
                         headerManagerEmail.setText(sm.getEmail());
-                        imageSetter.setImage(getApplicationContext(),headerManagerImage,sm.getEmail());
+                        imageSetter.setImage(getApplicationContext(),headerManagerImage,sm.getEmail(),spinner);
                         break;
                     }
                 }

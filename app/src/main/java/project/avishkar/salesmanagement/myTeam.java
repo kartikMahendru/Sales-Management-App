@@ -127,7 +127,7 @@ public class myTeam extends AppCompatActivity {
                                                 dialog.show();
 
                                                 spinner7.setVisibility(View.VISIBLE);
-                                                spinnerImage.setVisibility(View.VISIBLE);
+                                                //spinnerImage.setVisibility(View.VISIBLE);
 
                                                 final SalesPerson currSalesperson = list.get(position);
 
@@ -151,8 +151,7 @@ public class myTeam extends AppCompatActivity {
                                                                                 name.setText(sp.getName());
                                                                                 phone.setText(sp.getNumber());
                                                                                 email.setText(sp.getEmailId());
-                                                                                imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId());
-                                                                                spinnerImage.setVisibility(View.GONE);
+                                                                                imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId(),spinnerImage);
                                                                                 spinner7.setVisibility(View.GONE);
                                                                                 break;
                                                                             }
