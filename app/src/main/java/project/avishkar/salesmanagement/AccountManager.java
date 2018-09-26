@@ -109,7 +109,7 @@ public class AccountManager extends AppCompatActivity {
 
                             // downloading profile pic
                             spinnerImage.setVisibility(View.VISIBLE);
-                            imageSetter.setImage(getApplicationContext(),imageView,currEmail);
+                            imageSetter.setImage(getApplicationContext(),imageView,currEmail,spinnerImage);
                             spinnerImage.setVisibility(View.GONE);
                             break;
                         }
@@ -172,7 +172,7 @@ public class AccountManager extends AppCompatActivity {
                                     update_org.setText(currOrg);
                                     update_email.setText(currEmail);
                                     update_mobile.setText(currMobile);
-                                    imageSetter.setImage(getApplicationContext(),imageView,currEmail);
+                                    imageSetter.setImage(getApplicationContext(),imageView,currEmail,spinnerImage);
                                     dialog.dismiss();
                                 }
 
