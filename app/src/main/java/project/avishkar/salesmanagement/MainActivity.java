@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<com.google.firebase.auth.AuthResult> task) {
 
-                                progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
                                     // there was an error
                                     if (password.length() < 6) {
@@ -147,13 +146,14 @@ public class MainActivity extends AppCompatActivity {
                                                         SessionManager sm = new SessionManager(getApplicationContext());
                                                         sm.createLoginSession(snapshot.getKey(), "Manager");
                                                         flag = 1;
+                                                        progressBar.setVisibility(View.GONE);
                                                         goto_Manager();
                                                         break;
                                                     }
                                                 }
                                                 // authentication done but chose wrong radio button
                                                 if(flag != 1){
-                                                    Toast.makeText(getApplicationContext(),"This Email is not registerd as manager!!",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(getApplicationContext(),"This email is not registerd as manager!!",Toast.LENGTH_LONG).show();
                                                 }
                                             }
 
@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
                                                         SessionManager sm = new SessionManager(getApplicationContext());
                                                         flag=1;
                                                         sm.createLoginSession(snapshot.getKey().toString(), "Salesperson");
+                                                        progressBar.setVisibility(View.GONE);
                                                         goto_Salesperson();
-
                                                     }
                                                 }
                                                 if(flag != 1){

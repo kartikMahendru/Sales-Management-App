@@ -96,7 +96,7 @@ public class manager_main extends AppCompatActivity
                         }
                                         /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
                                         listView.setAdapter(mAdapter); */
-                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                        mAdapter=new InventoryAdapter(getApplicationContext(), list, manager_main.this);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
@@ -161,7 +161,7 @@ public class manager_main extends AppCompatActivity
                                                 list.add(it1);
                                             }
 
-                                            mAdapter = new InventoryAdapter(getApplicationContext(), list);
+                                            mAdapter = new InventoryAdapter(getApplicationContext(), list, manager_main.this);
                                             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                             mRecyclerView.setAdapter(mAdapter);
                                             mAdapter.notifyDataSetChanged();
@@ -431,7 +431,7 @@ public class manager_main extends AppCompatActivity
                             InventoryItem it1 = snapshot.getValue(InventoryItem.class);
                             list.add(it1);
                         }
-                        mAdapter=new InventoryAdapter(getApplicationContext(),list);
+                        mAdapter=new InventoryAdapter(getApplicationContext(),list, manager_main.this);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
