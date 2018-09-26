@@ -37,6 +37,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProductSpecificDetails" />
+        <activity android:name=".PersonalChatActivityManager"></activity>
+        <activity android:name=".PersonalChatActivitySalesperson"></activity>
+        <activity android:name=".chatRoom"></activity>
+
         <activity
             android:name=".myTeam"
             android:label="My Team"></activity>

@@ -246,6 +246,7 @@ public class manager_main extends AppCompatActivity
                         SalesManager sm = snapshot.getValue(SalesManager.class);
                         headerManagerName.setText(sm.getName());
                         headerManagerEmail.setText(sm.getEmail());
+                        imageSetter.setImage(getApplicationContext(),headerManagerImage,sm.getEmail());
                         break;
                     }
                 }
@@ -369,6 +370,30 @@ public class manager_main extends AppCompatActivity
                             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                             startActivity(Intent.createChooser(sharingIntent, "Send invite"));
                             break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        } else if(id == R.id.chat_room){
+
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            final String idManager = sessionManager.getUserDetails().get("id");
+            databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        if(dataSnapshot1.getKey().equals(idManager)){
+
+                            SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
+                            Intent intent = new Intent(manager_main.this, chatRoom.class);
+                            intent.putExtra("ManagerNumber", salesManager.getNumber());
+                            startActivity(intent);
                         }
                     }
                 }

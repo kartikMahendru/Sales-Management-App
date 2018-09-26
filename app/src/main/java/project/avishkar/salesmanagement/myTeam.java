@@ -1,5 +1,6 @@
 package project.avishkar.salesmanagement;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,9 +9,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -30,6 +31,7 @@ public class myTeam extends AppCompatActivity {
     private SwipeMenuListView listView;
     private MyTeamAdapter myTeamAdapter;
     private ProgressBar spinner;
+    private String managerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class myTeam extends AppCompatActivity {
         listView=findViewById(R.id.teamListView);
         spinner=findViewById(R.id.progressBar5);
 
-        final ArrayList<String> list=new ArrayList<>();
+        final ArrayList<SalesPerson> list=new ArrayList<>();
 
         spinner.setVisibility(View.VISIBLE);
 
@@ -53,7 +55,7 @@ public class myTeam extends AppCompatActivity {
                 {
                     if(snapshot.getKey().equals(id))
                     {
-                        final String managerName = snapshot.getValue(SalesManager.class).getName();
+                        managerName = snapshot.getValue(SalesManager.class).getName();
 
                         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Salesperson");
                         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -61,7 +63,7 @@ public class myTeam extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
                                     if(snapshot1.getValue(SalesPerson.class).getManagerName().equals(managerName)){
-                                        list.add(snapshot1.getValue(SalesPerson.class).getName());
+                                        list.add(snapshot1.getValue(SalesPerson.class));
                                     }
                                 }
                                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,8 +106,6 @@ public class myTeam extends AppCompatActivity {
                                     public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                                         switch (index) {
                                             case 0:
-                                                // Details
-                                                // Toast.makeText(getApplicationContext(),"Details Clicked",Toast.LENGTH_SHORT).show();
 
                                                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(myTeam.this);
                                                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_myteam_details, null);
@@ -114,17 +114,18 @@ public class myTeam extends AppCompatActivity {
                                                 final AlertDialog dialog = mBuilder.create();
 
                                                 final TextView name, phone, email, org;
+                                                final ImageView imageView;
 
                                                 final ProgressBar spinner7 = mView.findViewById(R.id.progressBar6);
                                                 name = mView.findViewById(R.id.name);
                                                 phone = mView.findViewById(R.id.mobile);
                                                 email = mView.findViewById(R.id.emailid);
                                                 org = mView.findViewById(R.id.organisation);
-
+                                                imageView=mView.findViewById(R.id.user_pic);
                                                 dialog.show();
                                                 spinner7.setVisibility(View.VISIBLE);
 
-                                                final String currSalesperson = list.get(position);
+                                                final SalesPerson currSalesperson = list.get(position);
 
                                                 DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Salesperson");
                                                 reference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -146,6 +147,7 @@ public class myTeam extends AppCompatActivity {
                                                                                 name.setText(sp.getName());
                                                                                 phone.setText(sp.getNumber());
                                                                                 email.setText(sp.getEmailId());
+                                                                                //imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId());
                                                                                 spinner7.setVisibility(View.GONE);
                                                                                 break;
                                                                             }
@@ -169,8 +171,11 @@ public class myTeam extends AppCompatActivity {
                                                 });
                                                 break;
                                             case 1:
-                                                // Message
-                                                Toast.makeText(getApplicationContext(),"Message Clicked",Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(getApplicationContext(),"Aa gya hun mai",Toast.LENGTH_LONG).show();
+                                                Intent intent=new Intent(getApplicationContext(),PersonalChatActivityManager.class);
+                                                intent.putExtra("SalespersonName", list.get(position).getName());
+                                                intent.putExtra("ManagerName",managerName);
+                                                startActivity(intent);
                                                 break;
                                         }
                                         // false : close the menu; true : not close the menu
