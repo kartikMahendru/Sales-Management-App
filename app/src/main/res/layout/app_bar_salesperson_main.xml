@@ -32,6 +32,6 @@
         android:tint="#FFFFFF"
         app:backgroundTint="@color/colorAlert"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
 </android.support.design.widget.CoordinatorLayout>
