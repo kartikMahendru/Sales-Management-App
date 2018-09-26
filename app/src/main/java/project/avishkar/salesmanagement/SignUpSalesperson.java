@@ -135,6 +135,14 @@ public class SignUpSalesperson extends AppCompatActivity {
                     final String key = databaseRef.push().getKey();
                     databaseRef.child(key).setValue(salesPerson);
 
+                    //added chat room with manager
+                    //String tmp1 = managerName.replaceAll("\\s+","");
+                    //String tmp2 = name.replaceAll("\\s+","");
+                    //databaseRef = FirebaseDatabase.getInstance().getReference("ChatsTable");
+                    //String key1 = databaseRef.child(tmp1+"-"+tmp2).push().getKey();
+                    //databaseRef.child(key1).setValue(new BaseMessage("sample","0000","sampler1","role"));
+
+
                     // session created using sharedPreference
                     SessionManager sessionManager = new SessionManager(getApplicationContext());
                     sessionManager.createLoginSession(key,"Salesperson");

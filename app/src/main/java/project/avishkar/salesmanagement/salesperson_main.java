@@ -56,7 +56,7 @@ public class salesperson_main extends AppCompatActivity
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList <InventoryItem> list;
     private FloatingActionButton fab;
-    private String managerName;
+    private String managerName, salespersonName ,id,role;
     private int sold;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +70,8 @@ public class salesperson_main extends AppCompatActivity
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
-        final String id = details.get("id");
-        final String role = details.get("role");
+        id = details.get("id");
+        role = details.get("role");
         databaseReference = FirebaseDatabase.getInstance().getReference(role);
         mRecyclerView = findViewById(R.id.items_list1);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -133,8 +133,13 @@ public class salesperson_main extends AppCompatActivity
                             else
                             {
 
+<<<<<<< HEAD
+                                databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
+                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+=======
                                 final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Salesperson");
                                 databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+>>>>>>> b2b59b1245ec8bd15e4660a2c7bb705a365c6723
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -144,7 +149,7 @@ public class salesperson_main extends AppCompatActivity
                                             if(snapshot.getKey().equals(id)){
 
                                                 SalesPerson sp = snapshot.getValue(SalesPerson.class);
-
+                                                salespersonName = sp.getName();
                                                 managerName = sp.getManagerName();
 
                                                 final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Salesperson");
@@ -411,10 +416,10 @@ public class salesperson_main extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id1 = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id1 == R.id.action_settings) {
             return true;
         }
 
@@ -425,21 +430,21 @@ public class salesperson_main extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        int id1 = item.getItemId();
 
-        if (id == R.id.dashboard) {
+        if (id1 == R.id.dashboard) {
 
-        } else if (id == R.id.my_account) {
+        } else if (id1 == R.id.my_account) {
 
             //show the salesperson's myaccount (used same class AccountManager for salesperson also)
             Intent intent = new Intent(salesperson_main.this,AccountManager.class);
             startActivity(intent);
 
-        } else if (id == R.id.leaderboard) {
+        } else if (id1 == R.id.leaderboard) {
 
-        } else if (id == R.id.statistics) {
+        } else if (id1 == R.id.statistics) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id1 == R.id.nav_share) {
 
             //Share app with others
             ApplicationInfo api = getApplicationContext().getApplicationInfo();
@@ -448,9 +453,39 @@ public class salesperson_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
+<<<<<<< HEAD
+        } else if(id1 == R.id.message_manager){
+
+                databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                            if (snapshot.getKey().equals(id)) {
+
+                                SalesPerson sp = snapshot.getValue(SalesPerson.class);
+                                salespersonName = sp.getName();
+                                managerName = sp.getManagerName();
+                                Intent intent = new Intent(salesperson_main.this, PersonalChatActivitySalesperson.class);
+                                intent.putExtra("SalespersonName", salespersonName);
+                                intent.putExtra("ManagerName", managerName);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+=======
         }else if(id == R.id.chat_room){
 
             // add intent for chat room here
+>>>>>>> b2b59b1245ec8bd15e4660a2c7bb705a365c6723
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
