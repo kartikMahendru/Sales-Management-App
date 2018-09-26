@@ -39,6 +39,7 @@
         <activity android:name=".ProductSpecificDetails" />
         <activity android:name=".PersonalChatActivityManager"></activity>
         <activity android:name=".PersonalChatActivitySalesperson"></activity>
+        <activity android:name=".chatRoom"></activity>
 
         <activity
             android:name=".myTeam"

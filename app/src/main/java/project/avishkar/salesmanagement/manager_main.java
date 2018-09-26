@@ -381,7 +381,28 @@ public class manager_main extends AppCompatActivity
             });
         } else if(id == R.id.chat_room){
 
-            // add intent for chat room here
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            final String idManager = sessionManager.getUserDetails().get("id");
+            databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        if(dataSnapshot1.getKey().equals(idManager)){
+
+                            SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
+                            Intent intent = new Intent(manager_main.this, chatRoom.class);
+                            intent.putExtra("ManagerNumber", salesManager.getNumber());
+                            startActivity(intent);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

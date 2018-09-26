@@ -133,13 +133,9 @@ public class salesperson_main extends AppCompatActivity
                             else
                             {
 
-<<<<<<< HEAD
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
                                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-=======
-                                final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Salesperson");
-                                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
->>>>>>> b2b59b1245ec8bd15e4660a2c7bb705a365c6723
+
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -453,7 +449,7 @@ public class salesperson_main extends AppCompatActivity
             share_intent.setType("application/vnd.android.package-archive");
             share_intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
             startActivity(Intent.createChooser(share_intent, "Share app using"));
-<<<<<<< HEAD
+
         } else if(id1 == R.id.message_manager){
 
                 databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
@@ -481,11 +477,54 @@ public class salesperson_main extends AppCompatActivity
 
                     }
                 });
-=======
-        }else if(id == R.id.chat_room){
+        }else if(id1 == R.id.chat_room){
 
-            // add intent for chat room here
->>>>>>> b2b59b1245ec8bd15e4660a2c7bb705a365c6723
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            final String idSP = sessionManager.getUserDetails().get("id");
+            databaseReference = FirebaseDatabase.getInstance().getReference("Salesperson");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                     String thisManager="";
+                    for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+
+                        if(idSP.equals(dataSnapshot1.getKey())){
+
+                            SalesPerson salesPerson = dataSnapshot1.getValue(SalesPerson.class);
+                            thisManager = salesPerson.getManagerName();
+                            break;
+                        }
+                    }
+                    final String thisManagerName = thisManager;
+                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Manager");
+                    databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+
+                                SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
+                                if(salesManager.getName().equals(thisManagerName)){
+
+                                    Intent intent = new Intent(salesperson_main.this, chatRoom.class);
+                                    intent.putExtra("ManagerNumber", salesManager.getNumber());
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

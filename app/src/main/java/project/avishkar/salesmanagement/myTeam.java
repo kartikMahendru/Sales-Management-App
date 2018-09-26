@@ -173,7 +173,7 @@ public class myTeam extends AppCompatActivity {
                                             case 1:
                                                 //Toast.makeText(getApplicationContext(),"Aa gya hun mai",Toast.LENGTH_LONG).show();
                                                 Intent intent=new Intent(getApplicationContext(),PersonalChatActivityManager.class);
-                                                intent.putExtra("SalespersonName", list.get(position));
+                                                intent.putExtra("SalespersonName", list.get(position).getName());
                                                 intent.putExtra("ManagerName",managerName);
                                                 startActivity(intent);
                                                 break;
