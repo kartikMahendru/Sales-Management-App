@@ -10,10 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -52,6 +54,12 @@ public class PersonalChatActivityManager extends AppCompatActivity{
          SalespersonName = it.getStringExtra("SalespersonName");
          ManagerName = it.getStringExtra("ManagerName");
 
+        final RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(getApplicationContext()) {
+            @Override protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
+
         //getting current users info
         SessionManager sm = new SessionManager(getApplicationContext());
         final HashMap<String, String> mp = sm.getUserDetails();
@@ -69,7 +77,7 @@ public class PersonalChatActivityManager extends AppCompatActivity{
                 databaseReference.child(tmp1+"-"+tmp2).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        ArrayList<BaseMessage> mMessages=new ArrayList<>();
+                        final ArrayList<BaseMessage> mMessages=new ArrayList<>();
 
                         for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
 
@@ -78,9 +86,11 @@ public class PersonalChatActivityManager extends AppCompatActivity{
 
                         }
                         messageListAdapter=new MessageListAdapter(getApplicationContext(),mMessages);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+                        recyclerView.setLayoutManager(linearLayoutManager);
                         recyclerView.setAdapter(messageListAdapter);
                         messageListAdapter.notifyDataSetChanged();
+                        recyclerView.smoothScrollToPosition(mMessages.size()-1);
                     }
 
                     @Override
@@ -138,11 +148,12 @@ public class PersonalChatActivityManager extends AppCompatActivity{
                                 mMessages.add(bm);
 
                             }
-                            messageListAdapter = new MessageListAdapter(getApplicationContext(), mMessages);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            messageListAdapter=new MessageListAdapter(getApplicationContext(),mMessages);
+                            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+                            recyclerView.setLayoutManager(linearLayoutManager);
                             recyclerView.setAdapter(messageListAdapter);
                             messageListAdapter.notifyDataSetChanged();
-
+                            recyclerView.smoothScrollToPosition(mMessages.size()-1);
                             chatBox.setText("");
                         }
 

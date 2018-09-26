@@ -49,7 +49,7 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
         holder.soldItems.setText(sold.get(position));
         holder.profitText.setText(String.valueOf(Integer.parseInt(sold.get(position)) * Integer.parseInt(profit.get(position))));
         holder.spinnerImage.setVisibility(View.VISIBLE);
-        imageSetter.setImage(holder.itemView.getContext(),holder.userPic,names.get(position).getEmailId());
+        imageSetter.setImage(holder.itemView.getContext(),holder.userPic,names.get(position).getEmailId(),holder.spinnerImage);
         holder.spinnerImage.setVisibility(View.GONE);
     }
 
