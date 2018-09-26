@@ -17,6 +17,8 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.bumptech.glide.util.Util;
+import com.google.android.gms.common.images.internal.ImageUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -115,6 +117,7 @@ public class myTeam extends AppCompatActivity {
 
                                                 final TextView name, phone, email, org;
                                                 final ImageView imageView;
+
                                                 final ProgressBar spinner7 = mView.findViewById(R.id.progressBar6);
                                                 final ProgressBar spinnerImage = mView.findViewById(R.id.progressBar10);
 
@@ -138,7 +141,7 @@ public class myTeam extends AppCompatActivity {
 
                                                             final SalesPerson sp = snapshot1.getValue(SalesPerson.class);
 
-                                                            if(sp.getName().equals(currSalesperson.getName())){
+                                                            if(sp.getName().equals(currSalesperson)){
 
                                                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
                                                                 reference.addListenerForSingleValueEvent(new ValueEventListener() {

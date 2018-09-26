@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -43,7 +44,6 @@
             android:label="Personal Chat"></activity>
         <activity android:name=".chatRoom"
             android:label="Chat Room"></activity>
-
         <activity
             android:name=".myTeam"
             android:label="My Team"></activity>
