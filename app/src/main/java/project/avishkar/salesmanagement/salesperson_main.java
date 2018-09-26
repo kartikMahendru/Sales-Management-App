@@ -161,7 +161,7 @@ public class salesperson_main extends AppCompatActivity
                                                                     Toast.makeText(getApplicationContext(), "Sold can't be greater than items remaining!", Toast.LENGTH_LONG).show();
                                                                     sold=0;
                                                                 }
-                                                                InventoryItem it = new InventoryItem(itemName,it1.getTotal_available(),sold + it1.getSold());
+                                                                InventoryItem it = new InventoryItem(itemName,it1.getTotal_available(),sold + it1.getSold(), it1.getProfit());
                                                                 databaseReference1.child(id).child("Inventory").child(snapshot1.getKey()).setValue(it);
 
                                                                 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +184,7 @@ public class salesperson_main extends AppCompatActivity
                                                                                             Log.d("TAG :: ", snapshot1.getValue(InventoryItem.class).getItemName()+ " " + itemName);
                                                                                             if(snapshot1.getValue(InventoryItem.class).getItemName().equals(itemName)){
                                                                                                 InventoryItem it1 = snapshot1.getValue(InventoryItem.class);
-                                                                                                InventoryItem it = new InventoryItem(itemName,it1.getTotal_available()-sold,it1.getSold());
+                                                                                                InventoryItem it = new InventoryItem(itemName,it1.getTotal_available()-sold,it1.getSold(), it1.getProfit());
                                                                                                 databaseReference1.child(snapshot3.getKey()).child("Inventory").child(snapshot1.getKey()).setValue(it);
                                                                                                 break;
                                                                                             }
@@ -320,7 +320,7 @@ public class salesperson_main extends AppCompatActivity
                                     Log.d("TAGI :: ",snapshot1.getValue(InventoryItem.class).getItemName() + " " + itemName);
                                     if(snapshot1.getValue(InventoryItem.class).getItemName().equals(itemName)){
                                         InventoryItem it1 = snapshot1.getValue(InventoryItem.class);
-                                        InventoryItem itNew = new InventoryItem(itemName,it1.getTotal_available(),it1.getSold() + sold);
+                                        InventoryItem itNew = new InventoryItem(itemName,it1.getTotal_available(),it1.getSold() + sold, it1.getProfit());
                                         databaseReference.child(snapshot.getKey()).child("Inventory").child(snapshot1.getKey()).setValue(itNew);
                                         break;
                                     }

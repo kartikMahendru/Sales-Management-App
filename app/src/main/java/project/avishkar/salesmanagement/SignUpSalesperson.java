@@ -181,7 +181,7 @@ public class SignUpSalesperson extends AppCompatActivity {
                                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                         for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
                                                                             InventoryItem it = snapshot1.getValue(InventoryItem.class);
-                                                                            InventoryItem itNew = new InventoryItem(it.getItemName(),it.getTotal_available() - it.getSold(), 0);
+                                                                            InventoryItem itNew = new InventoryItem(it.getItemName(),it.getTotal_available() - it.getSold(), 0, it.getProfit());
                                                                             databaseReference1.child("Inventory").child(databaseReference1.child("Inventory").push().getKey()).setValue(itNew);
                                                                         }
                                                                     }

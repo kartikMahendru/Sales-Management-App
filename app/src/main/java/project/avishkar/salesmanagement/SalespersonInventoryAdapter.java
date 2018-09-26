@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,7 +41,9 @@ public class SalespersonInventoryAdapter extends RecyclerView.Adapter<Salesperso
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.itemName.setText(list.get(position).getItemName());
         holder.sold.setText(String.valueOf(list.get(position).getSold()));
+        holder.progressBar.setProgress(list.get(position).getSold());
         holder.remaining.setText(String.valueOf(list.get(position).getTotal_available()));
+        holder.profitText.setText(String.valueOf(list.get(position).getSold() * list.get(position).getProfit()));
     }
 
     @Override
@@ -51,14 +54,17 @@ public class SalespersonInventoryAdapter extends RecyclerView.Adapter<Salesperso
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView itemName,sold,remaining;
+        private TextView itemName, sold, remaining, profitText;
         private ImageView edit;
+        private ProgressBar progressBar;
 
         public MyViewHolder(View itemView){
             super(itemView);
             itemName=itemView.findViewById(R.id.item_name);
             sold=itemView.findViewById(R.id.items_sold);
+            progressBar=itemView.findViewById(R.id.progressBar2);
             remaining=itemView.findViewById(R.id.remaining_items_text);
+            profitText=itemView.findViewById(R.id.profitText);
         }
     }
 }
