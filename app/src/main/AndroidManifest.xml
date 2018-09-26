@@ -39,6 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProductSpecificDetails" />
         <activity android:name=".PersonalChatActivityManager"
+            android:windowSoftInputMode="adjustPan"
             android:label="Personal Chat"></activity>
         <activity android:name=".PersonalChatActivitySalesperson"
             android:label="Personal Chat"></activity>

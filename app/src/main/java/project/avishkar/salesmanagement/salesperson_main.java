@@ -68,7 +68,6 @@ public class salesperson_main extends AppCompatActivity
         fab=findViewById(R.id.fab_salesperson);
         spinner = (ProgressBar) findViewById(R.id.progressBar3);
         swipeRefreshLayout=findViewById(R.id.swiperefresh1);
-
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         id = details.get("id");
@@ -293,7 +292,7 @@ public class salesperson_main extends AppCompatActivity
                         SalesPerson sm = snapshot.getValue(SalesPerson.class);
                         headerSalespersonName.setText(sm.getName());
                         headerSalespersonEmail.setText(sm.getEmailId());
-                        imageSetter.setImage(getApplicationContext(),headerSalespersonImage,sm.getEmailId());
+                        imageSetter.setImage(getApplicationContext(),headerSalespersonImage,sm.getEmailId(),spinner);
                         break;
                     }
                 }

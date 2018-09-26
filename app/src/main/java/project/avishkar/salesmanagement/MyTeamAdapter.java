@@ -49,9 +49,9 @@ public class MyTeamAdapter extends BaseAdapter {
         ProgressBar spinnerImage=convertView.findViewById(R.id.progressBar11);
 
         teamName.setText(list.get(position).getName());
-        spinnerImage.setVisibility(View.VISIBLE);
-        imageSetter.setImage(parent.getContext(),teamImage,list.get(position).getEmailId());
-        spinnerImage.setVisibility(View.GONE);
+        //spinnerImage.setVisibility(View.VISIBLE);
+        imageSetter.setImage(parent.getContext(),teamImage,list.get(position).getEmailId(),spinnerImage);
+        //spinnerImage.setVisibility(View.GONE);
         return convertView;
     }
 }
