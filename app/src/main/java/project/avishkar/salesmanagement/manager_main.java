@@ -142,7 +142,7 @@ public class manager_main extends AppCompatActivity
                         else {
 
                             int quant = Integer.parseInt(q1);
-                            it = new InventoryItem(item, quant);
+                            it = new InventoryItem(item, quant, 0, profitAmount);
 
                             String key = databaseRef.child(id).child("Inventory").push().getKey();
                             databaseRef.child(id).child("Inventory").child(key).setValue(it);

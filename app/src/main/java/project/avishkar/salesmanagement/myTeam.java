@@ -17,8 +17,6 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.bumptech.glide.util.Util;
-import com.google.android.gms.common.images.internal.ImageUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -141,7 +139,7 @@ public class myTeam extends AppCompatActivity {
 
                                                             final SalesPerson sp = snapshot1.getValue(SalesPerson.class);
 
-                                                            if(sp.getName().equals(currSalesperson)){
+                                                            if(sp.getName().equals(currSalesperson.getName())){
 
                                                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
                                                                 reference.addListenerForSingleValueEvent(new ValueEventListener() {

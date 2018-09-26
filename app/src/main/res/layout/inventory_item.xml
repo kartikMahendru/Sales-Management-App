@@ -96,6 +96,24 @@
                 android:layout_toLeftOf="@id/separator"
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/unallocated"
+                android:text="Total Profit: ₹"
+                android:id="@+id/profit"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profitText"
+                android:layout_alignBaseline="@id/profit"
+                android:layout_toRightOf="@id/profit"
+                android:text="200"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
         </RelativeLayout>
     </LinearLayout>
 

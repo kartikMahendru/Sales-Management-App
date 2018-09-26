@@ -66,8 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sold:"
                     android:id="@+id/sold"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +74,25 @@
                     android:text="200"
                     android:id="@+id/soldText"
                     android:textSize="20sp"
-                    android:layout_marginLeft="8dp"/>
+                    android:layout_marginLeft="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profit: ₹"
+                    android:id="@+id/profit"
+                    android:layout_toLeftOf="@+id/profitText"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="200"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/profitText"
+                    android:textSize="20sp" />
+
 
             </RelativeLayout>
 
