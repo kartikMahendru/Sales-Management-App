@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,8 +11,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,6 +84,7 @@ public class AccountManager extends AppCompatActivity {
 
               final ProgressDialog dialog = ProgressDialog.show(AccountManager.this, "Loading...","Please wait..." , true);
               dialog.show();
+              spinnerImage.setVisibility(View.VISIBLE);
               Handler handler = new Handler();
               handler.postDelayed(new Runnable() {
                   public void run() {
@@ -108,7 +105,6 @@ public class AccountManager extends AppCompatActivity {
                             currEmail = sm1.getEmail();
 
                             // downloading profile pic
-                            spinnerImage.setVisibility(View.VISIBLE);
                             imageSetter.setImage(getApplicationContext(),imageView,currEmail);
                             spinnerImage.setVisibility(View.GONE);
                             break;
@@ -131,7 +127,7 @@ public class AccountManager extends AppCompatActivity {
 
 
                   }
-              }, 4000);  // 4000 milliseconds
+              }, 1000);  // 1000 milliseconds
 
         }
         else
@@ -140,6 +136,7 @@ public class AccountManager extends AppCompatActivity {
 
             final ProgressDialog dialog = ProgressDialog.show(AccountManager.this, "Loading...","Please wait..." , true);
             dialog.show();
+            spinnerImage.setVisibility(View.VISIBLE);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -172,7 +169,9 @@ public class AccountManager extends AppCompatActivity {
                                     update_org.setText(currOrg);
                                     update_email.setText(currEmail);
                                     update_mobile.setText(currMobile);
+
                                     imageSetter.setImage(getApplicationContext(),imageView,currEmail);
+                                    spinnerImage.setVisibility(View.GONE);
                                     dialog.dismiss();
                                 }
 
@@ -193,7 +192,7 @@ public class AccountManager extends AppCompatActivity {
 
                 });
                 }
-            }, 4000);  // 4000 milliseconds
+            }, 1000);  // 1000 milliseconds
         }
 
         //Toast.makeText(this,currOrg+"**"+currName,Toast.LENGTH_LONG).show();

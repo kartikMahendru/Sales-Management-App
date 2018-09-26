@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,8 +46,12 @@ public class MyTeamAdapter extends BaseAdapter {
 
         TextView teamName=convertView.findViewById(R.id.team_name);
         ImageView teamImage=convertView.findViewById(R.id.team_image);
+        ProgressBar spinnerImage=convertView.findViewById(R.id.progressBar11);
+
         teamName.setText(list.get(position).getName());
+        spinnerImage.setVisibility(View.VISIBLE);
         imageSetter.setImage(parent.getContext(),teamImage,list.get(position).getEmailId());
+        spinnerImage.setVisibility(View.GONE);
         return convertView;
     }
 }

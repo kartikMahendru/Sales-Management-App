@@ -12,25 +12,42 @@
         android:layout_height="wrap_content"
         android:ems="20"
         android:inputType="text"
-        android:layout_weight="0.04"
+        android:layout_weight="0.03"
         android:hint="Item name"/>
 
     <EditText
-        android:id="@+id/quantity"
+        android:id="@+id/profit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="20"
         android:inputType="text|number"
-        android:layout_weight="0.04"
-        android:hint="Quantity"
+        android:layout_weight="0.03"
+        android:hint="Profit (per item)"
         android:layout_margin="4dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Quantity -"
+        android:ems="20"
+        android:layout_margin="4dp"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+
+    <com.alexzaitsev.meternumberpicker.MeterView
+        android:id="@+id/quantity"
+        style="@style/MeterViewStyle"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        android:layout_weight="0.03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.02"
+        android:layout_weight="0.01"
         android:text="Ok"
         android:background="#db3236"
         android:textColor="#FFFFFF"/>
