@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alexzaitsev.meternumberpicker.MeterView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,7 +46,8 @@ import java.util.HashMap;
 public class manager_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private EditText itemName,q;
+    private EditText itemName, profit;
+    private MeterView q;
     private DatabaseReference databaseRef;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -118,7 +120,9 @@ public class manager_main extends AppCompatActivity
 
                 Button ok = (Button) mView.findViewById(R.id.ok);
                 itemName = mView.findViewById(R.id.item_name);
+                profit = mView.findViewById(R.id.profit);
                 q = mView.findViewById(R.id.quantity);
+
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
@@ -128,7 +132,8 @@ public class manager_main extends AppCompatActivity
                     public void onClick(View view) {
 
                         String item = itemName.getText().toString();
-                        String q1 = q.getText().toString();
+                        String q1 = String.valueOf(q.getValue());
+                        int profitAmount = Integer.parseInt(profit.getText().toString());
 
                         if(TextUtils.isEmpty(item) || TextUtils.isEmpty(q1))
                         {
@@ -381,7 +386,29 @@ public class manager_main extends AppCompatActivity
             });
         } else if(id == R.id.chat_room){
 
-            // add intent for chat room here
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            final String idManager = sessionManager.getUserDetails().get("id");
+            databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+            databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        if(dataSnapshot1.getKey().equals(idManager)){
+
+                            SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
+                            Intent intent = new Intent(manager_main.this, chatRoom.class);
+                            intent.putExtra("ManagerNumber", salesManager.getNumber());
+                            intent.putExtra("Name",salesManager.getName());
+                            startActivity(intent);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

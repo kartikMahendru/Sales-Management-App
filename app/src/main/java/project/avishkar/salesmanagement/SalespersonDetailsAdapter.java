@@ -1,12 +1,12 @@
 package project.avishkar.salesmanagement;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,7 +46,9 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
         holder.userName.setText(names.get(position).getName());
         holder.soldItems.setText(sold.get(position));
+        holder.spinnerImage.setVisibility(View.VISIBLE);
         imageSetter.setImage(holder.itemView.getContext(),holder.userPic,names.get(position).getEmailId());
+        holder.spinnerImage.setVisibility(View.GONE);
     }
 
 
@@ -59,11 +61,13 @@ public class SalespersonDetailsAdapter extends RecyclerView.Adapter<SalespersonD
 
         private TextView userName,soldItems;
         private ImageView userPic;
+        private ProgressBar spinnerImage;
         public MyViewHolder(View itemView) {
             super(itemView);
             userName=itemView.findViewById(R.id.user_name);
             soldItems=itemView.findViewById(R.id.soldText);
             userPic=itemView.findViewById(R.id.user_pic);
+            spinnerImage=itemView.findViewById(R.id.progressBar9);
         }
     }
 }

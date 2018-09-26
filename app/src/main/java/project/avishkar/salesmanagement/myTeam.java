@@ -115,15 +115,18 @@ public class myTeam extends AppCompatActivity {
 
                                                 final TextView name, phone, email, org;
                                                 final ImageView imageView;
-
                                                 final ProgressBar spinner7 = mView.findViewById(R.id.progressBar6);
+                                                final ProgressBar spinnerImage = mView.findViewById(R.id.progressBar10);
+
                                                 name = mView.findViewById(R.id.name);
                                                 phone = mView.findViewById(R.id.mobile);
                                                 email = mView.findViewById(R.id.emailid);
                                                 org = mView.findViewById(R.id.organisation);
                                                 imageView=mView.findViewById(R.id.user_pic);
                                                 dialog.show();
+
                                                 spinner7.setVisibility(View.VISIBLE);
+                                                spinnerImage.setVisibility(View.VISIBLE);
 
                                                 final SalesPerson currSalesperson = list.get(position);
 
@@ -135,7 +138,7 @@ public class myTeam extends AppCompatActivity {
 
                                                             final SalesPerson sp = snapshot1.getValue(SalesPerson.class);
 
-                                                            if(sp.getName().equals(currSalesperson)){
+                                                            if(sp.getName().equals(currSalesperson.getName())){
 
                                                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manager");
                                                                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,7 +150,8 @@ public class myTeam extends AppCompatActivity {
                                                                                 name.setText(sp.getName());
                                                                                 phone.setText(sp.getNumber());
                                                                                 email.setText(sp.getEmailId());
-                                                                                //imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId());
+                                                                                imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId());
+                                                                                spinnerImage.setVisibility(View.GONE);
                                                                                 spinner7.setVisibility(View.GONE);
                                                                                 break;
                                                                             }
@@ -173,7 +177,7 @@ public class myTeam extends AppCompatActivity {
                                             case 1:
                                                 //Toast.makeText(getApplicationContext(),"Aa gya hun mai",Toast.LENGTH_LONG).show();
                                                 Intent intent=new Intent(getApplicationContext(),PersonalChatActivityManager.class);
-                                                intent.putExtra("SalespersonName", list.get(position));
+                                                intent.putExtra("SalespersonName", list.get(position).getName());
                                                 intent.putExtra("ManagerName",managerName);
                                                 startActivity(intent);
                                                 break;
