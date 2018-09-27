@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".manager_main"
+    android:background="@drawable/login_gradient"
     tools:showIn="@layout/app_bar_manager_main">
 
     <FrameLayout
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/progress_bar"
             android:visibility="invisible" />
 
     </LinearLayout>

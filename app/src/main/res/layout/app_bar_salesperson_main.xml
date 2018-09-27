@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="project.avishkar.salesmanagement.salesperson_main">
+    tools:context="project.avishkar.salesmanagement.salesperson_main"
+    android:background="@drawable/login_gradient">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -30,7 +31,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:tint="#FFFFFF"
-        app:backgroundTint="@color/colorAlert"
+        app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 

@@ -10,7 +10,6 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GraphManagerActivity extends AppCompatActivity {
 

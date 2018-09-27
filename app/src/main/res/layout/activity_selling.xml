@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
+    android:background="@drawable/login_gradient"
     android:padding="5dp">
 
     <AutoCompleteTextView
@@ -10,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Item name"
+        android:textColor="#fff"
+        android:textColorHint="@color/colorPrimary"
         android:ems="10"
         />
 

@@ -7,13 +7,12 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/colorPrimaryLight">
+    app:cardBackgroundColor="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-
 
         <ImageView
             android:layout_width="100dp"
@@ -29,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/user_pic"
             android:layout_centerVertical="true"
+            android:background="@drawable/progress_bar"
             android:layout_gravity="center"
             android:layout_marginStart="25dp"
             android:visibility="invisible" />
@@ -46,7 +46,7 @@
                 android:text="Utkarsh Garg"
                 android:id="@+id/user_name"
                 android:textSize="25sp"
-                android:textColor="@color/black" />
+                android:textColor="#ffffff" />
 
             <View
                 android:layout_width="match_parent"
@@ -66,6 +66,8 @@
                     android:layout_height="wrap_content"
                     android:text="Sold:"
                     android:id="@+id/sold"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,6 +76,7 @@
                     android:text="200"
                     android:id="@+id/soldText"
                     android:textSize="20sp"
+                    android:textColor="#ffffff"
                     android:layout_marginLeft="8dp" />
 
                 <TextView
@@ -81,6 +84,8 @@
                     android:layout_height="wrap_content"
                     android:text="Profit: ₹"
                     android:id="@+id/profit"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
                     android:layout_toLeftOf="@+id/profitText"
                     android:textSize="20sp" />
 
@@ -89,10 +94,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="200"
+                    android:textColor="#ffffff"
                     android:layout_marginRight="5dp"
                     android:id="@+id/profitText"
                     android:textSize="20sp" />
-
 
             </RelativeLayout>
 

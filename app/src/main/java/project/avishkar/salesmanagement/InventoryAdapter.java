@@ -92,7 +92,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
 
                 new FancyAlertDialog.Builder(activity)
                         .setTitle("Warning!!!")
-                        .setBackgroundColor(Color.parseColor("#00A144"))  //Don't pass R.color.colorvalue
+                        .setBackgroundColor(Color.parseColor("#5002a4"))  //Don't pass R.color.colorvalue
                         .setMessage("Do you really want to delete this item?")
                         .setNegativeBtnText("No")
                         .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue

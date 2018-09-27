@@ -18,7 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemTextColor="@color/colorPrimary"
         android:fitsSystemWindows="true"
+        android:background="@drawable/login_gradient"
         app:headerLayout="@layout/nav_header_salesperson_main"
         app:menu="@menu/activity_salesperson_main_drawer" />
 

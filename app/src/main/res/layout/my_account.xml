@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryLight">
+    android:background="@drawable/login_gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,11 +19,11 @@
             android:padding="10dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:id="@+id/image_picker"
-                android:src="@drawable/ic_collections"
+                android:src="@drawable/gallery"
                 android:layout_gravity="center"/>
 
             <FrameLayout
@@ -44,17 +44,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/progress_bar"
                     android:layout_gravity="center"
                     android:visibility="invisible" />
 
             </FrameLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:id="@+id/image_uploader"
-                android:src="@drawable/ic_cloud_upload"
+                android:src="@drawable/upload"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -66,6 +67,7 @@
         android:layout_gravity="center"
         tools:text="Utkarsh Garg"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
         android:layout_margin="8dp"
         android:textSize="33sp"
         />
@@ -81,7 +83,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_phone" />
+            android:src="@drawable/phonebook_new"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,7 +98,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             tools:text="7753839036"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp" />
         <View android:layout_height="1.5dp"
             android:layout_width="match_parent"
@@ -119,7 +121,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_email" />
+            android:src="@drawable/email" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,7 +137,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 tools:text="utkarsh22garg@gmail.com"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
             <View android:layout_height="1.5dp"
                 android:layout_width="match_parent"
@@ -157,7 +159,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_business_center" />
+            android:src="@drawable/company_new" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,7 +175,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 tools:text="Visa"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
             <View android:layout_height="1.5dp"
                 android:layout_width="match_parent"
@@ -196,7 +198,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:textColor="@color/black"
+            android:textColor="#ffffff"
             android:layout_margin="4dp"
             android:text="Change Password"
             android:textSize="25sp"
@@ -223,7 +225,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAlert"
             android:layout_margin="4dp"
-            android:textColor="@color/black"
+            android:textColor="#ffffff"
             android:text="Logout"
             android:textSize="25sp"
             android:linksClickable="true"
