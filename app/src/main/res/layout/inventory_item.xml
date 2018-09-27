@@ -7,7 +7,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/colorPrimaryLight">
+    app:cardBackgroundColor="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +27,8 @@
                 android:padding="8dp"
                 android:text="Samsung S9"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="22sp"
+                android:textStyle="bold|italic" />
 
             <ImageView
                 android:id="@+id/delete_icon"
@@ -47,7 +47,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progressTint="@color/colorPrimaryDarkComp"
+            android:progressTint="@color/colorPrimaryDark"
             android:progress="43"
             android:max="100"
             android:indeterminate="false"/>
@@ -61,33 +61,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Remaining items: "
+                android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/colorPrimaryDark"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/unallocated_text"
                 android:id="@+id/unallocated"
-                android:text="20"
+                android:text=" 20"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="#fff"/>
 
             <TextView
                 android:id="@+id/total_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100"
+                android:textStyle="bold"
                 android:layout_alignParentRight="true"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/colorPrimaryDark"/>
             <TextView
                 android:id="@+id/separator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
+                android:textStyle="bold"
                 android:layout_toLeftOf="@id/total_item"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/colorPrimaryDark"/>
             <TextView
                 android:id="@+id/sold"
                 android:layout_width="wrap_content"
@@ -95,16 +98,17 @@
                 android:text="43"
                 android:layout_toLeftOf="@id/separator"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="#fff"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/unallocated"
                 android:text="Total Profit: ₹"
                 android:id="@+id/profit"
+                android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/colorPrimaryDark"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,7 +117,7 @@
                 android:layout_toRightOf="@id/profit"
                 android:text="200"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="#fff"/>
         </RelativeLayout>
     </LinearLayout>
 

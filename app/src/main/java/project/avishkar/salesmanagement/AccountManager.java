@@ -4,20 +4,17 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,10 +36,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
+import com.shashank.sony.fancydialoglib.Icon;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+
+import project.avishkar.salesmanagement.Registration.MainActivity;
 
 public class AccountManager extends AppCompatActivity {
 
@@ -109,7 +112,7 @@ public class AccountManager extends AppCompatActivity {
 
                             // downloading profile pic
                             spinnerImage.setVisibility(View.VISIBLE);
-                            imageSetter.setImage(getApplicationContext(),imageView,currEmail,spinnerImage);
+                            ImageSetter.setImage(getApplicationContext(),imageView,currEmail,spinnerImage);
                             spinnerImage.setVisibility(View.GONE);
                             break;
                         }
@@ -172,7 +175,7 @@ public class AccountManager extends AppCompatActivity {
                                     update_org.setText(currOrg);
                                     update_email.setText(currEmail);
                                     update_mobile.setText(currMobile);
-                                    imageSetter.setImage(getApplicationContext(),imageView,currEmail,spinnerImage);
+                                    ImageSetter.setImage(getApplicationContext(),imageView,currEmail,spinnerImage);
                                     dialog.dismiss();
                                 }
 
@@ -196,99 +199,53 @@ public class AccountManager extends AppCompatActivity {
             }, 1000);  // 1000 milliseconds
         }
 
-        //Toast.makeText(this,currOrg+"**"+currName,Toast.LENGTH_LONG).show();
         update_name = (TextView) findViewById(R.id.name);
-
         update_org = (TextView) findViewById(R.id.organisation);
-        //update_org.setText(currOrg);
-
         update_email = (TextView) findViewById(R.id.emailid);
-        //update_email.setText(currEmail);
-        update_email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountManager.this);
-                final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_email, null);
-                mBuilder.setTitle("Update email-id");
-
-                Button update = (Button) mView.findViewById(R.id.update);
-
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-
-
-                        dialog.dismiss();
-                        Snackbar snackbar = Snackbar
-                                .make(view , "Email-id updated successfully !", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-                });
-            }
-        });
-
         update_mobile = (TextView) findViewById(R.id.mobile);
-        //update_mobile.setText(currMobile);
-        update_mobile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountManager.this);
-                final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_mobile, null);
-                mBuilder.setTitle("Update mobile number");
-
-                Button update = (Button) mView.findViewById(R.id.update);
-                final EditText updated_number = (EditText) mView.findViewById(R.id.mobile);
-
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        // update mobile no. in firebase
-
-                        dialog.dismiss();
-
-                        Toast.makeText(getApplicationContext(), "Mobile no. updated successfully!", Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-            }
-        });
-
         change_password = (TextView) findViewById(R.id.change_pass);
+
         change_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountManager.this);
-                final View mView = getLayoutInflater().inflate(R.layout.dialog_box_manager_change_password, null);
-                mBuilder.setTitle("Change password");
 
-                Button update = (Button) mView.findViewById(R.id.update);
+                new FancyAlertDialog.Builder(AccountManager.this)
+                        .setTitle("Warning!!!")
+                        .setBackgroundColor(Color.parseColor("#00A144"))  //Don't pass R.color.colorvalue
+                        .setMessage("Do you really want to change password ?")
+                        .setNegativeBtnText("No")
+                        .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
+                        .setPositiveBtnText("Yes")
+                        .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
+                        .setAnimation(Animation.POP)
+                        .isCancellable(true)
+                        .setIcon(R.drawable.ic_error_outline_black_24dp, Icon.Visible)
+                        .OnPositiveClicked(new FancyAlertDialogListener() {
+                            @Override
+                            public void OnClick() {
+                               // progressBar.setVisibility(View.VISIBLE);
+                                auth.sendPasswordResetEmail(update_email.getText().toString())
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(AccountManager.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(AccountManager.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                                }
 
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
+                                              //  progressBar.setVisibility(View.GONE);
+                                            }
+                                        });
+                            }
+                        })
+                        .OnNegativeClicked(new FancyAlertDialogListener() {
+                            @Override
+                            public void OnClick() {
 
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        // authenticate old password and update new
-
-                        dialog.dismiss();
-                        Snackbar snackbar = Snackbar
-                                .make(view , "Password updated successfully !", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-                });
+                            }
+                        })
+                        .build();
             }
         });
 

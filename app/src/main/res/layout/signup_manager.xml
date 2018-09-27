@@ -6,167 +6,175 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
 
-    tools:context=".SignUpSalesManager">
+    tools:context=".Registration.SignUpSalesManager">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="40dp"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryLight"
-        android:paddingRight="40dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Sign Up"
-                android:textSize="40dp"
-                android:fontFamily="@font/acmeregular"/>
-
-        </LinearLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textColorHint="@color/colorAccent"
-            android:id="@+id/textInputLayout">
-            <android.support.design.widget.TextInputEditText
-                android:layout_height="57dp"
-                android:layout_width="match_parent"
-                android:hint="Name"
-                android:id="@+id/name"
-                android:layout_marginTop="50dp"
-                android:textSize="25dp"
-                android:inputType="text"
-                />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="68dp"
-            android:layout_width="match_parent"
-            android:textColorHint="@color/colorAccent"
-            android:id="@+id/textInputLayout12">
-            <android.support.design.widget.TextInputEditText
-                android:layout_height="57dp"
-                android:layout_width="match_parent"
-                android:hint="Mobile number"
-                android:id="@+id/mobile"
-                android:layout_marginTop="50dp"
-                android:textSize="25dp"
-                android:inputType="text|number"
-                />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="68dp"
-            android:layout_width="match_parent"
-            android:textColorHint="@color/colorAccent"
-            android:id="@+id/organisation">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/organisation_name"
-                android:layout_width="match_parent"
-                android:layout_height="57dp"
-                android:layout_marginTop="50dp"
-                android:hint="Organisation Name"
-                android:inputType="text"
-                android:textSize="25dp" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textColorHint="@color/colorAccent"
-            android:id="@+id/textInputLayout1">
-            <android.support.design.widget.TextInputEditText
-                android:layout_height="49dp"
-                android:layout_width="match_parent"
-                android:hint="Email-ID"
-                android:id="@+id/emailid"
-                android:textSize="25dp"
-                android:layout_marginTop="25dp"
-                android:inputType="textEmailAddress"
-                />
-        </android.support.design.widget.TextInputLayout>
-
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="66dp"
-            android:layout_width="match_parent"
-            app:passwordToggleEnabled="true"
-            android:textColorHint="@color/colorAccent"
-            app:passwordToggleTint="@color/colorAccent"
-
-
-            android:id="@+id/textInputLayout2">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:hint="Password"
-                android:layout_marginTop="25dp"
-                android:textSize="25dp"
-                android:id="@+id/password"
-                android:inputType="textPassword"/>
-        </android.support.design.widget.TextInputLayout>
+        android:background="@drawable/login_gradient">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_height="match_parent"
+            android:paddingLeft="40dp"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Signup"
-                android:id="@+id/signUp_button"
-                android:textColor="#f7f7f7"
-                android:background="@color/colorPrimaryDark"
-                android:gravity="center"/>
+            android:background="@drawable/login_gradient"
+            android:paddingRight="40dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Already Registered!! "/>
+                android:gravity="center"
+                android:layout_gravity="center_horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:linksClickable="true"
-                    android:text="Login"
-                    android:id="@+id/login"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textColorLink="@color/colorAccent"
-                    android:textSize="20sp" />
+                    android:layout_gravity="center"
+                    android:text="Sign Up"
+                    android:textSize="40dp"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="@font/acmeregular"/>
 
             </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/colorPrimary"
+                android:id="@+id/textInputLayout">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_height="57dp"
+                    android:layout_width="match_parent"
+                    android:hint="Name"
+                    android:id="@+id/name"
+                    android:layout_marginTop="50dp"
+                    android:textSize="25dp"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="68dp"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/colorPrimary"
+                android:id="@+id/textInputLayout12">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_height="57dp"
+                    android:layout_width="match_parent"
+                    android:hint="Mobile number"
+                    android:id="@+id/mobile"
+                    android:layout_marginTop="50dp"
+                    android:textSize="25dp"
+                    android:inputType="text|number"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="68dp"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/colorPrimary"
+                android:id="@+id/organisation">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/organisation_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:layout_marginTop="50dp"
+                    android:hint="Organisation Name"
+                    android:inputType="text"
+                    android:textSize="25dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/colorPrimary"
+                android:id="@+id/textInputLayout1">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_height="49dp"
+                    android:layout_width="match_parent"
+                    android:hint="Email-ID"
+                    android:id="@+id/emailid"
+                    android:textSize="25dp"
+                    android:layout_marginTop="25dp"
+                    android:inputType="textEmailAddress"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="66dp"
+                android:layout_width="match_parent"
+                app:passwordToggleEnabled="true"
+                android:textColorHint="@color/colorPrimary"
+                app:passwordToggleTint="@color/colorPrimary"
+
+
+                android:id="@+id/textInputLayout2">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:hint="Password"
+                    android:layout_marginTop="25dp"
+                    android:textSize="25dp"
+                    android:id="@+id/password"
+                    android:inputType="textPassword"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign up"
+                    android:id="@+id/signUp_button"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorAccent"
+                        android:text="Already Registered!! "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:linksClickable="true"
+                        android:text="Login"
+                        android:id="@+id/login"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorAccent"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:background="@drawable/login_gradient"
+            >
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@drawable/progress_bar"
                 android:layout_gravity="center|bottom"
                 android:visibility="gone" />
         </LinearLayout>

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp">
+    android:paddingTop="8dp"
+    android:background="@color/colorPrimaryDark">
 
 
     <TextView
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:maxWidth="240dp"
         android:padding="8dp"
-        android:textColor="#000000"
+        android:textColor="#fff"
         android:textSize="20sp"
         android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp" />
@@ -27,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
+        android:textColor="#fff"
         android:textStyle="italic"
         app:layout_constraintLeft_toRightOf="@+id/text_message_body"
         android:layout_marginLeft="4dp"
