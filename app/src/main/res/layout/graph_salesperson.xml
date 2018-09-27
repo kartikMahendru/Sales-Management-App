@@ -23,6 +23,7 @@
                 android:id="@+id/progressBar13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/progress_bar"
                 android:layout_gravity="center"
                 android:visibility="gone" />
         </LinearLayout>
