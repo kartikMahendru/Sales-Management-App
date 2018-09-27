@@ -49,6 +49,7 @@
             android:name=".myTeam"
             android:label="My Team"></activity>
 
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}"
@@ -60,6 +61,9 @@
                 android:resource="@xml/file_paths" />
 
         </provider>
+
+        <activity android:name=".GraphSalespersonActivity"></activity>
+        <activity android:name=".GraphManagerActivity"></activity>
 
     </application>
 

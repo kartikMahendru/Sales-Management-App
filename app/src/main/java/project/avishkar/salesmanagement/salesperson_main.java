@@ -68,10 +68,12 @@ public class salesperson_main extends AppCompatActivity
         fab=findViewById(R.id.fab_salesperson);
         spinner = (ProgressBar) findViewById(R.id.progressBar3);
         swipeRefreshLayout=findViewById(R.id.swiperefresh1);
+
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
         id = details.get("id");
         role = details.get("role");
+
         databaseReference = FirebaseDatabase.getInstance().getReference(role);
         mRecyclerView = findViewById(R.id.items_list1);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -163,6 +165,20 @@ public class salesperson_main extends AppCompatActivity
                                                                 InventoryItem it = new InventoryItem(itemName,it1.getTotal_available(),sold + it1.getSold(), it1.getProfit());
                                                                 databaseReference1.child(id).child("Inventory").child(snapshot1.getKey()).setValue(it);
 
+
+                                                                // updating manager's sold
+                                                                updateManagerSold(managerName,itemName,sold);
+
+                                                                // updating graph node
+                                                                if(sold>0)
+                                                                {
+                                                                    for(int i=0;i<100;i++)
+                                                                    {
+                                                                        System.out.println(salespersonName+" "+String.valueOf(it1.getProfit()*sold));
+                                                                    }
+                                                                    GraphSalesperson.create(String.valueOf(it1.getProfit()*sold), salespersonName);
+                                                                }
+
                                                                 ////////////////////////////////////////////////////////////////////////////////////////////
                                                                 // decreasing the current item total remaining for all attached salespersons
 
@@ -185,9 +201,6 @@ public class salesperson_main extends AppCompatActivity
                                                                                                 InventoryItem it1 = snapshot1.getValue(InventoryItem.class);
                                                                                                 InventoryItem it = new InventoryItem(itemName,it1.getTotal_available()-sold,it1.getSold(), it1.getProfit());
                                                                                                 databaseReference1.child(snapshot3.getKey()).child("Inventory").child(snapshot1.getKey()).setValue(it);
-
-                                                                                                // updating manager's sold
-                                                                                                updateManagerSold(managerName,itemName,sold);
 
                                                                                                 break;
                                                                                             }
@@ -440,6 +453,9 @@ public class salesperson_main extends AppCompatActivity
         } else if (id1 == R.id.leaderboard) {
 
         } else if (id1 == R.id.statistics) {
+
+            Intent intent=new Intent(salesperson_main.this,GraphSalespersonActivity.class);
+            startActivity(intent);
 
         } else if (id1 == R.id.nav_share) {
 
