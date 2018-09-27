@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Chat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SessionManager;
 
 /**
  * Created by user on 9/25/18.

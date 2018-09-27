@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< Updated upstream
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/login_gradient">
-=======
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
->>>>>>> Stashed changes
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/login_gradient">
+
 
     <FrameLayout
         android:layout_width="match_parent"

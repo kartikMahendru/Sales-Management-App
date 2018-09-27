@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.MyTeam;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import project.avishkar.salesmanagement.ImageSetter;
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SalesPerson;
 
 public class MyTeamAdapter extends BaseAdapter {
     private ArrayList <SalesPerson> list;
@@ -50,7 +54,7 @@ public class MyTeamAdapter extends BaseAdapter {
 
         teamName.setText(list.get(position).getName());
         //spinnerImage.setVisibility(View.VISIBLE);
-        imageSetter.setImage(parent.getContext(),teamImage,list.get(position).getEmailId(),spinnerImage);
+        ImageSetter.setImage(parent.getContext(),teamImage,list.get(position).getEmailId(),spinnerImage);
         //spinnerImage.setVisibility(View.GONE);
         return convertView;
     }

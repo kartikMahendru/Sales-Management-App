@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Registration;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +27,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+
+import project.avishkar.salesmanagement.ManagerMain;
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SalesManager;
+import project.avishkar.salesmanagement.SalesPerson;
+import project.avishkar.salesmanagement.SalespersonMain;
+import project.avishkar.salesmanagement.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -239,13 +246,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     void goto_Manager() {
-        Intent intent=new Intent(MainActivity.this,manager_main.class);
+        Intent intent=new Intent(MainActivity.this,ManagerMain.class);
         startActivity(intent);
         finish();
     }
 
     void goto_Salesperson() {
-        Intent intent=new Intent(MainActivity.this,salesperson_main.class);
+        Intent intent=new Intent(MainActivity.this,SalespersonMain.class);
         startActivity(intent);
         finish();
     }

@@ -45,7 +45,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class salesperson_main extends AppCompatActivity
+import project.avishkar.salesmanagement.Chat.ChatRoom;
+import project.avishkar.salesmanagement.Chat.PersonalChatActivitySalesperson;
+import project.avishkar.salesmanagement.Graph.GraphSalesperson;
+import project.avishkar.salesmanagement.Graph.GraphSalespersonActivity;
+import project.avishkar.salesmanagement.Leaderboard.LeaderBoardSalesperson;
+
+public class SalespersonMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
 
@@ -90,7 +96,7 @@ public class salesperson_main extends AppCompatActivity
                 ArrayList<String> itemlist=new ArrayList<>();
                 itemlist=getItemList(id,role);
 
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(salesperson_main.this);
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(SalespersonMain.this);
                 final View mView = getLayoutInflater().inflate(R.layout.activity_selling, null);
                 final AutoCompleteTextView autoCompleteTextView;
                 final MeterView numberPicker;
@@ -305,7 +311,7 @@ public class salesperson_main extends AppCompatActivity
                         SalesPerson sm = snapshot.getValue(SalesPerson.class);
                         headerSalespersonName.setText(sm.getName());
                         headerSalespersonEmail.setText(sm.getEmailId());
-                        imageSetter.setImage(getApplicationContext(),headerSalespersonImage,sm.getEmailId(),spinner);
+                        ImageSetter.setImage(getApplicationContext(),headerSalespersonImage,sm.getEmailId(),spinner);
                         break;
                     }
                 }
@@ -400,7 +406,7 @@ public class salesperson_main extends AppCompatActivity
                     .OnPositiveClicked(new FancyAlertDialogListener() {
                         @Override
                         public void OnClick() {
-                            salesperson_main.super.onBackPressed();
+                            SalespersonMain.super.onBackPressed();
                         }
                     })
                     .OnNegativeClicked(new FancyAlertDialogListener() {
@@ -447,17 +453,17 @@ public class salesperson_main extends AppCompatActivity
         } else if (id1 == R.id.my_account) {
 
             //show the salesperson's myaccount (used same class AccountManager for salesperson also)
-            Intent intent = new Intent(salesperson_main.this,AccountManager.class);
+            Intent intent = new Intent(SalespersonMain.this,AccountManager.class);
             startActivity(intent);
 
         } else if (id1 == R.id.leaderboard) {
 
-            Intent intent = new Intent(salesperson_main.this, LeaderBoardSalesperson.class);
+            Intent intent = new Intent(SalespersonMain.this, LeaderBoardSalesperson.class);
             startActivity(intent);
 
         } else if (id1 == R.id.statistics) {
 
-            Intent intent=new Intent(salesperson_main.this,GraphSalespersonActivity.class);
+            Intent intent=new Intent(SalespersonMain.this,GraphSalespersonActivity.class);
             startActivity(intent);
 
         } else if (id1 == R.id.nav_share) {
@@ -484,7 +490,7 @@ public class salesperson_main extends AppCompatActivity
                                 SalesPerson sp = snapshot.getValue(SalesPerson.class);
                                 salespersonName = sp.getName();
                                 managerName = sp.getManagerName();
-                                Intent intent = new Intent(salesperson_main.this, PersonalChatActivitySalesperson.class);
+                                Intent intent = new Intent(SalespersonMain.this, PersonalChatActivitySalesperson.class);
                                 intent.putExtra("SalespersonName", salespersonName);
                                 intent.putExtra("ManagerName", managerName);
                                 startActivity(intent);
@@ -526,7 +532,7 @@ public class salesperson_main extends AppCompatActivity
                                 SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
                                 if(salesManager.getName().equals(thisManagerName)){
 
-                                    Intent intent = new Intent(salesperson_main.this, chatRoom.class);
+                                    Intent intent = new Intent(SalespersonMain.this, ChatRoom.class);
                                     intent.putExtra("ManagerNumber", salesManager.getNumber());
                                     intent.putExtra("Name",SalesPersonName);
                                     startActivity(intent);

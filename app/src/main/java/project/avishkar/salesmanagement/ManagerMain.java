@@ -43,7 +43,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class manager_main extends AppCompatActivity
+import project.avishkar.salesmanagement.Chat.ChatRoom;
+import project.avishkar.salesmanagement.Graph.GraphManagerActivity;
+import project.avishkar.salesmanagement.MyTeam.MyTeam;
+
+public class ManagerMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private EditText itemName, profit;
@@ -95,7 +99,7 @@ public class manager_main extends AppCompatActivity
                         }
                                         /* CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(),data);
                                         listView.setAdapter(mAdapter); */
-                        mAdapter=new InventoryAdapter(getApplicationContext(), list, manager_main.this);
+                        mAdapter=new InventoryAdapter(getApplicationContext(), list, ManagerMain.this);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
@@ -113,7 +117,7 @@ public class manager_main extends AppCompatActivity
             public void onClick(View view) {
 
                 // dialog box to add item on dashboard
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(manager_main.this);
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ManagerMain.this);
                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_add_item_inventory, null);
                 mBuilder.setTitle("Add an item");
 
@@ -160,7 +164,7 @@ public class manager_main extends AppCompatActivity
                                                 list.add(it1);
                                             }
 
-                                            mAdapter = new InventoryAdapter(getApplicationContext(), list, manager_main.this);
+                                            mAdapter = new InventoryAdapter(getApplicationContext(), list, ManagerMain.this);
                                             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                             mRecyclerView.setAdapter(mAdapter);
                                             mAdapter.notifyDataSetChanged();
@@ -250,7 +254,7 @@ public class manager_main extends AppCompatActivity
                         SalesManager sm = snapshot.getValue(SalesManager.class);
                         headerManagerName.setText(sm.getName());
                         headerManagerEmail.setText(sm.getEmail());
-                        imageSetter.setImage(getApplicationContext(),headerManagerImage,sm.getEmail(),spinner);
+                        ImageSetter.setImage(getApplicationContext(),headerManagerImage,sm.getEmail(),spinner);
                         break;
                     }
                 }
@@ -286,7 +290,7 @@ public class manager_main extends AppCompatActivity
                     .OnPositiveClicked(new FancyAlertDialogListener() {
                         @Override
                         public void OnClick() {
-                            manager_main.super.onBackPressed();
+                            ManagerMain.super.onBackPressed();
                         }
                     })
                     .OnNegativeClicked(new FancyAlertDialogListener() {
@@ -334,15 +338,15 @@ public class manager_main extends AppCompatActivity
         else if (id == R.id.my_account) {
 
             //show the manager's account
-            Intent intent = new Intent(manager_main.this,AccountManager.class);
+            Intent intent = new Intent(ManagerMain.this,AccountManager.class);
             startActivity(intent);
 
         } else if (id == R.id.my_team) {
-            Intent intent= new Intent(this,myTeam.class);
+            Intent intent= new Intent(this,MyTeam.class);
             startActivity(intent);
 
         } else if (id == R.id.statistics) {
-            Intent intent=new Intent(manager_main.this,GraphManagerActivity.class);
+            Intent intent=new Intent(ManagerMain.this,GraphManagerActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_share) {
@@ -397,7 +401,7 @@ public class manager_main extends AppCompatActivity
                         if(dataSnapshot1.getKey().equals(idManager)){
 
                             SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
-                            Intent intent = new Intent(manager_main.this, chatRoom.class);
+                            Intent intent = new Intent(ManagerMain.this, ChatRoom.class);
                             intent.putExtra("ManagerNumber", salesManager.getNumber());
                             intent.putExtra("Name",salesManager.getName());
                             startActivity(intent);
@@ -432,7 +436,7 @@ public class manager_main extends AppCompatActivity
                             InventoryItem it1 = snapshot.getValue(InventoryItem.class);
                             list.add(it1);
                         }
-                        mAdapter=new InventoryAdapter(getApplicationContext(),list, manager_main.this);
+                        mAdapter=new InventoryAdapter(getApplicationContext(),list, ManagerMain.this);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();

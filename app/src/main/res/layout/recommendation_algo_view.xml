@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="@drawable/login_gradient">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your upcoming profit target"
         android:textSize="25sp"
-        android:textColor="@color/black"
+        android:textColor="#fff"
         android:layout_gravity="center"/>
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
     <com.jackandphantom.circularprogressbar.CircleProgressbar
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:cpb_progress="50"
+        app:cpb_progress="0"
         android:id="@+id/circular_progress"
         android:layout_gravity="center"
         app:cpb_roundedCorner="true"
@@ -33,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="40000"
+            android:textColor="#fff"
             android:id="@+id/target"
             android:layout_gravity="center"
             android:textSize="50sp"/>
@@ -44,27 +46,30 @@
         android:layout_height="wrap_content"
         android:text="Tips :-"
         android:layout_marginTop="5sp"
-        android:textColor="@color/black"
+        android:textColor="@color/colorPrimary"
         android:layout_marginBottom="5sp"
         android:textSize="25sp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="#fff"
+        android:layout_gravity="center"
         android:text="1. Focus more on products whose demand is increasing in the market."
         android:layout_marginBottom="3sp"
         android:textSize="18sp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="#fff"
+        android:layout_gravity="center"
         android:text="2. Try innovative ways of selling a product to end customer."
         android:layout_marginBottom="3sp"
         android:textSize="18sp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="#fff"
+        android:layout_gravity="center"
         android:text="3. Stay positive!!!"
         android:textSize="18sp"/>
 
