@@ -48,6 +48,8 @@
         <activity
             android:name=".myTeam"
             android:label="My Team"></activity>
+        <activity android:name=".LeaderBoardSalesperson"
+            android:label="Leader Board - Top Ten"></activity>
 
 
         <provider

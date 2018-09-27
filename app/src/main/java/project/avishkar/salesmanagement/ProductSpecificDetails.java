@@ -144,9 +144,6 @@ public class ProductSpecificDetails extends AppCompatActivity  {
     synchronized void populatingData(){
 
 
-        for(int i=0;i<100;i++)
-        System.out.println(""+salespersonNames.size()+" "+sold_number.size());
-
         mRecyclerView=findViewById(R.id.recyclerViewProduct);
         mAdapter= new SalespersonDetailsAdapter(getApplicationContext(), salespersonNames, sold_number, profit);
         mRecyclerView.setAdapter(mAdapter);

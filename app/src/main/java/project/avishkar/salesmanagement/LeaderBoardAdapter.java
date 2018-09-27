@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static project.avishkar.salesmanagement.R.layout.leaderboard_item;
 
@@ -47,16 +50,31 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        SalesPerson salesPerson = personArrayList.get(position);
-        holder.performanceIndex.setText(performanceIndex.get(position));
+        Map<String,SalesPerson> container = new HashMap<>();
+        for(int i=0;i<performanceIndex.size();i++){
+            container.put(performanceIndex.get(i), personArrayList.get(i));
+        }
+        Collections.sort(performanceIndex, Collections.reverseOrder());
+        for(int i=0;i<performanceIndex.size();i++){
+            personArrayList.set(i, container.get(performanceIndex.get(i)));
+        }
+        ArrayList<String> PI = new ArrayList<>();
+        ArrayList<SalesPerson> SP = new ArrayList<>();
+        for(int i=0; i< Math.min(10,performanceIndex.size()); i++){
+                PI.add(performanceIndex.get(i));
+                SP.add(personArrayList.get(i));
+        }
+
+        SalesPerson salesPerson = SP.get(position);
+        holder.performanceIndex.setText(PI.get(position));
         holder.name.setText(salesPerson.getName());
-        holder.rank.setText(String.valueOf(position+1));
+        holder.rank.setText(String.valueOf(position+1)+".");
         imageSetter.setImage(context,holder.imageView,salesPerson.getEmailId(),holder.progressBar);
     }
 
     @Override
     public int getItemCount() {
-        return performanceIndex.size();
+        return Math.min(performanceIndex.size(),10);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
