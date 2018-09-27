@@ -27,7 +27,7 @@
         <item
             android:id="@+id/chat_room"
             android:icon="@drawable/ic_message"
-            android:title="Chat Room" />
+            android:title="Team Chat" />
     </group>
 
     <item android:title="Communicate">

@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="@drawable/login_gradient">
 
     <EditText
         android:id="@+id/mobile"
@@ -11,7 +12,9 @@
         android:layout_height="wrap_content"
         android:ems="20"
         android:inputType="text|phone"
+        android:textColor="#fff"
         android:layout_weight="0.08"
+        android:textColorHint="@color/colorPrimary"
         android:hint="Enter mobile number"/>
 
     <Button

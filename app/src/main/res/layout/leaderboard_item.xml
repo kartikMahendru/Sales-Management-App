@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
 
 
     <TextView
@@ -15,6 +16,7 @@
         android:layout_marginBottom="8dp"
         android:text="1."
         android:textSize="20dp"
+        android:textColor="@color/colorPrimary"
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,6 +49,7 @@
             android:id="@+id/leaderboard_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/progress_bar"
             android:layout_gravity="center" />
 
     </FrameLayout>
@@ -61,7 +64,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Utkarsh Garg"
-        android:textColor="@color/black"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +84,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
-        android:textColor="#8B0000"
+        android:textColor="#fff"
         android:text="98.00"
         android:textSize="17sp"
         android:textStyle="italic"
@@ -103,7 +106,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/performance_index"
         android:textSize="17sp"
         android:textStyle="italic"
-        android:textColor="#8B0000"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.383"

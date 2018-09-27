@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:padding="5dp"
+    android:background="@drawable/login_gradient"
     >
 
     <EditText
@@ -11,16 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="20"
+        android:textColor="#fff"
         android:inputType="text"
         android:layout_weight="0.03"
-        android:hint="Item name"/>
+        android:hint="Item name"
+        android:textColorHint="@color/colorPrimary"/>
 
     <EditText
         android:id="@+id/profit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="20"
+        android:textColorHint="@color/colorPrimary"
         android:inputType="text|number"
+        android:textColor="#fff"
         android:layout_weight="0.03"
         android:hint="Profit (per item)"
         android:layout_margin="4dp"/>
@@ -32,7 +37,7 @@
         android:ems="20"
         android:layout_margin="4dp"
         android:textSize="20dp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/colorPrimary"/>
 
     <com.alexzaitsev.meternumberpicker.MeterView
         android:id="@+id/quantity"

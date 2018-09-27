@@ -274,8 +274,8 @@ public class manager_main extends AppCompatActivity
             // exit dialog box
             new FancyAlertDialog.Builder(this)
                     .setTitle("Warning!!!")
-                    .setBackgroundColor(Color.parseColor("#00A144"))  //Don't pass R.color.colorvalue
-                    .setMessage("Do you really want to Exit ?")
+                    .setBackgroundColor(Color.parseColor("#5002a4"))  //Don't pass R.color.colorvalue
+                    .setMessage("Do you really want to exit?")
                     .setNegativeBtnText("No")
                     .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
                     .setPositiveBtnText("Yes")

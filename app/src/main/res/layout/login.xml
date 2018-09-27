@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="LOGIN"
+            android:id="@+id/login_head"
             android:fontFamily="@font/creteround"
             android:textSize="40sp"
             android:layout_above="@id/emailLayout"
@@ -31,6 +32,7 @@
             android:layout_above="@id/passLayout"
             app:errorEnabled="true"
             >
+
             <android.support.design.widget.TextInputEditText
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -83,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="Login"
-            android:textColor=" #5002a4  "
+            android:textColor="@color/colorPrimaryDark"
             android:background="#ff9e00"
             android:textSize="26sp"
             android:id="@+id/login_press"
@@ -148,6 +150,7 @@
                 android:id="@+id/progressBar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@drawable/progress_bar"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:visibility="gone" />
