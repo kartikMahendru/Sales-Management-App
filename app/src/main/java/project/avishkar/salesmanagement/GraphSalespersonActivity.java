@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +29,7 @@ public class GraphSalespersonActivity extends AppCompatActivity {
     private String id;
     private ArrayList<BarEntry> entries;
     private int flag, store;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +37,10 @@ public class GraphSalespersonActivity extends AppCompatActivity {
         setContentView(R.layout.graph_salesperson);
         barChart=findViewById(R.id.chart);
         entries=new ArrayList<>();
+
+        progressBar = findViewById(R.id.progressBar13);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         SessionManager sm = new SessionManager(getApplicationContext());
         HashMap<String, String> details = sm.getUserDetails();
@@ -76,6 +80,8 @@ public class GraphSalespersonActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
+
+                                progressBar.setVisibility(View.GONE);
                                 BarDataSet dataSet=new BarDataSet(entries,"Profit");
                                 dataSet.setValueTextSize(15f);
                                 BarData data = new BarData(dataSet);
@@ -99,7 +105,6 @@ public class GraphSalespersonActivity extends AppCompatActivity {
 
                             }
                         });
-
                         break;
                     }
                 }
