@@ -1,13 +1,20 @@
 package project.avishkar.salesmanagement;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,8 +22,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jackandphantom.circularprogressbar.CircleProgressbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import static java.lang.Thread.sleep;
@@ -34,6 +43,7 @@ public class LeaderBoardSalesperson extends AppCompatActivity{
     private LeaderBoardAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private ProgressBar progressBar;
+    private FloatingActionButton fabButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +51,7 @@ public class LeaderBoardSalesperson extends AppCompatActivity{
         setContentView(R.layout.leaderboard);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> mp = sessionManager.getUserDetails();
+        final HashMap<String, String> mp = sessionManager.getUserDetails();
 
         SalespersonList = new ArrayList<>();
         performanceIndex = new ArrayList<>();
@@ -49,6 +59,82 @@ public class LeaderBoardSalesperson extends AppCompatActivity{
         progressBar=findViewById(R.id.leaderboard_progress);
         progressBar.setVisibility(View.VISIBLE);
         ListenerRunner1();
+
+        fabButton = findViewById(R.id.fabButton);
+
+        ///////////////adding intent/////////////////////////
+        fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String currId = mp.get("id");
+                for(int i=0;i<10;i++)
+                    System.out.println("inside fab");
+                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("Salesperson");
+                databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                            for(int i=0;i<10;i++)
+                                System.out.println("inside listener");
+                            if(dataSnapshot1.getKey().equals(currId)){
+                                for(int i=0;i<10;i++)
+                                    System.out.println("inside if");
+                                //Intent intent = new Intent(LeaderBoardSalesperson.this, RecommendationAlgo.class);
+                                SalesPerson salesPerson = dataSnapshot1.getValue(SalesPerson.class);
+                                ArrayList<Double> arrayList = new ArrayList<>();
+                                for(int i=0;i<10;i++)
+                                    System.out.println("size performanceIndex: "+performanceIndex.size());
+                                for(int i=0;i<performanceIndex.size();i++){
+                                    arrayList.add(Double.parseDouble(performanceIndex.get(i)));
+                                }
+                                String currName = salesPerson.getName();
+                                Double PiTopper = Collections.max(arrayList);
+                                int i;
+                                for(i=0;i<SalespersonList.size();i++){
+                                    if(SalespersonList.get(i).getName().equals(currName))
+                                        break;
+                                }
+                                for(int j=0;j<10;j++)
+                                    System.out.println(i);
+                                Double PiCurr = Double.parseDouble(performanceIndex.get(i));
+
+                                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LeaderBoardSalesperson.this);
+                                final View mView = getLayoutInflater().inflate(R.layout.recommendation_algo_view, null);
+                                TextView target=mView.findViewById(R.id.target);
+
+                                Double targetProfit = (PiCurr + (PiTopper - PiCurr))*1.10;
+                                target.setText(String.valueOf(targetProfit));
+
+                                CircleProgressbar circleProgressbar=mView.findViewById(R.id.circular_progress);
+                                circleProgressbar.setForegroundProgressColor(Color.RED);
+                                circleProgressbar.setBackgroundColor(Color.GREEN);
+                                circleProgressbar.setBackgroundProgressWidth(15);
+                                circleProgressbar.setForegroundProgressWidth(20);
+                                circleProgressbar.enabledTouch(true);
+                                circleProgressbar.setRoundedCorner(true);
+                                circleProgressbar.setClockwise(true);
+                                int animationDuration = 2500; // 2500ms = 2,5s
+                                circleProgressbar.setProgressWithAnimation(100, animationDuration);
+                                mBuilder.setView(mView);
+
+                                final AlertDialog dialog = mBuilder.create();
+
+                                dialog.show();
+                                //startActivity(intent);
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
 
 
     }

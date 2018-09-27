@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:padding="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your upcoming profit target"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+    <com.jackandphantom.circularprogressbar.CircleProgressbar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cpb_progress="50"
+        android:id="@+id/circular_progress"
+        android:layout_gravity="center"
+        app:cpb_roundedCorner="true"
+        app:cpb_foregroundProgressWidth="15"
+        app:cpb_foregroundProgressColor="#1864c2"
+        app:cpb_touchEnabled="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="40000"
+            android:id="@+id/target"
+            android:layout_gravity="center"
+            android:textSize="50sp"/>
+    </FrameLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tips :-"
+        android:layout_marginTop="5sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="5sp"
+        android:textSize="25sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="1. Focus more on products whose demand is increasing in the market."
+        android:layout_marginBottom="3sp"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="2. Try innovative ways of selling a product to end customer."
+        android:layout_marginBottom="3sp"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="3. Stay positive!!!"
+        android:textSize="18sp"/>
+
+
+</LinearLayout>
