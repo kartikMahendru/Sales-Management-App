@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -75,7 +76,7 @@ public class GraphManagerActivity extends AppCompatActivity {
 
                                 progressBar.setVisibility(View.GONE);
                                 PieDataSet set = new PieDataSet(entries, "Profit Results");
-                                set.setValueTextSize(15f);
+                                set.setValueTextSize(20f);
                                 set.setColors(ColorTemplate.VORDIPLOM_COLORS);
                                 PieData data = new PieData(set);
                                 data.setValueTextColor(Color.BLACK);
@@ -84,8 +85,15 @@ public class GraphManagerActivity extends AppCompatActivity {
                                 pieChart.setCenterText("Your Profit\nAnalysis");
                                 pieChart.setCenterTextSize(20f);
                                 pieChart.animateXY(1000,1000, Easing.EasingOption.EaseInOutCirc, Easing.EasingOption.EaseInOutCirc);
-                                pieChart.setCenterTextColor(Color.BLACK);
-                                pieChart.setTransparentCircleColor(Color.BLACK);
+                                pieChart.setCenterTextColor(Color.WHITE);
+                                pieChart.setTransparentCircleColor(getResources().getColor(R.color.colorPrimary));
+                                pieChart.setHoleColor(getResources().getColor(R.color.colorPrimaryDark));
+                                pieChart.setHighlightPerTapEnabled(true);
+                                Legend legend=pieChart.getLegend();
+                                legend.setWordWrapEnabled(true);
+                                legend.setTextSize(10);
+                                legend.setTextColor(getResources().getColor(R.color.colorPrimary));
+
                             }
 
                             @Override
