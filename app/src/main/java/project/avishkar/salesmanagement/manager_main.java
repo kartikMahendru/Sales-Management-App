@@ -342,6 +342,8 @@ public class manager_main extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.statistics) {
+            Intent intent=new Intent(manager_main.this,GraphManagerActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
             // Share app with others
