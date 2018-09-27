@@ -452,6 +452,9 @@ public class salesperson_main extends AppCompatActivity
 
         } else if (id1 == R.id.leaderboard) {
 
+            Intent intent = new Intent(salesperson_main.this, LeaderBoardSalesperson.class);
+            startActivity(intent);
+
         } else if (id1 == R.id.statistics) {
 
             Intent intent=new Intent(salesperson_main.this,GraphSalespersonActivity.class);

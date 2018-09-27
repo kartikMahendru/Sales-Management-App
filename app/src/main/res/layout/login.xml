@@ -4,19 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:paddingLeft="45dp"
+    android:paddingRight="45dp"
+    android:paddingTop="25dp"
     android:id="@+id/scroll"
+    android:background="@drawable/login_gradient"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="45dp"
-        android:paddingRight="45dp"
-        android:paddingTop="25dp"
-        android:background="@color/colorPrimaryLight"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:weightSum="1">
 
         <TextView
             android:layout_width="match_parent"
@@ -24,15 +17,19 @@
             android:text="LOGIN"
             android:fontFamily="@font/creteround"
             android:textSize="40sp"
-            android:textColor="@color/black"
+            android:layout_above="@id/emailLayout"
+            android:textColor=" #f39c12 "
             android:gravity="center"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="40dp"
             />
 
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textColorHint="@color/colorAccent"
+            android:id="@+id/emailLayout"
+            android:textColorHint="@color/colorPrimary"
+            android:layout_above="@id/passLayout"
+            app:errorEnabled="true"
             >
             <android.support.design.widget.TextInputEditText
                 android:layout_height="wrap_content"
@@ -47,10 +44,12 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
+            android:id="@+id/passLayout"
             android:layout_width="match_parent"
             app:passwordToggleEnabled="true"
-            android:textColorHint="@color/colorAccent"
-            app:passwordToggleTint="@color/colorAccent">
+            android:layout_above="@id/radioGroup_type_person"
+            android:textColorHint="@color/colorPrimary"
+            app:passwordToggleTint="@color/colorPrimary">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_height="wrap_content"
@@ -64,7 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radioGroup_type_person"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_above="@id/login_press">
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,19 +82,25 @@
         <android.support.v7.widget.AppCompatButton
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="LOGIN"
-            android:textColor="@color/black"
-            android:background="@color/colorPrimary"
+            android:text="Login"
+            android:textColor=" #5002a4  "
+            android:background="#ff9e00"
             android:textSize="26sp"
             android:id="@+id/login_press"
             android:layout_marginTop="15dp"
+            android:layout_above="@id/linear1"
             android:layout_marginBottom="5dp"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="bottom"
+            android:id="@+id/linear1"
+            android:gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <Button
@@ -120,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign up as a Manager"
                 android:layout_marginTop="15sp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#ff9e00"
                 android:linksClickable="true"
                 android:id="@+id/Manager"
                 android:textSize="20sp"
@@ -133,10 +139,11 @@
                 android:textSize="20sp"
                 android:layout_marginTop="5sp"
                 android:id="@+id/salesperson"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#ff9e00"
                 android:linksClickable="true"
                 android:gravity="center_horizontal"
                 />
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="30dp"
@@ -145,6 +152,5 @@
                 android:layout_marginBottom="20dp"
                 android:visibility="gone" />
         </LinearLayout>
-    </LinearLayout>
 
 </RelativeLayout>
