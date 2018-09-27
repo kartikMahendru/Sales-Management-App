@@ -1,8 +1,5 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Leaderboard;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,10 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +22,11 @@ import com.jackandphantom.circularprogressbar.CircleProgressbar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+
+import project.avishkar.salesmanagement.InventoryItem;
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SalesPerson;
+import project.avishkar.salesmanagement.SessionManager;
 
 import static java.lang.Thread.sleep;
 
@@ -107,14 +107,13 @@ public class LeaderBoardSalesperson extends AppCompatActivity{
                                 target.setText(String.valueOf(targetProfit));
 
                                 CircleProgressbar circleProgressbar=mView.findViewById(R.id.circular_progress);
-                                circleProgressbar.setForegroundProgressColor(Color.RED);
-                                circleProgressbar.setBackgroundColor(Color.GREEN);
+                                circleProgressbar.setForegroundProgressColor(getResources().getColor(R.color.colorPrimary));
                                 circleProgressbar.setBackgroundProgressWidth(15);
                                 circleProgressbar.setForegroundProgressWidth(20);
                                 circleProgressbar.enabledTouch(true);
                                 circleProgressbar.setRoundedCorner(true);
                                 circleProgressbar.setClockwise(true);
-                                int animationDuration = 2500; // 2500ms = 2,5s
+                                int animationDuration = 1000; // 2500ms = 2,5s
                                 circleProgressbar.setProgressWithAnimation(100, animationDuration);
                                 mBuilder.setView(mView);
 

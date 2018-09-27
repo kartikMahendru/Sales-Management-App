@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
 
-    tools:context=".SignUpSalesManager">
+    tools:context=".Registration.SignUpSalesManager">
 
     <FrameLayout
         android:layout_width="match_parent"

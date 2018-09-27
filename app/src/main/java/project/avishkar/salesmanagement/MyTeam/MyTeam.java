@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.MyTeam;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,7 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class myTeam extends AppCompatActivity {
+import project.avishkar.salesmanagement.Chat.PersonalChatActivityManager;
+import project.avishkar.salesmanagement.ImageSetter;
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SalesManager;
+import project.avishkar.salesmanagement.SalesPerson;
+import project.avishkar.salesmanagement.SessionManager;
+
+public class MyTeam extends AppCompatActivity {
 
     private SwipeMenuListView listView;
     private MyTeamAdapter myTeamAdapter;
@@ -107,7 +114,7 @@ public class myTeam extends AppCompatActivity {
                                         switch (index) {
                                             case 0:
 
-                                                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(myTeam.this);
+                                                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MyTeam.this);
                                                 final View mView = getLayoutInflater().inflate(R.layout.dialog_box_myteam_details, null);
 
                                                 mBuilder.setView(mView);
@@ -151,7 +158,7 @@ public class myTeam extends AppCompatActivity {
                                                                                 name.setText(sp.getName());
                                                                                 phone.setText(sp.getNumber());
                                                                                 email.setText(sp.getEmailId());
-                                                                                imageSetter.setImage(mView.getContext(),imageView,sp.getEmailId(),spinnerImage);
+                                                                                ImageSetter.setImage(mView.getContext(),imageView,sp.getEmailId(),spinnerImage);
                                                                                 spinner7.setVisibility(View.GONE);
                                                                                 break;
                                                                             }

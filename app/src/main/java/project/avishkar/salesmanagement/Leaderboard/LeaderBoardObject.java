@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Leaderboard;
 
 /**
  * Created by user on 9/26/18.

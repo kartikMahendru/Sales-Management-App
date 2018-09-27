@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Registration;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import project.avishkar.salesmanagement.ManagerMain;
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SalesManager;
+import project.avishkar.salesmanagement.SessionManager;
 
 /**
  * Created by Mehul Garg on 01-09-2018.
@@ -158,7 +163,7 @@ public class SignUpSalesManager extends AppCompatActivity {
                                     }
                                     else {
 
-                                        startActivity(new Intent(SignUpSalesManager.this, manager_main.class));
+                                        startActivity(new Intent(SignUpSalesManager.this, ManagerMain.class));
                                         finish();
                                     }
                                     progressBar.setVisibility(View.GONE);

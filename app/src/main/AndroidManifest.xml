@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Registration.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,10 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpSalesManager" />
-        <activity android:name=".SignUpSalesperson" />
+        <activity android:name=".Registration.SignUpSalesManager" />
+        <activity android:name=".Registration.SignUpSalesperson" />
         <activity
-            android:name=".manager_main"
+            android:name=".ManagerMain"
             android:label="SalesManagement"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -34,22 +34,23 @@
             android:name=".AccountManager"
             android:label="My Account" />
         <activity
-            android:name=".salesperson_main"
+            android:name=".SalespersonMain"
             android:label="SalesManagement"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProductSpecificDetails" />
-        <activity android:name=".PersonalChatActivityManager"
+        <activity android:name=".Chat.PersonalChatActivityManager"
             android:windowSoftInputMode="adjustPan"
             android:label="Personal Chat"></activity>
-        <activity android:name=".PersonalChatActivitySalesperson"
+        <activity android:name=".Chat.PersonalChatActivitySalesperson"
             android:label="Personal Chat"></activity>
-        <activity android:name=".chatRoom"
+        <activity android:name=".Chat.ChatRoom"
+            android:windowSoftInputMode="adjustPan"
             android:label="Chat Room"></activity>
         <activity
-            android:name=".myTeam"
+            android:name=".MyTeam.MyTeam"
             android:label="My Team"></activity>
-        <activity android:name=".LeaderBoardSalesperson"
+        <activity android:name=".Leaderboard.LeaderBoardSalesperson"
             android:label="Leader Board - Top Ten"></activity>
 
         <provider
@@ -64,8 +65,8 @@
 
         </provider>
 
-        <activity android:name=".GraphSalespersonActivity"></activity>
-        <activity android:name=".GraphManagerActivity"></activity>
+        <activity android:name=".Graph.GraphSalespersonActivity"></activity>
+        <activity android:name=".Graph.GraphManagerActivity"></activity>
 
     </application>
 

@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Chat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import project.avishkar.salesmanagement.R;
 
 /**
  * Created by user on 9/26/18.

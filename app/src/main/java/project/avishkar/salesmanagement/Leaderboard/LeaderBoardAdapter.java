@@ -1,7 +1,6 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Leaderboard;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -12,16 +11,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static project.avishkar.salesmanagement.R.layout.leaderboard_item;
+import project.avishkar.salesmanagement.ImageSetter;
+import project.avishkar.salesmanagement.R;
+import project.avishkar.salesmanagement.SalesPerson;
 
 public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.MyViewHolder> {
 
@@ -75,7 +72,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         holder.performanceIndex.setText(PI.get(position));
         holder.name.setText(salesPerson.getName());
         holder.rank.setText(String.valueOf(position+1)+".");
-        imageSetter.setImage(context,holder.imageView,salesPerson.getEmailId(),holder.progressBar);
+        ImageSetter.setImage(context,holder.imageView,salesPerson.getEmailId(),holder.progressBar);
     }
 
     @Override

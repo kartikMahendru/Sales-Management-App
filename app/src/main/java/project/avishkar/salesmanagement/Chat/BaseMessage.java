@@ -1,4 +1,4 @@
-package project.avishkar.salesmanagement;
+package project.avishkar.salesmanagement.Chat;
 
 /**
  * Created by user on 9/24/18.
