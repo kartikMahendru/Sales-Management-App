@@ -126,99 +126,129 @@ public class SignUpSalesperson extends AppCompatActivity {
                         tmp = -1;
                         break;
                     }
+                    if(sp.getNumber().equals(num)){
+                        Toast.makeText(getApplicationContext(),"This mobile number is already registered !!", Toast.LENGTH_LONG).show();
+                        tmp = -1;
+                        break;
+                    }
                 }
-                if(tmp != -1){
+                databaseRef = FirebaseDatabase.getInstance().getReference("Manager");
+                databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int x=0;
+                        for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
 
-                    SalesPerson salesPerson = new SalesPerson(name, num, password, managerName, email);
-                    //Added data to database
-                    databaseRef = FirebaseDatabase.getInstance().getReference("Salesperson");
-                    final String key = databaseRef.push().getKey();
-                    databaseRef.child(key).setValue(salesPerson);
+                            SalesManager salesManager = dataSnapshot1.getValue(SalesManager.class);
+                            if(salesManager.getName().equals(managerName)){
+                                x=1;
+                                break;
+                            }
+                        }
+                        if(x == 0){
+                            Toast.makeText(getApplicationContext(),"This Manager does not exist !!", Toast.LENGTH_LONG).show();
+                            tmp = -1;
+                        }
+                        if(tmp != -1){
 
-                    //added chat room with manager
-                    //String tmp1 = managerName.replaceAll("\\s+","");
-                    //String tmp2 = name.replaceAll("\\s+","");
-                    //databaseRef = FirebaseDatabase.getInstance().getReference("ChatsTable");
-                    //String key1 = databaseRef.child(tmp1+"-"+tmp2).push().getKey();
-                    //databaseRef.child(key1).setValue(new BaseMessage("sample","0000","sampler1","role"));
+                            SalesPerson salesPerson = new SalesPerson(name, num, password, managerName, email);
+                            //Added data to database
+                            databaseRef = FirebaseDatabase.getInstance().getReference("Salesperson");
+                            final String key = databaseRef.push().getKey();
+                            databaseRef.child(key).setValue(salesPerson);
+
+                            //added chat room with manager
+                            //String tmp1 = managerName.replaceAll("\\s+","");
+                            //String tmp2 = name.replaceAll("\\s+","");
+                            //databaseRef = FirebaseDatabase.getInstance().getReference("ChatsTable");
+                            //String key1 = databaseRef.child(tmp1+"-"+tmp2).push().getKey();
+                            //databaseRef.child(key1).setValue(new BaseMessage("sample","0000","sampler1","role"));
 
 
-                    // session created using sharedPreference
-                    SessionManager sessionManager = new SessionManager(getApplicationContext());
-                    sessionManager.createLoginSession(key,"Salesperson");
+                            // session created using sharedPreference
+                            SessionManager sessionManager = new SessionManager(getApplicationContext());
+                            sessionManager.createLoginSession(key,"Salesperson");
 
-                    //adding node under LeaderBoard
-                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("LeaderBoard");
-                    String key1 = databaseReference1.push().getKey();
+                            //adding node under LeaderBoard
+                            DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("LeaderBoard");
+                            String key1 = databaseReference1.push().getKey();
 
-                    Long tsLong = System.currentTimeMillis()/1000;
-                    String ts = tsLong.toString();
+                            Long tsLong = System.currentTimeMillis()/1000;
+                            String ts = tsLong.toString();
 
-                    LeaderBoardObject leaderBoardObject = new LeaderBoardObject(name, ts);
-                    databaseReference1.child(key1).setValue(leaderBoardObject);
-                    //register user on fireBase Authentication
+                            LeaderBoardObject leaderBoardObject = new LeaderBoardObject(name, ts);
+                            databaseReference1.child(key1).setValue(leaderBoardObject);
+                            //register user on fireBase Authentication
 
-                    //create user
-                    auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(SignUpSalesperson.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    //Toast.makeText(SignUpSalesManager.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                            //create user
+                            auth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(SignUpSalesperson.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            //Toast.makeText(SignUpSalesManager.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
 
-                                    if (!task.isSuccessful()) {
-                                        Toast.makeText(SignUpSalesperson.this, "Authentication failed." + task.getException(),
-                                                Toast.LENGTH_SHORT).show();
+                                            if (!task.isSuccessful()) {
+                                                Toast.makeText(SignUpSalesperson.this, "Authentication failed." + task.getException(),
+                                                        Toast.LENGTH_SHORT).show();
 
-                                    }
-                                    else {
+                                            }
+                                            else {
 
-                                        // checking if any items were present in manager's inventory which are to be allotted to new salesperson
-                                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Manager");
-                                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                                    if(snapshot.getValue(SalesManager.class).getName().equals(managerName)){
-                                                        // Manager found now go to his inventory
+                                                // checking if any items were present in manager's inventory which are to be allotted to new salesperson
+                                                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Manager");
+                                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                                            if(snapshot.getValue(SalesManager.class).getName().equals(managerName)){
+                                                                // Manager found now go to his inventory
 
-                                                        // Taking a reference of current salesperson
-                                                        final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Salesperson").child(key);
+                                                                // Taking a reference of current salesperson
+                                                                final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Salesperson").child(key);
 
-                                                        databaseReference.child(snapshot.getKey()).child("Inventory")
-                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                    @Override
-                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                        for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
-                                                                            InventoryItem it = snapshot1.getValue(InventoryItem.class);
-                                                                            InventoryItem itNew = new InventoryItem(it.getItemName(),it.getTotal_available() - it.getSold(), 0, it.getProfit());
-                                                                            databaseReference1.child("Inventory").child(databaseReference1.child("Inventory").push().getKey()).setValue(itNew);
-                                                                        }
-                                                                    }
+                                                                databaseReference.child(snapshot.getKey()).child("Inventory")
+                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                                                                                    InventoryItem it = snapshot1.getValue(InventoryItem.class);
+                                                                                    InventoryItem itNew = new InventoryItem(it.getItemName(),it.getTotal_available() - it.getSold(), 0, it.getProfit());
+                                                                                    databaseReference1.child("Inventory").child(databaseReference1.child("Inventory").push().getKey()).setValue(itNew);
+                                                                                }
+                                                                            }
 
-                                                                    @Override
-                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                                                    }
-                                                                });
+                                                                            }
+                                                                        });
 
-                                                        startActivity(new Intent(SignUpSalesperson.this, salesperson_main.class));
-                                                        finish();
+                                                                startActivity(new Intent(SignUpSalesperson.this, salesperson_main.class));
+                                                                finish();
 
-                                                        break;
+                                                                break;
+                                                            }
+                                                        }
                                                     }
-                                                }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                                                    }
+                                                });
                                             }
-                                        });
-                                    }
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            });
-                }
+                                            progressBar.setVisibility(View.GONE);
+                                        }
+                                    });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override
