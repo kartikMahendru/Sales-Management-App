@@ -33,9 +33,9 @@ public class GraphSalesperson {
                     GraphObject mGraph=dataSnapshot1.getValue(GraphObject.class);
                     if(mGraph.getName().equals(salespersonName))
                     {
-                        flag=1;
                         if(mGraph.getDate().equals(date))
                         {
+                            flag=1;
                             GraphObject newGraph=new GraphObject(salespersonName,String.valueOf(Integer.parseInt(profit)+Integer.parseInt(mGraph.getProfit())),date);
                             mDatabaseReference.child(dataSnapshot1.getKey()).setValue(newGraph);
                             break;
