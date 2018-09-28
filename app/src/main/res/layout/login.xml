@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="Not a member yet? "
-                android:textColor="@color/black"
+                android:textColor="#fff"
                 android:textSize="18sp" />
             <TextView
                 android:layout_width="match_parent"
