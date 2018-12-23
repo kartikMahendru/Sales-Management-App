@@ -14,3 +14,8 @@ An app to manage your sales team efficiently.
 - Image compression before uploading data on server to reduce server data.
 - Graphs to show the salesperson progress over time.
 - Pie graph to give profit analysis to the sales manager.
+
+# Team members :
+- [Kartik Mahendru](https://github.com/kartikMahendru)
+- [Mehul Garg](https://github.com/gargmehul10)
+- [Utkarsh Garg](https://github.com/utkarsh22garg)
