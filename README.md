@@ -19,3 +19,21 @@ An app to manage your sales team efficiently.
 - [Kartik Mahendru](https://github.com/kartikMahendru)
 - [Mehul Garg](https://github.com/gargmehul10)
 - [Utkarsh Garg](https://github.com/utkarsh22garg)
+
+# Screenshots :
+
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/1.jpeg" height="400" alt="Screenshot"/> 
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/2.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/3.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/4.jpeg" height="400" alt="Screenshot"/> 
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/5.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/6.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/7.jpeg" height="400" alt="Screenshot"/> 
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/8.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/9.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/10.jpeg" height="400" alt="Screenshot"/> 
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/11.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/12.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/13.jpeg" height="400" alt="Screenshot"/> 
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/14.jpeg" height="400" alt="Screenshot"/>
+<img src="https://github.com/gargmehul10/Sales-Management-App/blob/master/Screenshots/15.jpeg" height="400" alt="Screenshot"/>
