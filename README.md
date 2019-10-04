@@ -10,7 +10,7 @@ An app to manage your sales team efficiently.
 
 # Advanced Features Implemented :
 - A global chat room for the salespersons and the sales manager as well as personal chat for the salesperson and sales manager.
-- Recommendation algorithm based on the salesperson’s sales to assign him a future target to maximize the profit.
+- Recommendation algorithm based on the salesperson’s sales to assign him a future target so that he can maximize the profit.
 - Image compression before uploading data on server to reduce server data.
 - Graphs to show the salesperson progress over time.
 - Pie graph to give profit analysis to the sales manager.
